@@ -9,6 +9,9 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -76,6 +79,8 @@ public class UserList extends JFrame implements ActionListener {
 	
 	// 리스트
 	private JPanel jpUser;
+	private ArrayList<String> nameKOR = new ArrayList<>();
+	
 	
 	// 버튼
 	private JPanel jpbutton;
@@ -115,7 +120,7 @@ public class UserList extends JFrame implements ActionListener {
 		databaseClass.connect(dbURL, dbID, dbPassword);
 		
 		//DBset
-		setDB();
+		setUserTable();
 		
 		// 레이아웃 설정
 		setLayout(null);
@@ -147,18 +152,42 @@ public class UserList extends JFrame implements ActionListener {
 		setVisible(true);
 		
 	}
-
-
 	
-
-
-	private void setDB() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
+	//유저 조회 테이블
+		private void setUserTable() {
+			
+			//전체 사용자 조회
+			String sql = "SELECT ID, password, nameKOR, nameENG, sex, passport, birth, tel, email\r\n"
+					+ "FROM user\r\n"
+					+ "ORDER BY nameKOR";
+			
+			//테이블 초기화
+			model.setNumRows(0);
+			
+			//결제 금액 검색
+			ResultSet rs = databaseClass.select(sql);
+			try {
+				while(rs.next()) {
+					String ID = rs.getString("ID");
+					String password = rs.getString("password");
+					String nameKOR = rs.getString("nameKOR");
+					String nameENG = rs.getString("nameENG");
+					String sex = rs.getString("sex");
+					String passport = rs.getString("passport");
+					String birth = rs.getString("birth");
+					String tel = rs.getString("tel");
+					String email = rs.getString("email");
+					
+					String[] User = {ID, password, nameKOR, nameENG, sex, passport, birth, tel, email};
+					model.addRow(User);
+					
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			
+		}
 
 
 	private void setUserEdit() {
@@ -515,8 +544,13 @@ public class UserList extends JFrame implements ActionListener {
 		} else if(obj == btnAirplane) {
 			dispose();
 			airplanelist = new AirplaneList();
+		} else if(obj == btnOk) {
+			
 		}
 	}
+	
+
+	
 	// jtable 생성
 	class CreateTable extends JTable{
 		public CreateTable(DefaultTableModel model) {

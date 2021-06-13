@@ -6,7 +6,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -15,7 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -38,7 +36,6 @@ import Management.AirPort.AirportList;
 import Management.Airplane.AirplaneList;
 import Management.Airway.AirwayList;
 import Management.Main.MainForm;
-import Management.Payment.PaymentList;
 import Management.User.UserList;
 import be.sign.SignIn;
 
