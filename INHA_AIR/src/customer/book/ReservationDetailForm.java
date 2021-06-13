@@ -57,10 +57,8 @@ public class ReservationDetailForm extends JFrame implements ActionListener {
 	private JPanel jpInputInfor, jpBtns;
 	private JLabel lblInformation, lblFamilyNameKor, lblNameKor, lblFamilyNameEng, lblNameEng, 
 					lblSex, lblPassport, lblTel, lblEmail, lblBirth;
-//	private JTextField tfFamilyNameKor, tfNameKor, tfFamilyNameEng, tfNameEng,
-//					tfPassport, tfTel, tfEmail, tfBirth;
 	private HintTextField tfFamilyNameKor, tfNameKor, tfFamilyNameEng, tfNameEng,
-	tfPassport, tfTel, tfEmail, tfBirth;
+							tfPassport, tfTel, tfEmail, tfBirth;
 	private ButtonGroup bgSex;
 	private JRadioButton rbWoman, rbMan;
 	private JCheckBox cbAgree;

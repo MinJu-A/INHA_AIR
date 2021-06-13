@@ -223,7 +223,6 @@ public class SelectPaymentForm extends JFrame implements ActionListener {
 		// 결제하기 버튼 부분
 		jpBtn = new JPanel(new GridLayout(1, 2, 30, 30));
 		jpBtn.setBorder(new EmptyBorder(30, 50, 30, 50));
-//		jpBtn = new JPanel();
 		jpBtn.setSize(1100, 100);
 		jpBtn.setLocation(0, 520);
 		jpBtn.setBackground(Color.WHITE);
@@ -380,20 +379,20 @@ public class SelectPaymentForm extends JFrame implements ActionListener {
 	private void updateSeat() {
 		
 		// 스케쥴번호, 좌석 클래스 정보 select
-		String sql = "SELECT GOscheduleNo, COMscheduleNo, GOclass, COMclass FROM reservation WHERE reserveNum = '" + reserveNum + "'";
+		String sqlSchedule = "SELECT GOscheduleNo, COMscheduleNo, GOclass, COMclass FROM reservation WHERE reserveNum = '" + reserveNum + "'";
 		
 		String GOscheduleNo = "";
 		String COMscheduleNo = "";
 		String GOclass = "";
 		String COMclass = "";
 		
-		ResultSet rs1 = databaseClass.select(sql);
+		ResultSet rsSchedule = databaseClass.select(sqlSchedule);
 		try {
-			while(rs1.next()) {
-				GOscheduleNo = rs1.getString("GOscheduleNo");
-				COMscheduleNo = rs1.getString("COMscheduleNo");
-				GOclass = rs1.getString("GOclass");
-				COMclass = rs1.getString("COMclass");
+			while(rsSchedule.next()) {
+				GOscheduleNo = rsSchedule.getString("GOscheduleNo");
+				COMscheduleNo = rsSchedule.getString("COMscheduleNo");
+				GOclass = rsSchedule.getString("GOclass");
+				COMclass = rsSchedule.getString("COMclass");
 			}
 			
 		} catch (SQLException e) {
@@ -404,22 +403,22 @@ public class SelectPaymentForm extends JFrame implements ActionListener {
 		int goSeat = 0;
 		int comSeat = 0;
 		
-		String sql2 = "SELECT " + GOclass + " FROM seat WHERE scheduleNo='" + GOscheduleNo + "'";
-		String sql3 = "SELECT " + COMclass + " FROM seat WHERE scheduleNo='" + COMscheduleNo + "'";
+		String sqlGoSeat = "SELECT " + GOclass + " FROM seat WHERE scheduleNo='" + GOscheduleNo + "'";
+		String sqlComSeat = "SELECT " + COMclass + " FROM seat WHERE scheduleNo='" + COMscheduleNo + "'";
 		
-		ResultSet rs2 = databaseClass.select(sql2);
+		ResultSet rsGoSeat = databaseClass.select(sqlGoSeat);
 		try {
-			while(rs2.next()) {
-				goSeat = Integer.parseInt(rs2.getString(1));
+			while(rsGoSeat.next()) {
+				goSeat = Integer.parseInt(rsGoSeat.getString(1));
 			}
 		} catch (NumberFormatException | SQLException e) {
 			e.printStackTrace();
 		}
 		
-		ResultSet rs3 = databaseClass.select(sql3);
+		ResultSet rsComSeat = databaseClass.select(sqlComSeat);
 		try {
-			while(rs3.next()) {
-				comSeat = Integer.parseInt(rs3.getString(1));
+			while(rsComSeat.next()) {
+				comSeat = Integer.parseInt(rsComSeat.getString(1));
 			}
 		} catch (NumberFormatException | SQLException e) {
 			e.printStackTrace();
