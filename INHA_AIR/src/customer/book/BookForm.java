@@ -450,8 +450,12 @@ public class BookForm extends JFrame implements ActionListener {
 			} else if (SelectDepCode.isEmpty()) {
 				JOptionPane.showMessageDialog(null, "탑승지를 선택해주세요", "조회", JOptionPane.OK_CANCEL_OPTION);
 			} else {
-				tkRTGoForm = new TicketingRoundTripGoingForm(this);
-				this.setVisible(false);
+				try {
+					tkRTGoForm = new TicketingRoundTripGoingForm(this);
+					this.setVisible(false);
+				} catch (StringIndexOutOfBoundsException e2) {
+					JOptionPane.showMessageDialog(null, "여행 일정이 없습니다. 항공편 현황을 확인해주세요.", "예매하기", JOptionPane.OK_CANCEL_OPTION);
+				}
 			}
 			
 		} else if (obj == btnReset) {
@@ -501,8 +505,14 @@ public class BookForm extends JFrame implements ActionListener {
 				SelectDepCode = SelectArrCode;
 				SelectArrCode = swapCode;
 				
+				btnDep.setText(SelectDep);
+				btnArr.setText(SelectArr);
+				
 			}	
 		}
+		
+		
+		
 	}
 }
 
