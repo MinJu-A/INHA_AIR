@@ -88,7 +88,7 @@ public class SignUpForm extends JFrame implements ActionListener{
 	private boolean korVCheck;
 	private boolean engVCheck;
 	
-	//정규표현식
+
 	private String kor = "^[가-힣]+$";
 	private String eng = "^[a-zA-Z]+$";
 
