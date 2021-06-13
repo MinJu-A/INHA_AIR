@@ -361,7 +361,7 @@ public class SelectPaymentForm extends JFrame implements ActionListener {
 	}
 
 	private void payment(String type) {
-		String sql = "INSERT INTO payment(reserveNum, payable, pay) VALUES('" + reserveNum + "', '" + type + "', " + 
+		String sql = "INSERT INTO payment(reserveNum, `date`, payable, pay) VALUES('" + reserveNum + "', NOW(), '" + type + "', " + 
 				"( SELECT pay FROM reservation WHERE reserveNum='" + reserveNum + "'))";
 		
 		int rs = databaseClass.insert(sql);
