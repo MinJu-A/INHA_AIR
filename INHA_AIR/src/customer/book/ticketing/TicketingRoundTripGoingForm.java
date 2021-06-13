@@ -303,7 +303,7 @@ public TicketingRoundTripGoingForm(BookForm sel) {
 	this.ID = sel.getId();
 	
 //	reserveNum = goDay.substring(0, 3) + comeDay.substring(2,5) + ID.substring(0,3) + strToday.substring(3,6) + "00";
-	reserveNum = goDay.substring(0, 3) + comeDay.substring(2,5) + ID + strToday.substring(3,6) + sdf2.substring(11, 14);
+	reserveNum = goDay.substring(0, 3) + comeDay.substring(2,5) + ID + sdf2.substring(11, 13) +"-" +strToday.substring(4, 6);
 
 	setTitle(title);
 	setSize(width, height);
@@ -553,18 +553,19 @@ public TicketingRoundTripGoingForm(BookForm sel) {
 		}
 		java.sql.PreparedStatement ps = null;
 		try {
-		String sql = "INSERT INTO reservation(reserveNum, GOscheduleNo, COMscheduleNo, ID, adult, child, infant, pay, GOclass, COMclass) VALUES (?,?,?,?,?,?,?,?,?,?)";
+//		String sql = "INSERT INTO reservation(reserveNum, GOscheduleNo, COMscheduleNo, ID, adult, child, infant, pay, GOclass, COMclass) VALUES (?,?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO reservation(`date`, reserveNum, GOscheduleNo, COMscheduleNo, ID, adult, child, infant, pay, GOclass, COMclass) VALUES (NOW(),?,?,?,?,?,?,?,?,?,?)";
 		ps = conn.prepareStatement(sql);
-		ps.setString(1,reserveNum);
-		ps.setString(2,GOscheduleNo);
-		ps.setString(3,null);
-		ps.setString(4,ID);
-		ps.setInt(5, numAdult);
-		ps.setInt(6,numInfant);
-		ps.setInt(7,numChild);
-		ps.setInt(8,0);
-		ps.setString(9,selectedSeatGo);
-		ps.setString(10,null);
+		ps.setString(2,reserveNum);
+		ps.setString(3,GOscheduleNo);
+		ps.setString(4,null);
+		ps.setString(5,ID);
+		ps.setInt(6, numAdult);
+		ps.setInt(7,numInfant);
+		ps.setInt(8,numChild);
+		ps.setInt(9,0);
+		ps.setString(10,selectedSeatGo);
+		ps.setString(11,null);
 		 int res = ps.executeUpdate();
 		 if(res>0) {
 			 System.out.println(sql);
