@@ -11,9 +11,13 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,6 +27,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -50,7 +55,7 @@ public class PaymentList extends JFrame implements ActionListener {
 		private PaymentList paymentlist;
 		private AirwayList airwaylist;
 		private AirportList airlinelist;
-		private AirplaneList airplanelist;
+		private AirplaneList airplanelist; 
 		private MainForm mainform;
 		private int result;
 		
@@ -87,7 +92,7 @@ public class PaymentList extends JFrame implements ActionListener {
 	private DefaultTableModel model;
 	private CreateTable jtPay;
 	private String[][] datas = new String[0][0];
-	private String[] uTableTitle = {"카드", "무통장", "총매출"};
+	private String[] uTableTitle = {"날짜", "예매번호", "결제수단", "결제금액"};
 	private DefaultTableCellRenderer Center; //테이블 정렬
 	private JTableHeader jtUHeader;
 	private JScrollPane sp;
@@ -99,7 +104,14 @@ public class PaymentList extends JFrame implements ActionListener {
 	private JTextField tfId, tfPw, tfName, tfSex, tfPN, tfBir, tfTel, tfEmail, tfSer;
 	private AirportList airportlist;
 	
-
+	//월 매출, 총 매출
+	private JLabel lblMonPay, lblTotalPay;
+	private JComboBox<String> cbMonth;
+	private ArrayList<String> month = new ArrayList<String>();
+	
+	private int monthPay = 0;
+	private int totalPay = 0;
+	
 	
 	
 
@@ -143,7 +155,8 @@ public class PaymentList extends JFrame implements ActionListener {
 		//수정창
 		setButtonPannel();
 		
-		
+		//결제 내역 테이블
+		setPaymentTable();
 
 		
 		setVisible(true);
@@ -153,11 +166,44 @@ public class PaymentList extends JFrame implements ActionListener {
 
 	
 
+	//결제 내역 테이블
+	private void setPaymentTable() {
+		String sql = "SELECT `index`, reserveNum, `date`, payable, pay\r\n"
+				+ "FROM payment\r\n"
+				+ "ORDER BY `index` DESC";
+		
+		// 테이블 초기화
+		model.setNumRows(0);
+		
+		// 결제 금액 검색
+		ResultSet rs = databaseClass.select(sql);
+		try {
+			while(rs.next()) {
+				String date = rs.getString("date");
+				String reserveNum = rs.getString("reserveNum");
+				String payable = rs.getString("payable");
+				if(payable == "cash") payable = "무통장 입금";
+				else if(payable == " card") payable = "카드";
+				String pay = rs.getString("pay");
+				
+				String[] data = {date, reserveNum, payable, pay};
+				model.addRow(data);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+
+
+
 
 	private void setButtonPannel() {
-		jpEdit = new JPanel(new BorderLayout());
-		jpEdit.setSize(200, 40);
-		jpEdit.setLocation(125,45);
+		jpEdit = new JPanel(new GridLayout(4, 2, 5, 5));
+		jpEdit.setBorder(new EmptyBorder(20, 15, 20, 15));
+		jpEdit.setSize(380, 180);
+		jpEdit.setLocation(68, 45);
 		jpEdit.setBackground(Color.WHITE);
 		//월별 콤보박스 삽입 예정
 		btnser = new JButton("매출 조회");
@@ -167,10 +213,101 @@ public class PaymentList extends JFrame implements ActionListener {
 		btnser.setFont(fontNanumGothic25);
 		btnser.addActionListener(this);
 		
-		jpEdit.add(btnser);
+		// 월매출 라벨
+		JLabel lblMon = new JLabel("월매출");
+		lblMon.setFont(fontNanumGothic18);
+		
+		JLabel lblNon1 = new JLabel("");
+		
+		// 월매출 콤보박스
+		String sql = "SELECT DISTINCT left(`date`, 7)\r\n"
+				+ "FROM payment\r\n"
+				+ "ORDER BY `date` DESC";
+		
+		ResultSet rs = databaseClass.select(sql);
+		try {
+			while(rs.next()) {
+				month.add(rs.getString(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		cbMonth = new JComboBox<String>(month.toArray(new String[month.size()]));
+		cbMonth.addActionListener(this);
+		cbMonth.setFont(fontNanumGothic18);
+		cbMonth.setBackground(Color.WHITE);
+		
+		
+		// 웖매출 결과
+		lblMonPay = new JLabel(monthPay + " 원");
+		lblMonPay.setFont(fontNanumGothic18);
+		lblMonPay.setHorizontalAlignment(JLabel.RIGHT);
+		
+		selectMonthPay();
+		
+		JLabel lblNon2 = new JLabel("");
+		JLabel lblNon3 = new JLabel("");
+		
+		// 총매출 라벨
+		JLabel lblTotal = new JLabel("총매출");
+		lblTotal.setFont(fontNanumGothic18);
+		
+		// 총매출 결과
+		sql = "SELECT SUM(pay) FROM payment";
+		
+		rs = databaseClass.select(sql);
+		try {
+			while(rs.next()) {
+				totalPay = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		lblTotalPay = new JLabel(totalPay + " 원");
+		lblTotalPay.setFont(fontNanumGothic18);
+		lblTotalPay.setHorizontalAlignment(JLabel.RIGHT);
+		
+		jpEdit.add(lblMon);
+		jpEdit.add(lblNon1);
+		jpEdit.add(cbMonth);
+		jpEdit.add(lblMonPay);
+		jpEdit.add(lblNon2);
+		jpEdit.add(lblNon3);
+		jpEdit.add(lblTotal);
+		jpEdit.add(lblTotalPay);
+		
+		
+//		jpEdit.add(btnser);
 		jpUser.add(jpEdit);
 	}
 
+
+
+
+	// 월 매출 select
+	private void selectMonthPay() {
+		// 콤보박스 현재 값
+		String selected = cbMonth.getSelectedItem().toString();
+		
+		// 월 매출 검색 sql
+		String sql = "SELECT SUM(pay)\r\n"
+				+ "FROM payment\r\n"
+				+ "WHERE left(`date`, 7) = '" + selected + "'";
+		
+		ResultSet rs = databaseClass.select(sql);
+		try {
+			while(rs.next()) {
+				monthPay = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		lblMonPay.setText(monthPay + " 원");
+	}
 
 
 
@@ -191,9 +328,10 @@ public class PaymentList extends JFrame implements ActionListener {
 		
 		Center = new DefaultTableCellRenderer(); //테이블 정렬
 		Center.setHorizontalAlignment(JLabel.CENTER); //가운데정렬
-		jtPay.getColumn("카드").setCellRenderer(Center);
-		jtPay.getColumn("무통장").setCellRenderer(Center);
-		jtPay.getColumn("총매출").setCellRenderer(Center);
+		jtPay.getColumn("날짜").setCellRenderer(Center);
+		jtPay.getColumn("예매번호").setCellRenderer(Center);
+		jtPay.getColumn("결제수단").setCellRenderer(Center);
+		jtPay.getColumn("결제금액").setCellRenderer(Center);
 		
 		jtUHeader = jtPay.getTableHeader();
 		jtUHeader.setReorderingAllowed(false); //컬럼 이동 금지
@@ -354,8 +492,11 @@ Object obj = e.getSource();
 		} else if(obj == btnAirplane) {
 			dispose();
 			airplanelist = new AirplaneList();
+		} else if(obj == cbMonth) {
+			selectMonthPay();
 		}
 	}
+	
 	// jtable 생성
 	class CreateTable extends JTable{
 		public CreateTable(DefaultTableModel model) {
