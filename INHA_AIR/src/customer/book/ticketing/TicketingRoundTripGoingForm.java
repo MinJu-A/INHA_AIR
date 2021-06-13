@@ -303,7 +303,7 @@ public TicketingRoundTripGoingForm(BookForm sel) {
 	this.ID = sel.getId();
 	
 //	reserveNum = goDay.substring(0, 3) + comeDay.substring(2,5) + ID.substring(0,3) + strToday.substring(3,6) + "00";
-	reserveNum = goDay.substring(0, 3) + comeDay.substring(2,5) + ID + strToday.substring(3,6) + sdf2.substring(11, 14);
+	reserveNum = goDay.substring(0, 3) + comeDay.substring(2,5) + ID + sdf2.substring(11, 13) +"-" +strToday.substring(4, 6);
 
 	setTitle(title);
 	setSize(width, height);
