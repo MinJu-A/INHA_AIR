@@ -119,8 +119,6 @@ public class UserList extends JFrame implements ActionListener {
 		String dbPassword="1234";
 		databaseClass.connect(dbURL, dbID, dbPassword);
 		
-		//DBset
-		setUserTable();
 		
 		// 레이아웃 설정
 		setLayout(null);
@@ -146,7 +144,9 @@ public class UserList extends JFrame implements ActionListener {
 		//수정창
 		setUserEdit();
 		
-		
+		//DBset
+		setUserTable();
+				
 
 		
 		setVisible(true);

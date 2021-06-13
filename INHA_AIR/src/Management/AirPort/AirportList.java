@@ -9,6 +9,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -142,7 +144,8 @@ public class AirportList extends JFrame implements ActionListener {
 		//수정창
 		setUserEdit();
 		
-		
+		// 공항 정보 테이블
+		setAirportTable(0, "");
 
 		
 		setVisible(true);
@@ -151,6 +154,44 @@ public class AirportList extends JFrame implements ActionListener {
 
 
 	
+
+	// 공항 정보 테이블
+	private void setAirportTable(int i, String codename) {
+		String sql = "";
+		
+		if(i == 0) {
+			sql = "SELECT code, continent, country, city, airport, terminal\r\n"
+					+ "FROM airport\r\n"
+					+ "ORDER BY terminal, continent, city";
+		}
+		else if(i == 1) {
+			sql = "SELECT code, continent, country, city, airport, terminal\r\n"
+					+ "FROM airport\r\n"
+					+ "WHERE code = '" + codename + "'\r\n"
+					+ "ORDER BY terminal, continent, city";
+		}
+		
+		model.setNumRows(0);
+		
+		ResultSet rs = databaseClass.select(sql);
+		try {
+			while(rs.next()) {
+				String code = rs.getString("code");
+				String continent = rs.getString("continent");
+				String country = rs.getString("country");
+				String city = rs.getString("city");
+				String airport = rs.getString("airport");
+				String terminal = rs.getString("terminal");
+				
+				String[] data = {code, continent, country, city, airport, terminal};
+				model.addRow(data);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 
 
 	private void setUserEdit() {
@@ -482,6 +523,45 @@ Object obj = e.getSource();
 		}else if(obj == btnAirplane) {
 			dispose();
 			airplanelist = new AirplaneList();
+		}
+		else if(obj == btnser) {
+			// 검색
+			String code = tfSer.getText();
+			
+			if(code.length() > 3) {
+				setAirportTable(0, "");
+			}
+			else {
+				setAirportTable(1, code);
+			}
+			
+		}
+		else if(obj == btnOk) {
+			// 등록
+			String code = tfCode.getText();
+			String continent = tfCon.getText();
+			String country = tfCountry.getText();
+			String city = tfCity.getText();
+			String airport = tfAName.getText();
+			String terminal = tfBound.getText();
+			
+			String sql = "INSERT INTO inhaair.airport\r\n"
+					+ "(code, continent, country, city, airport, terminal)\r\n"
+					+ "VALUES('" + code + "', '" + continent + "', '" + country + "', '" + city + "', '" + airport + "', '" + terminal + "')";
+			System.out.println(sql);
+			
+			int rs = databaseClass.insert(sql);
+			if(rs == 1) {
+				JOptionPane.showMessageDialog(this, "등록 되었습니다.");
+				setAirportTable(0, "");
+			} else if(rs == 0) {
+				JOptionPane.showMessageDialog(this, "등록에 실패했습니다.");
+			}
+
+		}
+		else if(obj == btnDel) {
+			// 삭제
+			
 		}
 	}
 	// jtable 생성
