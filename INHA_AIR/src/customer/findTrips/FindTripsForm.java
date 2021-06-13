@@ -34,7 +34,7 @@ public class FindTripsForm extends JFrame implements ActionListener {
 		private String id;
 		// 예원 - Forms
 		private MainMenuForm mainMenuForm;
-		private MemberInquiryDetailForm2 detailForm;
+		private MemberInquiryDetailForm detailForm;
 		
 		// 예원 - 색상
 		Color colorLogo = new Color(24, 62, 111);
@@ -416,7 +416,7 @@ public class FindTripsForm extends JFrame implements ActionListener {
 			this.setVisible(false);
 			
 		} else if(obj == btnDetail1) {
-			detailForm = new MemberInquiryDetailForm2();
+			detailForm = new MemberInquiryDetailForm(id);
 			this.setVisible(false);
 		}
 	}
