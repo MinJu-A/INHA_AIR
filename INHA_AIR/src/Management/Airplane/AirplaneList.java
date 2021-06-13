@@ -31,6 +31,7 @@ import javax.swing.table.TableCellRenderer;
 import DataBase.databaseClass;
 import Management.AirPort.AirportList;
 import Management.Airway.AirwayList;
+import Management.Form.HintTextField;
 import Management.Main.MainForm;
 import Management.Payment.PaymentList;
 import Management.User.UserList;
@@ -51,6 +52,7 @@ public class AirplaneList extends JFrame implements ActionListener {
 		private AirportList airportlist;
 		private MainForm mainform;
 		private AirplaneList airplanelist;
+		private HintTextField hintTf;
 		private int result;
 		
 	// 폰트
@@ -95,7 +97,7 @@ public class AirplaneList extends JFrame implements ActionListener {
 	private JPanel jpAll, jpBtn, jpEdit, jpNew, jpSer;
 	private JButton btnOk, btnBye, btnDel, btnMod, btnser;
 	private JLabel lblNew, lblsche, lblflightNo, lblDep, lblDepday, lblDepTime, lblArr, lblArrDay, lblArrTime, lblserach;
-	private JTextField tfSche, tfFlightNo, tfDep, tfDepDay, tfDepTime, tfArr, tfArrDay, tffArrTime, tfSer;
+	private HintTextField tfSche, tfFlightNo, tfDep, tfDepDay, tfDepTime, tfArr, tfArrDay, tffArrTime, tfSer;
 	
 
 	
@@ -169,8 +171,9 @@ public class AirplaneList extends JFrame implements ActionListener {
 		lblserach.setHorizontalAlignment(JLabel.CENTER);
 		
 		//검색 텍스트필드
-		tfSer = new JTextField("ex)AKLTOI-1",15);
-				
+		tfSer = new HintTextField("ex)AKLTOI-1");
+		tfSer.setPreferredSize(new Dimension(200, 25));	
+		
 		//검색 버튼
 		btnser = new JButton("검색");
 		btnser.setFont(fontNanumGothic13);
@@ -218,14 +221,14 @@ public class AirplaneList extends JFrame implements ActionListener {
 	 	lblArrTime.setHorizontalAlignment(JLabel.CENTER);
 	 			
 	 	//폼 텍스트필드 
-	 	tfSche = new JTextField("ex)AKLTOI-1",30);
-	 	tfFlightNo = new JTextField("ex)IH1222",30);
-	 	tfDep = new JTextField("ex)AKL",30);
-	 	tfDepDay = new JTextField("ex)1998-12-22",30);
-	 	tfDepTime = new JTextField("ex)12:22:00",30);
-	 	tfArr = new JTextField("ex)ICN",30);
-	 	tfArrDay = new JTextField("ex)2000-02-16",30);
-	 	tffArrTime = new JTextField("ex)02:16:00",30);
+	 	tfSche = new HintTextField("ex)AKLTOI-1");
+	 	tfFlightNo = new HintTextField("ex)IH1222");
+	 	tfDep = new HintTextField("ex)AKL");
+	 	tfDepDay = new HintTextField("ex)1998-12-22");
+	 	tfDepTime = new HintTextField("ex)12:22:00");
+	 	tfArr = new HintTextField("ex)ICN");
+	 	tfArrDay = new HintTextField("ex)2000-02-16");
+	 	tffArrTime = new HintTextField("ex)02:16:00");
 	 	
 	 	//붙이기
 	 	jpNew.add(lblsche);
@@ -522,6 +525,21 @@ Object obj = e.getSource();
 		} else if(obj == btnAirplane) {
 			dispose();
 			airplanelist = new AirplaneList();
+		} else if(obj == btnBye) {
+			result = JOptionPane.showConfirmDialog(this, "입력을 취소하시겠습니까?", "입력 취소",JOptionPane.YES_NO_OPTION);
+			if(result == JOptionPane.YES_OPTION) {
+				JOptionPane.showMessageDialog(null, "입력이 취소되었습니다.");
+				tfSche.setText("");
+			 	tfFlightNo.setText("");
+			 	tfDep.setText("");
+			 	tfDepDay.setText("");
+			 	tfDepTime.setText("");
+			 	tfArr.setText("");
+			 	tfArrDay.setText("");
+			 	tffArrTime.setText("");
+			} else {
+				JOptionPane.showMessageDialog(null, "계속 입력해주세요");
+			}
 		}
 	}
 	// jtable 생성

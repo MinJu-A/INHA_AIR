@@ -30,6 +30,7 @@ import DataBase.databaseClass;
 import Management.AirPort.AirportList;
 import Management.Airplane.AirplaneList;
 import Management.Airway.AirwayList;
+import Management.Form.HintTextField;
 import Management.Main.MainForm;
 import Management.Payment.PaymentList;
 import Management.User.UserList;
@@ -49,6 +50,7 @@ public class AirportList extends JFrame implements ActionListener {
 		private AirwayList airwaylist;
 		private AirportList airportlist;
 		private AirplaneList airplanelist;
+		private HintTextField hintTf;
 		private MainForm mainform;
 		private int result;
 		
@@ -94,7 +96,7 @@ public class AirportList extends JFrame implements ActionListener {
 	private JPanel jpAll, jpBtn, jpEdit, jpNew, jpSer;
 	private JButton btnOk, btnBye, btnDel, btnMod;
 	private JLabel lblNew, lblCode, lblCon, lblCountry, lblCity, lblAName, lblBound, lblTel, lblEmail, lblserach;
-	private JTextField tfCode, tfCon, tfCountry, tfCity, tfAName, tfBound, tfTel, tfEmail, tfSer;
+	private HintTextField tfCode, tfCon, tfCountry, tfCity, tfAName, tfBound, tfTel, tfEmail, tfSer;
 	
 
 	
@@ -168,7 +170,8 @@ public class AirportList extends JFrame implements ActionListener {
 		lblserach.setHorizontalAlignment(JLabel.CENTER);
 		
 		//검색 텍스트필드
-		tfSer = new JTextField("ex)AKL",15);
+		tfSer = new HintTextField("ex)AKL");
+		tfSer.setPreferredSize(new Dimension(200, 25));	
 				
 		//검색 버튼
 		btnser = new JButton("검색");
@@ -211,13 +214,12 @@ public class AirportList extends JFrame implements ActionListener {
 	 	lblBound.setHorizontalAlignment(JLabel.CENTER);
 	 			
 	 	//폼 텍스트필드 
-	 	tfCode = new JTextField("ex)AKL",30);
-	 	tfCode.addActionListener(this);
-	 	tfCon = new JTextField("ex)오세아니아",30);
-	 	tfCountry = new JTextField("ex)뉴질랜드",30);
-	 	tfCity = new JTextField("ex)오클랜드",30);
-	 	tfAName = new JTextField("ex)오클랜드 국제공항",30);
-	 	tfBound = new JTextField("ex)국제",30);
+	 	tfCode = new HintTextField("ex)AKL");
+	 	tfCon = new HintTextField("ex)오세아니아");
+	 	tfCountry = new HintTextField("ex)뉴질랜드");
+	 	tfCity = new HintTextField("ex)오클랜드");
+	 	tfAName = new HintTextField("ex)오클랜드 국제공항");
+	 	tfBound = new HintTextField("ex)국제");
 	 	
 	 	//붙이기
 	 	jpNew.add(lblCode);
@@ -468,12 +470,12 @@ Object obj = e.getSource();
 			 result = JOptionPane.showConfirmDialog(this, "입력을 취소하시겠습니까?", "입력 취소",JOptionPane.YES_NO_OPTION);
 			 if(result == JOptionPane.YES_OPTION ) {
 					JOptionPane.showMessageDialog(null, "입력이 취소되었습니다");
-					tfCode.setText("ex)AKL");
-					tfCon.setText("ex)오세아니아");
-					tfCountry.setText("ex)뉴질랜드");
-					tfCity.setText("ex)오클랜드");
-					tfAName.setText("ex)오클랜드 국제공항");
-					tfBound.setText("ex)국제");
+					tfCode.setText("");
+					tfCon.setText("");
+					tfCountry.setText("");
+					tfCity.setText("");
+					tfAName.setText("");
+					tfBound.setText("");
 				} else {
 					JOptionPane.showMessageDialog(null, "계속 입력해주세요");
 				}

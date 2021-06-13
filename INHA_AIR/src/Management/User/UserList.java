@@ -30,6 +30,7 @@ import DataBase.databaseClass;
 import Management.AirPort.AirportList;
 import Management.Airplane.AirplaneList;
 import Management.Airway.AirwayList;
+import Management.Form.HintTextField;
 import Management.Main.MainForm;
 import Management.Payment.PaymentList;
 import be.sign.SignIn;
@@ -49,6 +50,7 @@ public class UserList extends JFrame implements ActionListener {
 		private AirportList airportlist;
 		private AirplaneList airplanelist;
 		private MainForm mainform;
+		private HintTextField hintTf;
 		private int result;
 		
 		
@@ -93,10 +95,7 @@ public class UserList extends JFrame implements ActionListener {
 	private JPanel jpAll, jpBtn, jpEdit, jpNew, jpSer;
 	private JButton btnOk, btnBye, btnDel, btnMod;
 	private JLabel lblNew, lblId, lblPw, lblName, lblSex, lblPN, lblBir, lblTel, lblEmail, lblserach, lblEName;
-	private JTextField tfId, tfPw, tfName, tfSex, tfPN, tfBir, tfTel, tfEmail, tfSer, tfEName;
-	
-
-	
+	private HintTextField tfId, tfPw, tfName, tfSex, tfPN, tfBir, tfTel, tfEmail, tfSer, tfEName;
 	
 
 	
@@ -114,6 +113,9 @@ public class UserList extends JFrame implements ActionListener {
 		String dbID="inhaair";
 		String dbPassword="1234";
 		databaseClass.connect(dbURL, dbID, dbPassword);
+		
+		//DBset
+		setDB();
 		
 		// 레이아웃 설정
 		setLayout(null);
@@ -150,6 +152,15 @@ public class UserList extends JFrame implements ActionListener {
 	
 
 
+	private void setDB() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+
 	private void setUserEdit() {
 		jpEdit = new JPanel();
 		jpEdit.setSize(400, 635);
@@ -167,7 +178,8 @@ public class UserList extends JFrame implements ActionListener {
 		lblserach.setHorizontalAlignment(JLabel.CENTER);
 		
 		//검색 텍스트필드
-		tfSer = new JTextField("ex)japboss",15);
+		tfSer = new HintTextField("ex)japboss");
+		tfSer.setPreferredSize(new Dimension(200, 25));	
 				
 		//검색 버튼
 		btnser = new JButton("검색");
@@ -219,15 +231,15 @@ public class UserList extends JFrame implements ActionListener {
 	 	lblEmail.setHorizontalAlignment(JLabel.CENTER);
 	 			
 	 	//폼 텍스트필드 
-	 	tfId = new JTextField("ex)japboss",30);
-	 	tfPw = new JTextField("ex)1234",30);
-	 	tfName = new JTextField("ex)김민주",30);
-	 	tfEName = new JTextField("ex)KIMMIMJU",30);
-	 	tfSex = new JTextField("ex)여",30);
-	 	tfPN = new JTextField("ex)jap-981222",30);
-	 	tfBir = new JTextField("ex)1998-12-22",30);
-	 	tfTel = new JTextField("ex)010-1998-1222",30);
-	 	tfEmail = new JTextField("ex)japboss@naver.com",30);
+	 	tfId = new HintTextField("ex)japboss");
+	 	tfPw = new HintTextField("ex)1234");
+	 	tfName = new HintTextField("ex)김민주");
+	 	tfEName = new HintTextField("ex)KIMMIMJU");
+	 	tfSex = new HintTextField("ex)여");
+	 	tfPN = new HintTextField("ex)jap-981222");
+	 	tfBir = new HintTextField("ex)1998-12-22");
+	 	tfTel = new HintTextField("ex)010-1998-1222");
+	 	tfEmail = new HintTextField("ex)japboss@naver.com");
 	 	
 	 	//붙이기
 	 	jpNew.add(lblId);
@@ -487,15 +499,15 @@ public class UserList extends JFrame implements ActionListener {
 			result = JOptionPane.showConfirmDialog(this, "입력을 취소하시겠습니까?", "입력 취소",JOptionPane.YES_NO_OPTION);
 			 if(result == JOptionPane.YES_OPTION ) {
 					JOptionPane.showMessageDialog(null, "입력이 취소되었습니다");
-					tfId .setText("ex)japboss");
-					tfPw.setText("ex)1234");
-					tfName.setText("ex)김민주");
-					tfEName.setText("ex)KIMMIMJU");
-					tfSex.setText("ex)여");
-					tfPN.setText("ex)jap-981222");
-					tfBir.setText("ex)1998-12-22");
-					tfTel.setText("ex)010-1998-1222");
-					tfEmail.setText("ex)japboss@naver.com");
+					tfId.setText("");
+					tfPw.setText("");
+					tfName.setText("");
+					tfEName.setText("");
+					tfSex.setText("");
+					tfPN.setText("");
+					tfBir.setText("");
+					tfTel.setText("");
+					tfEmail.setText("");
 					
 				} else {
 					JOptionPane.showMessageDialog(null, "계속 입력해주세요");
