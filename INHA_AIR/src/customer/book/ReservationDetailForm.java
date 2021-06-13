@@ -28,6 +28,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import DataBase.databaseClass;
+import Management.Form.HintTextField;
 import customer.start.MainMenuForm;
 
 public class ReservationDetailForm extends JFrame implements ActionListener {
@@ -56,8 +57,10 @@ public class ReservationDetailForm extends JFrame implements ActionListener {
 	private JPanel jpInputInfor, jpBtns;
 	private JLabel lblInformation, lblFamilyNameKor, lblNameKor, lblFamilyNameEng, lblNameEng, 
 					lblSex, lblPassport, lblTel, lblEmail, lblBirth;
-	private JTextField tfFamilyNameKor, tfNameKor, tfFamilyNameEng, tfNameEng,
-					tfPassport, tfTel, tfEmail, tfBirth;
+//	private JTextField tfFamilyNameKor, tfNameKor, tfFamilyNameEng, tfNameEng,
+//					tfPassport, tfTel, tfEmail, tfBirth;
+	private HintTextField tfFamilyNameKor, tfNameKor, tfFamilyNameEng, tfNameEng,
+	tfPassport, tfTel, tfEmail, tfBirth;
 	private ButtonGroup bgSex;
 	private JRadioButton rbWoman, rbMan;
 	private JCheckBox cbAgree;
@@ -238,9 +241,9 @@ public class ReservationDetailForm extends JFrame implements ActionListener {
 		// 한글 이름 라벨
 		JPanel jpLblNameKor = new JPanel(new GridLayout(1, 2, 10, 10));
 		jpLblNameKor.setBackground(Color.WHITE);
-		lblFamilyNameKor = new JLabel("한글 성 (예: 이)");
+		lblFamilyNameKor = new JLabel("한글 성");
 		lblFamilyNameKor.setFont(fontNanumGothic15);
-		lblNameKor = new JLabel("한글 이름 (예: 은선)");
+		lblNameKor = new JLabel("한글 이름");
 		lblNameKor.setFont(fontNanumGothic15);
 		jpLblNameKor.add(lblFamilyNameKor);
 		jpLblNameKor.add(lblNameKor);
@@ -248,9 +251,9 @@ public class ReservationDetailForm extends JFrame implements ActionListener {
 		// 한글 이름 택스트박스
 		JPanel jpTfNameKor = new JPanel(new GridLayout(1, 2, 10, 10));
 		jpTfNameKor.setBackground(Color.WHITE);
-		tfFamilyNameKor = new JTextField(20);
+		tfFamilyNameKor = new HintTextField("예: 이");
 		tfFamilyNameKor.setFont(fontNanumGothicP15);
-		tfNameKor = new JTextField(20);
+		tfNameKor = new HintTextField("예: 은선");
 		tfNameKor.setFont(fontNanumGothicP15);
 		jpTfNameKor.add(tfFamilyNameKor);
 		jpTfNameKor.add(tfNameKor);
@@ -258,9 +261,9 @@ public class ReservationDetailForm extends JFrame implements ActionListener {
 		// 영문 이름 라벨
 		JPanel jpLblNameEng = new JPanel(new GridLayout(1, 2, 10, 10));
 		jpLblNameEng.setBackground(Color.WHITE);
-		lblFamilyNameEng = new JLabel("영문 성 (예: LEE)");
+		lblFamilyNameEng = new JLabel("영문 성");
 		lblFamilyNameEng.setFont(fontNanumGothic15);
-		lblNameEng = new JLabel("영문 이름 (예: EUNSEON)");
+		lblNameEng = new JLabel("영문 이름");
 		lblNameEng.setFont(fontNanumGothic15);
 		jpLblNameEng.add(lblFamilyNameEng);
 		jpLblNameEng.add(lblNameEng);
@@ -268,9 +271,9 @@ public class ReservationDetailForm extends JFrame implements ActionListener {
 		// 영문 이름 텍스트필드
 		JPanel jpTfNameEng = new JPanel(new GridLayout(1, 2, 10, 10));
 		jpTfNameEng.setBackground(Color.WHITE);
-		tfFamilyNameEng = new JTextField(20);
+		tfFamilyNameEng = new HintTextField("예: LEE");
 		tfFamilyNameEng.setFont(fontNanumGothicP15);
-		tfNameEng = new JTextField(20);
+		tfNameEng = new HintTextField("예: EUNSEON");
 		tfNameEng.setFont(fontNanumGothicP15);
 		jpTfNameEng.add(tfFamilyNameEng);
 		jpTfNameEng.add(tfNameEng);
@@ -283,10 +286,10 @@ public class ReservationDetailForm extends JFrame implements ActionListener {
 		JPanel jpSex = new JPanel(new GridLayout(1, 2, 10, 10));
 		jpSex.setBackground(Color.WHITE);
 		bgSex = new ButtonGroup();
-		rbMan = new JRadioButton("남자", false);
+		rbMan = new JRadioButton("남자", true);
 		rbMan.setFont(fontNanumGothic15);
 		rbMan.setBackground(Color.WHITE);
-		rbWoman = new JRadioButton("여자", true);
+		rbWoman = new JRadioButton("여자", false);
 		rbWoman.setFont(fontNanumGothic15);
 		rbWoman.setBackground(Color.WHITE);
 		bgSex.add(rbMan);
@@ -297,9 +300,9 @@ public class ReservationDetailForm extends JFrame implements ActionListener {
 		// 여권번호/생년월일 라벨
 		JPanel jpLblPss = new JPanel(new GridLayout(1, 2, 10, 10));
 		jpLblPss.setBackground(Color.WHITE);
-		lblPassport = new JLabel("여권 번호 (예: M46910832)");
+		lblPassport = new JLabel("여권 번호");
 		lblPassport.setFont(fontNanumGothic15);
-		lblBirth = new JLabel("생년월일 (예: 20010414)");
+		lblBirth = new JLabel("생년월일");
 		lblBirth.setFont(fontNanumGothic15);
 		jpLblPss.add(lblPassport);
 		jpLblPss.add(lblBirth);
@@ -307,9 +310,9 @@ public class ReservationDetailForm extends JFrame implements ActionListener {
 		// 여권번호/생년월일 텍스트필드
 		JPanel jpTfPss = new JPanel(new GridLayout(1, 2, 10, 10));
 		jpTfPss.setBackground(Color.WHITE);
-		tfPassport = new JTextField(20);
+		tfPassport = new HintTextField("예: M46910832");
 		tfPassport.setFont(fontNanumGothicP15);
-		tfBirth = new JTextField(20);
+		tfBirth = new HintTextField("예: 20010414");
 		tfBirth.setFont(fontNanumGothicP15);
 		jpTfPss.add(tfPassport);
 		jpTfPss.add(tfBirth);
@@ -317,9 +320,9 @@ public class ReservationDetailForm extends JFrame implements ActionListener {
 		// 연락처 라벨
 		JPanel jpLblTel = new JPanel(new GridLayout(1, 2, 10, 10));
 		jpLblTel.setBackground(Color.WHITE);
-		lblTel = new JLabel("연락처 (예: 01092032796)");
+		lblTel = new JLabel("연락처");
 		lblTel.setFont(fontNanumGothic15);
-		lblEmail = new JLabel("이메일 (예: oow214@gmail.com)");
+		lblEmail = new JLabel("이메일");
 		lblEmail.setFont(fontNanumGothic15);
 		jpLblTel.add(lblTel);
 		jpLblTel.add(lblEmail);
@@ -327,9 +330,9 @@ public class ReservationDetailForm extends JFrame implements ActionListener {
 		// 연락처 택스트필드
 		JPanel jptfTel = new JPanel(new GridLayout(1, 2, 10, 10));
 		jptfTel.setBackground(Color.WHITE);
-		tfTel = new JTextField(20);
+		tfTel = new HintTextField("예: 01092032796");
 		tfTel.setFont(fontNanumGothicP15);
-		tfEmail = new JTextField(20);
+		tfEmail = new HintTextField("예: oow214@gmail.com");
 		tfEmail.setFont(fontNanumGothicP15);
 		jptfTel.add(tfTel);
 		jptfTel.add(tfEmail);
