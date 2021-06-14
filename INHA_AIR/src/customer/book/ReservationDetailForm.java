@@ -415,14 +415,15 @@ public class ReservationDetailForm extends JFrame implements ActionListener {
 		} else {
 			// 정보 입력된 승객이 있으면 승객 정보 삭제 
 			sql = "DELETE FROM reservationDetail WHERE reserveNum = '" + reserveNum + "'";
-			System.out.println(sql);
 						
 			int result = databaseClass.delete(sql);
 			if(result == 1) {
-				// reservation 테이블에서 해당 예약 삭제
+				// reservationDetail 테이블에 해당 예매 삭제 성공시
+				// reservation 테이블에서 해당 예매 삭제
 				resdel = delReservation();
 							
 				if(resdel == 1) {
+					// reservation 테이블에 해당 예매 삭제 성공시
 					// 첫 화면으로 이동
 					mainMenuForm = new MainMenuForm();
 					mainMenuForm.setId(id);
