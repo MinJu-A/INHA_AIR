@@ -25,6 +25,7 @@ import be.main.MainForm;
 import be.menu.MenuBar;
 import customer.book.BookForm;
 import customer.findTrips.FindTripsForm;
+import customer.findTrips.FindTripsFormTEST;
 import customer.flightSchedule.FlightStatusForm;
 import customer.login.LoginForm;
 
@@ -63,7 +64,7 @@ public class MainMenuForm extends JFrame implements ActionListener {
 	// Forms
 	private BookForm bookForm;
 	private FlightStatusForm flightStatusForm;
-	private FindTripsForm findTripsForm;
+	private FindTripsFormTEST findTripsForm;
 	private JButton btnSignOut;
 	
 	public MainMenuForm() {
@@ -164,7 +165,7 @@ public class MainMenuForm extends JFrame implements ActionListener {
 			this.setVisible(false);
 			
 		} else if(obj == btnFindTrips) {
-			findTripsForm = new FindTripsForm(id);
+			findTripsForm = new FindTripsFormTEST(id);
 			this.setVisible(false);
 			
 		} else if(obj == btnFilghtStatus) {

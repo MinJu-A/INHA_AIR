@@ -24,7 +24,7 @@ import customer.start.MainMenuForm;
 
 
 
-public class FindTripsForm extends JFrame implements ActionListener {
+public class FindTripsFormTEST extends JFrame implements ActionListener {
 	// Title 및 사이즈 설정
 	private String title = "INHA AIR";
 	private int width = 1120, height = 770;
@@ -47,7 +47,9 @@ public class FindTripsForm extends JFrame implements ActionListener {
 		String dbPassword = "1234"; //사용자의 비밀번호를 상수로 정의
 			
 		Connection conn = null; 
-		Statement state = null; 
+		Statement state = null;
+		
+		String[] arrRes;
 	
 		public String getReserveNum() {
 			return reserveNum;
@@ -134,8 +136,9 @@ public class FindTripsForm extends JFrame implements ActionListener {
 		private String GOscheduleNo;
 		private String COMscheduleNo;
 		private String GOfromDate;
+		private String res1;
 
-	public FindTripsForm(String id) {
+	public FindTripsFormTEST(String id) {
 //		this.mainMenuForm=mainMenuForm;
 		
 //		this.id = mainMenuForm.getId();
@@ -331,30 +334,46 @@ public class FindTripsForm extends JFrame implements ActionListener {
 			
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 			state = conn.createStatement();	
-
+			
 			String sql;
 			sql = "SELECT * FROM reservation WHERE `ID` = '"+ id +"' ORDER BY date DESC";
 			
 			ResultSet rs = state.executeQuery(sql);
 			
-			int count = 0;
+//			int count = 0;
+			
+			
+			
+			
+			
+			
+			
 			while (rs.next()) {
+////				
+////				if(count>2) {
+////					break;
+////				}
+//				for(int i = 0; i>2 ;i++) {
+//				arrRes[i] = rs.getString("reserveNum");
+//				
+//				
+//				System.out.println(arrRes[i]);
+//				this.arrRes[i] = arrRes[i];
+//				
+//				}
+//				
+//				
 				
-				if(count>2) {
-					break;
-				}
-				reserveNum = rs.getString("reserveNum");
-				GOscheduleNo = rs.getString("GOscheduleNo");
-				COMscheduleNo = rs.getString("COMscheduleNo");
 				
 				
-				this.reserveNum = reserveNum;
-				this.GOscheduleNo = GOscheduleNo;
-				this.COMscheduleNo = COMscheduleNo;
 				
-				System.out.println(reserveNum);
+//				this.reserveNum = reserveNum;
+//				this.GOscheduleNo = GOscheduleNo;
+//				this.COMscheduleNo = COMscheduleNo;
 				
-				count++;
+//				System.out.println(reserveNum);
+				
+//				count++;
 			}
 //			rs.close();
 //			state.close();
@@ -365,10 +384,102 @@ public class FindTripsForm extends JFrame implements ActionListener {
 		catch (SQLException ex1) {}
 		try {if(conn!=null)conn.close();}
 		catch (SQLException ex2) {}
+		}
+//		
+//		//-------------------------------------------
+//		//-------------------------------------------
+//		try{
+//			Class.forName(driver);
+//			
+//			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
+//			state = conn.createStatement();	
+//
+//			String sql;
+//			sql = "SELECT * FROM reservation WHERE `ID` = '"+ id +"' ORDER BY date DESC";
+//			
+//			ResultSet rs = state.executeQuery(sql);
+//			
+//			int count = 0;
+//			while (rs.next()) {
+//				
+//				if(count>2) {
+//					break;
+//				}
+//				reserveNum = rs.getString("reserveNum");
+//				GOscheduleNo = rs.getString("GOscheduleNo");
+//				COMscheduleNo = rs.getString("COMscheduleNo");
+//				
+//				
+//				this.reserveNum = reserveNum;
+//				this.GOscheduleNo = GOscheduleNo;
+//				this.COMscheduleNo = COMscheduleNo;
+//				
+//				res1 =  reserveNum.substring(0, 16);
+//				
+////				System.out.println(reserveNum);
+//				System.out.println(res1);
+//				
+//				count++;
+//			}
+////			rs.close();
+////			state.close();
+////			conn.close();
+//		}
+//		catch (Exception e) {
+//		}finally {try {if(state!=null)state.close();}
+//		catch (SQLException ex1) {}
+//		try {if(conn!=null)conn.close();}
+//		catch (SQLException ex2) {}
+//			}
+//		
+//	//-------------------------------------------
+	//-------------------------------------------
+		try{
+			Class.forName(driver);
+			
+			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
+			state = conn.createStatement();	
+			
+			String sql;
+			sql = "SELECT * FROM reservation WHERE `ID` = '"+ id +"' ORDER BY date DESC";
+			
+			ResultSet rs = state.executeQuery(sql);
+			
+//			int count = 0;
+			while (rs.next()) {
+				
+//				if(count>2) {
+//					break;
+//				}
+				reserveNum = rs.getString("reserveNum");
+				GOscheduleNo = rs.getString("GOscheduleNo");
+				COMscheduleNo = rs.getString("COMscheduleNo");
+				
+				
+				this.reserveNum = reserveNum;
+				this.GOscheduleNo = GOscheduleNo;
+				this.COMscheduleNo = COMscheduleNo;
+				
+				res1 =  reserveNum.substring(0, 16);
+				
+//				System.out.println(reserveNum);
+				System.out.println(res1);
+				
+//				count++;
 			}
+//			rs.close();
+//			state.close();
+//			conn.close();
+		}
+		catch (Exception e) {
+		}finally {try {if(state!=null)state.close();}
+		catch (SQLException ex1) {}
+		try {if(conn!=null)conn.close();}
+		catch (SQLException ex2) {}
+		}
 		
-	//-------------------------------------------
-	//-------------------------------------------
+		//-------------------------------------------
+		//-------------------------------------------
 	try{
 		Class.forName(driver);
 		conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
@@ -384,7 +495,7 @@ public class FindTripsForm extends JFrame implements ActionListener {
 			
 //			this.scheduleNo = scheduleNo;
 			this.nameKOR = nameKOR;
-			System.out.println(nameKOR);
+//			System.out.println(nameKOR);
 //			System.out.println(scheduleNo);
 			
 		}
@@ -415,7 +526,7 @@ public class FindTripsForm extends JFrame implements ActionListener {
 
 			this.GOscheduleNo = GOscheduleNo;
 			this.COMscheduleNo = COMscheduleNo;
-			System.out.println(GOscheduleNo);
+//			System.out.println(GOscheduleNo);
 			
 		}
 //		rs.close();

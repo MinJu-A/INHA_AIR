@@ -24,7 +24,7 @@ import customer.start.MainMenuForm;
 
 
 
-public class FindTripsForm extends JFrame implements ActionListener {
+public class FindTripsFormIndex extends JFrame implements ActionListener {
 	// Title 및 사이즈 설정
 	private String title = "INHA AIR";
 	private int width = 1120, height = 770;
@@ -34,7 +34,7 @@ public class FindTripsForm extends JFrame implements ActionListener {
 		private String id;
 		// 예원 - Forms
 		private MainMenuForm mainMenuForm;
-		private MemberInquiryDetailForm detailForm;
+		private MemberInquiryDetailFormIndex detailForm;
 		
 		// 예원 - 색상
 		Color colorLogo = new Color(24, 62, 111);
@@ -135,7 +135,7 @@ public class FindTripsForm extends JFrame implements ActionListener {
 		private String COMscheduleNo;
 		private String GOfromDate;
 
-	public FindTripsForm(String id) {
+	public FindTripsFormIndex(String id) {
 //		this.mainMenuForm=mainMenuForm;
 		
 //		this.id = mainMenuForm.getId();
@@ -277,8 +277,8 @@ public class FindTripsForm extends JFrame implements ActionListener {
 		
 		add(jpInquiryTop);
 		add(jpInquiry1);
-		add(jpInquiry2);
-		add(jpInquiry3);
+//		add(jpInquiry2);
+//		add(jpInquiry3);
 //		add(jpInquiry4);
 
 		//------------------------------------------
@@ -333,16 +333,10 @@ public class FindTripsForm extends JFrame implements ActionListener {
 			state = conn.createStatement();	
 
 			String sql;
-			sql = "SELECT * FROM reservation WHERE `ID` = '"+ id +"' ORDER BY date DESC";
+			sql = "SELECT * FROM reservation WHERE `ID` = '"+ id +"' ";
 			
 			ResultSet rs = state.executeQuery(sql);
-			
-			int count = 0;
 			while (rs.next()) {
-				
-				if(count>2) {
-					break;
-				}
 				reserveNum = rs.getString("reserveNum");
 				GOscheduleNo = rs.getString("GOscheduleNo");
 				COMscheduleNo = rs.getString("COMscheduleNo");
@@ -353,8 +347,6 @@ public class FindTripsForm extends JFrame implements ActionListener {
 				this.COMscheduleNo = COMscheduleNo;
 				
 				System.out.println(reserveNum);
-				
-				count++;
 			}
 //			rs.close();
 //			state.close();
@@ -510,6 +502,7 @@ public class FindTripsForm extends JFrame implements ActionListener {
 //		
 //		String sql;
 //		sql = "SELECT * FROM airSchedule WHERE `secheduleNo` = '"+ COMscheduleNo +"' ";//----->철자
+//		sql = "SELECT * FROM reservation ORDER BY amount DESC LIMIT 5";//----->철자
 //		
 //		ResultSet rs = state.executeQuery(sql);
 //		while (rs.next()) {
@@ -554,7 +547,7 @@ public class FindTripsForm extends JFrame implements ActionListener {
 			this.setVisible(false);
 			
 		} else if(obj == btnDetail1) {
-			detailForm = new MemberInquiryDetailForm(id);
+			detailForm = new MemberInquiryDetailFormIndex(id);
 //			detailForm = new MemberInquiryDetailForm2(this);
 			this.setVisible(false);
 		}

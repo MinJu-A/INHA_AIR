@@ -304,7 +304,7 @@ public TicketingRoundTripGoingForm(BookForm sel) {
 	this.ID = sel.getId();
 	
 //	reserveNum = goDay.substring(0, 3) + comeDay.substring(2,5) + ID.substring(0,3) + strToday.substring(3,6) + "00";
-	reserveNum = goDay.substring(0, 3) + comeDay.substring(2,5) + ID + sdf2.substring(11, 13) +"-" +strToday.substring(4, 6);
+	reserveNum = goDay.substring(0, 3) + comeDay.substring(2,5) + ID.substring(0, 2) + sdf2.substring(11, 13) +"-" +strToday.substring(4, 6);
 
 	setTitle(title);
 	setSize(width, height);
@@ -803,7 +803,10 @@ public void actionPerformed(ActionEvent e) {
 	{
 //			totalPay = economyPay * (numAdult + numChild*(0.8));
 		totalPay = Math.round(economyPay * (numAdult + numChild*(0.8)));
-		lblTotalPayGoing.setText(totalPay + "원");
+		
+		String pay = Double.toString(totalPay);
+		pay = pay.substring(0, pay.length()-2);
+		lblTotalPayGoing.setText(pay + "원");
 		
 		selectedSeatGo = "economy";
 		setTotalPay(totalPay);
@@ -818,7 +821,10 @@ public void actionPerformed(ActionEvent e) {
 	{
 //			totalPay = businessPay;
 		totalPay = Math.round(businessPay * (numAdult + numChild*(0.8)));
-		lblTotalPayGoing.setText(totalPay + "원");	
+		
+		String pay = Double.toString(totalPay);
+		pay = pay.substring(0, pay.length()-2);
+		lblTotalPayGoing.setText(pay + "원");
 		selectedSeatGo = "business";
 //			jpFlight2.setBackground(crChange);
 //			GoPay = totalPay;
@@ -829,7 +835,9 @@ public void actionPerformed(ActionEvent e) {
 	else if(obj == btnFirs)
 	{
 		totalPay = Math.round(firstPay * (numAdult + numChild*(0.8)));
-		lblTotalPayGoing.setText(totalPay + "원");	
+		String pay = Double.toString(totalPay);
+		pay = pay.substring(0, pay.length()-2);
+		lblTotalPayGoing.setText(pay + "원");	
 		
 		selectedSeatGo = "first";
 //			jpFlight3.setBackground(crChange);
