@@ -387,7 +387,7 @@ public class AirwayList extends JFrame implements ActionListener {
 		btnLogo = new JButton("INHA AIR");
 		btnLogo.setFont(fontArial36);
 		btnLogo.setSize(200, 70);
-		btnLogo.setLocation(10, 5);
+		btnLogo.setLocation(10, 25);
 		btnLogo.addActionListener(this);
 		btnLogo.setBackground(Color.WHITE);
 		btnLogo.setForeground(new Color(24, 62, 111));	// 글자색 변경
@@ -484,7 +484,7 @@ Object obj = e.getSource();
 		if(result == JOptionPane.YES_OPTION) {
 			JOptionPane.showMessageDialog(this, "메인으로 돌아갑니다.");
 			dispose();
-			mainform = new MainForm();
+			userList = new UserList();
 		}else {
 			JOptionPane.showMessageDialog(this, "메인으로 돌아가지 않습니다.");
 		}

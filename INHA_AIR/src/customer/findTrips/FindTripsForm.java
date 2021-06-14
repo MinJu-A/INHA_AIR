@@ -52,36 +52,13 @@ public class FindTripsForm extends JFrame implements ActionListener {
 		public String getReserveNum() {
 			return reserveNum;
 		}
-		
-		
-	//---------------------가상의 고객이 선택한 정보
-	//-------------------------------------
-//		String reserveNum = "test001010";
-//		String scheduleNo = "AAAA-12";
-//		String nameKOR = "민보현";
-//		String from = "CJU";
-//		String fromDate ="20210521";
-//		String to = "GMP";
-//		String ID = "test1";
 	//-------------------------------------
 		private String reserveNum;
 		private String nameKOR;		
 		private String scheduleNo;		
 		private String from;		
 		private String to;		
-//		private String GOfromDate;	
-//		String ID;
 	//-------------------------------------	
-	//-------------------------------------	
-//		String reserveNum;
-//		String nameKOR;		
-//		String secheduleNo;		
-//		String from;		
-//		String to;		
-//		String fromDate =;	
-//		String ID = getID();
-//-------------------------------------	
-//-------------------------------------	
 		
 		public String getReserveNumF() {
 			return reserveNum;
@@ -252,34 +229,31 @@ public class FindTripsForm extends JFrame implements ActionListener {
 		jpInquiry1.setLocation(70,152);
 		jpInquiry1.setBackground(crInfo);
 		
-		jpInquiry2 = new JPanel();//선택 2
-		jpInquiry2.setLayout(null);
-		jpInquiry2.setSize(1000,110);
-		jpInquiry2.setLocation(70,274);
-		jpInquiry2.setBackground(crInfo);
-		
-		jpInquiry3 = new JPanel();// 선택 3
-		jpInquiry3.setLayout(null);
-		jpInquiry3.setSize(1000,110);
-		jpInquiry3.setLocation(70,396);
-		jpInquiry3.setBackground(crInfo);
-		
-		jpInquiry4 = new JPanel();// 선택 3
-		jpInquiry4.setLayout(null);
-		jpInquiry4.setSize(1000,110);
-		jpInquiry4.setLocation(70,518);
-		jpInquiry4.setBackground(crInfo);
+//		jpInquiry2 = new JPanel();//선택 2
+//		jpInquiry2.setLayout(null);
+//		jpInquiry2.setSize(1000,110);
+//		jpInquiry2.setLocation(70,274);
+//		jpInquiry2.setBackground(crInfo);
+//		
+//		jpInquiry3 = new JPanel();// 선택 3
+//		jpInquiry3.setLayout(null);
+//		jpInquiry3.setSize(1000,110);
+//		jpInquiry3.setLocation(70,396);
+//		jpInquiry3.setBackground(crInfo);
+//		
+//		jpInquiry4 = new JPanel();// 선택 3
+//		jpInquiry4.setLayout(null);
+//		jpInquiry4.setSize(1000,110);
+//		jpInquiry4.setLocation(70,518);
+//		jpInquiry4.setBackground(crInfo);
 		
 		jpInquiry1.add(btnDetail1);
-		jpInquiry2.add(btnDetail2);
-		jpInquiry3.add(btnDetail3);
-		jpInquiry4.add(btnDetail4);
-		
+//		jpInquiry2.add(btnDetail2);
+//		jpInquiry3.add(btnDetail3);
+//		jpInquiry4.add(btnDetail4);
+//		
 		add(jpInquiryTop);
 		add(jpInquiry1);
-//		add(jpInquiry2);
-//		add(jpInquiry3);
-//		add(jpInquiry4);
 
 		//------------------------------------------
 		//------------------------------------------
@@ -291,7 +265,6 @@ public class FindTripsForm extends JFrame implements ActionListener {
 		lblName.setBounds(245, 40, 80, 20);
 		lblName.setFont(fontNanumGothic15Plain);
 		
-//		lblDate = new JLabel(fromDate.substring(0,4)+"년 " + fromDate.substring(4,6) + "월 " + fromDate.substring(6,8) + "일");
 		lblFromDate = new JLabel(GOfromDate);
 		lblFromDate.setBounds(370, 30, 200, 20);
 		lblFromDate.setFont(fontNanumGothic15Plain);
@@ -316,8 +289,6 @@ public class FindTripsForm extends JFrame implements ActionListener {
 		jpInquiry1.add(lblToDate);
 		jpInquiry1.add(lblDepP);
 		jpInquiry1.add(lblArrP);
-		
-//		System.out.println(id);
 		
 		setVisible(true);
 	}
@@ -380,10 +351,8 @@ public class FindTripsForm extends JFrame implements ActionListener {
 			
 			nameKOR = rs.getString("nameKOR");
 			
-//			this.scheduleNo = scheduleNo;
 			this.nameKOR = nameKOR;
 			System.out.println(nameKOR);
-//			System.out.println(scheduleNo);
 			
 		}
 //		rs.close();
@@ -436,21 +405,15 @@ public class FindTripsForm extends JFrame implements ActionListener {
 
 		String sql;
 		sql = "SELECT * FROM airSchedule WHERE `scheduleNo` = '"+ GOscheduleNo +"' ";
-//		sql = "SELECT * FROM airSchedule WHERE `GOscheduleNo` = '"+ scheduleNo +"' and  `from` = '"+ from +"'";
 		
 		ResultSet rs = state.executeQuery(sql);
 		while (rs.next()) {
 			from = rs.getString("from");
 			GOfromDate = rs.getString("fromDate");
 			to = rs.getString("to");
-//			toDate = rs.getString("toDate");
 			this.from = from;
 			this.to = to;
 			this.GOfromDate=GOfromDate;
-//			this.toDate=toDate;
-//					System.out.println(from);
-//					System.out.println(to);
-
 			
 		}
 		rs.close();
@@ -463,7 +426,6 @@ public class FindTripsForm extends JFrame implements ActionListener {
 	try {if(conn!=null)conn.close();}
 	catch (SQLException ex2) {}
 	}
-//	
 //----------------------------------------
 //----------------------------------------
 	try{
@@ -476,18 +438,8 @@ public class FindTripsForm extends JFrame implements ActionListener {
 		
 		ResultSet rs = state.executeQuery(sql);
 		while (rs.next()) {
-//			from = rs.getString("from");
 			COMfromDate = rs.getString("fromDate");
-//			to = rs.getString("to");
-//			toDate = rs.getString("toDate");
-//			this.from = from;
-//			this.to = to;
 			this.COMfromDate=COMfromDate;
-//			this.toDate=toDate;
-//			System.out.println(from);
-//			System.out.println(to);
-			
-			
 		}
 		rs.close();
 		state.close();
@@ -499,41 +451,7 @@ public class FindTripsForm extends JFrame implements ActionListener {
 	try {if(conn!=null)conn.close();}
 	catch (SQLException ex2) {}
 	}
-//----------------------------------------
-//----------------------------------------
-//	try{
-//		Class.forName(driver);
-//		conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
-//		state = conn.createStatement();	
-//		
-//		String sql;
-//		sql = "SELECT * FROM airSchedule WHERE `secheduleNo` = '"+ COMscheduleNo +"' ";//----->철자
-//		
-//		ResultSet rs = state.executeQuery(sql);
-//		while (rs.next()) {
-////			from = rs.getString("from");
-//			COMfromDate = rs.getString("fromDate");
-////			to = rs.getString("to");
-////			toDate = rs.getString("toDate");
-////			this.from = from;
-////			this.to = to;
-//			this.COMfromDate=COMfromDate;
-////			this.toDate=toDate;
-////			System.out.println(from);
-////			System.out.println(to);
-//			
-//			
-//		}
-//		rs.close();
-//		state.close();
-//		conn.close();
-//	}
-//	catch (Exception e) {
-//	}finally {try {if(state!=null)state.close();}
-//	catch (SQLException ex1) {}
-//	try {if(conn!=null)conn.close();}
-//	catch (SQLException ex2) {}
-//	}
+
 }
 	
 	// 상단 
@@ -553,7 +471,6 @@ public class FindTripsForm extends JFrame implements ActionListener {
 			
 		} else if(obj == btnDetail1) {
 			detailForm = new MemberInquiryDetailForm(id);
-//			detailForm = new MemberInquiryDetailForm2(this);
 			this.setVisible(false);
 		}
 	}

@@ -280,9 +280,9 @@ public class UserList extends JFrame implements ActionListener, MouseListener {
 	 	tfName = new HintTextField("ex)김민주");
 	 	tfEName = new HintTextField("ex)KIMMIMJU");
 	 	tfSex = new HintTextField("ex)여");
-	 	tfPN = new HintTextField("ex)jap-981222");
-	 	tfBir = new HintTextField("ex)1998-12-22");
-	 	tfTel = new HintTextField("ex)010-1998-1222");
+	 	tfPN = new HintTextField("ex)jap981222");
+	 	tfBir = new HintTextField("ex)19981222");
+	 	tfTel = new HintTextField("ex)01019981222");
 	 	tfEmail = new HintTextField("ex)japboss@naver.com");
 	 	
 	 	//붙이기
@@ -418,7 +418,7 @@ public class UserList extends JFrame implements ActionListener, MouseListener {
 		btnLogo = new JButton("INHA AIR");
 		btnLogo.setFont(fontArial36);
 		btnLogo.setSize(200, 70);
-		btnLogo.setLocation(10, 5);
+		btnLogo.setLocation(10, 25);
 		btnLogo.addActionListener(this);
 		btnLogo.setBackground(Color.WHITE);
 		btnLogo.setForeground(new Color(24, 62, 111));	// 글자색 변경
@@ -544,6 +544,7 @@ public class UserList extends JFrame implements ActionListener, MouseListener {
 			result = JOptionPane.showConfirmDialog(this, "입력을 취소하시겠습니까?", "입력 취소",JOptionPane.YES_NO_OPTION);
 			 if(result == JOptionPane.YES_OPTION ) {
 					JOptionPane.showMessageDialog(null, "입력이 취소되었습니다");
+					tfSer.setText("");
 					tfId.setText("");
 					tfPw.setText("");
 					tfName.setText("");
@@ -604,6 +605,7 @@ public class UserList extends JFrame implements ActionListener, MouseListener {
 			}else if(rs == 0) {
 				JOptionPane.showMessageDialog(this, "등록 실패했습니다.");
 			}
+			tfSer.setText("");
 			tfId.setText("");
 			tfPw.setText("");
 			tfName.setText("");
@@ -686,6 +688,7 @@ public class UserList extends JFrame implements ActionListener, MouseListener {
 			}else if(rs == 0) {
 				JOptionPane.showMessageDialog(this, "수정 실패했습니다.");
 			}
+			tfSer.setText("");
 			tfId.setText("");
 			tfPw.setText("");
 			tfName.setText("");
