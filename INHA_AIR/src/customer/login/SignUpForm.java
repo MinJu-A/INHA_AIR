@@ -602,4 +602,3 @@ public class SignUpForm extends JFrame implements ActionListener{
 	}
 	
 }
-
