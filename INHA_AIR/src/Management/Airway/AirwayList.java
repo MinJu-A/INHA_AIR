@@ -564,7 +564,7 @@ Object obj = e.getSource();
 			String ArrTime = tffArrTime.getText();
 			
 			String sql = "INSERT INTO airSchedule( scheduleNo, flightCode, `from`, fromDate,fromTime,  `to`, toDate,toTime)\r\n"
-					+ "VALUES('" + sche +"','" + flightNo +"','" + Dep +"','" + DepDay +"','" + DepTime + "','" + Arr + "','" + ArrDay + "','" + ArrTime + "'";
+					+ "VALUES('" + sche +"','" + flightNo +"','" + Dep +"','" + DepDay +"','" + DepTime + "','" + Arr + "','" + ArrDay + "','" + ArrTime + "')";
 			
 			System.out.println(sql);
 			
@@ -624,8 +624,9 @@ Object obj = e.getSource();
 			
 			String sql = "DELETE FROM airSchedule\r\n"
 					+ "WHERE scheduleNo='" + sche + "' AND flightCode = '" + flightNo + "' AND `from` = '" + Dep +"' AND fromDate = '" + DepDay
-					+ "' fromDate sex = '" + DepTime + "' AND `to` = '" + Arr + "' AND toDate = '" + ArrDay + "'AND toTime = '" + ArrTime + "'";
+					+ "' AND fromTime = '" + DepTime + "' AND `to` = '" + Arr + "' AND toDate = '" + ArrDay + "' AND toTime = '" + ArrTime + "'";
 			
+			System.out.println(sql);
 			int rs = databaseClass.delete(sql);
 			if(rs ==1 ) {
 				JOptionPane.showMessageDialog(this, "삭제 되었습니다.");
@@ -652,9 +653,12 @@ Object obj = e.getSource();
 			String ArrDay = tfArrDay.getText();
 			String ArrTime = tffArrTime.getText();
 			
-			String sql = "UPDATE airschedule\r\n"
-					+ "SET scheduleNo='" + sche + "' , flightCode = '" + flightNo + "' , `from` = '" + Dep +"' , fromDate = '" + DepDay
-					+ "' fromDate sex = '" + DepTime + "' , `to` = '" + Arr + "' , toDate = '" + ArrDay + "', toTime = '" + ArrTime + "'";
+//			String sql = "UPDATE airschedule\r\n"
+//					+ "SET scheduleNo='" + sche + "' , flightCode = '" + flightNo + "' , `from` = '" + Dep +"' , fromDate = '" + DepDay
+//					+ "' fromDate = '" + DepTime + "' , `to` = '" + Arr + "' , toDate = '" + ArrDay + "', toTime = '" + ArrTime + "')";
+			String sql = "UPDATE airSchedule\r\n"
+					+ "SET flightCode='" + flightNo + "', `from`='" + Dep + "', fromDate='" + DepDay + "', fromTime='" + DepTime + "', `to`='" + Arr + "', toDate='" +ArrDay + "', toTime='" +ArrTime + "'\r\n"
+					+ "WHERE scheduleNo='" + sche + "'";
 			System.out.println(sql);
 			
 			int rs = databaseClass.update(sql);
