@@ -9,6 +9,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -38,7 +40,7 @@ import Management.Main.MainForm;
 import Management.Payment.PaymentList;
 import be.sign.SignIn;
 
-public class UserList extends JFrame implements ActionListener {
+public class UserList extends JFrame implements ActionListener, MouseListener {
 	// Title 및 사이즈 설정
 	private String title = "Management";
 	private int width = 1120, height = 770;
@@ -145,7 +147,7 @@ public class UserList extends JFrame implements ActionListener {
 		setUserEdit();
 		
 		//DBset
-		setUserTable();
+		setUserTable(0,"");
 				
 
 		
@@ -154,17 +156,30 @@ public class UserList extends JFrame implements ActionListener {
 	}
 	
 	//유저 조회 테이블
-		private void setUserTable() {
+		private void setUserTable(int i, String codename) {
 			
 			//전체 사용자 조회
 			String sql = "SELECT ID, password, nameKOR, nameENG, sex, passport, birth, tel, email\r\n"
 					+ "FROM user\r\n"
 					+ "ORDER BY nameKOR";
 			
+			if(i == 0) {
+				sql = "SELECT ID, password, nameKOR, nameENG, sex, passport, birth, tel, email\r\n"
+						+ "FROM user\r\n"
+						+ "ORDER BY nameKOR";
+			}
+			else if(i == 1) {
+				sql = "SELECT ID, password, nameKOR, nameENG, sex, passport, birth, tel, email\r\n"
+						+ "FROM user\r\n"
+						+ "WHERE ID = '" + codename + "' \r\n"
+						+ "ORDER BY nameKOR";
+			}
+			
+			
 			//테이블 초기화
 			model.setNumRows(0);
 			
-			//결제 금액 검색
+			//테이블 
 			ResultSet rs = databaseClass.select(sql);
 			try {
 				while(rs.next()) {
@@ -362,6 +377,7 @@ public class UserList extends JFrame implements ActionListener {
 		jtUser.setRowHeight(20);
 		jtUser.setFillsViewportHeight(true); //스크롤팬에 꽉 차서 보이게 하기
 		jtUser.setBackground(Color.WHITE);
+		jtUser.addMouseListener(this);
 		
 		Center = new DefaultTableCellRenderer(); //테이블 정렬
 		Center.setHorizontalAlignment(JLabel.CENTER); //가운데정렬
@@ -545,7 +561,7 @@ public class UserList extends JFrame implements ActionListener {
 			dispose();
 			airplanelist = new AirplaneList();
 		} else if(obj == btnOk) {
-			//값 입력됐는지 먼저 확인
+			//등록
 			if(tfId.getText().equals("")||tfId.getText().equals("ex)japboss")){
 				JOptionPane.showMessageDialog(null, "아이디를 입력하세요");
 			}else if(tfPw.getText().equals("")||tfPw.getText().equals("ex)1234")) {
@@ -566,14 +582,122 @@ public class UserList extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "이메일를 입력하세요");
 			}
 			
+			String ID = tfId.getText();
+			String password = tfPw.getText();
+			String nameKOR = tfName.getText();
+			String nameENG = tfEName.getText();
+			String sex = tfSex.getText();;
+			String passport = tfPN.getText();
+			String birth = tfBir.getText();
+			String tel = tfTel.getText();
+			String email = tfEmail.getText();
+			
+			String sql = "INSERT INTO user(ID, password, nameKOR, nameENG, sex, passport, birth, tel, email)\r\n"
+					+ "VALUES('" + ID +"','" + password +"','" + nameKOR +"','" + nameENG +"','" + sex + "','" + passport + "','" + birth + "','" + tel + "', '" +email + "')";
+			
+			System.out.println(sql);
+			
+			int rs = databaseClass.insert(sql);
+			if(rs ==1) {
+				JOptionPane.showMessageDialog(this, "등록 되었습니다.");
+				setUserTable(0, "");
+			}else if(rs == 0) {
+				JOptionPane.showMessageDialog(this, "등록 실패했습니다.");
+			}
+			tfId.setText("");
+			tfPw.setText("");
+			tfName.setText("");
+			tfEName.setText("");
+			tfSex.setText("");
+			tfPN.setText("");
+			tfBir.setText("");
+			tfTel.setText("");
+			tfEmail.setText("");
+			
+			
 			
 		}else if(obj == btnser) {
+			//검색
 			String code = tfSer.getText();
 			
-			setUserTable();
+			if(code.equals("")||code.equals("ex)japboss")) {
+				setUserTable(0, "");
+			}else {
+				setUserTable(1, code);
+			}
+			
+		}else if(obj == btnDel) {
+			//삭제
+			String ID = tfId.getText();
+			String password = tfPw.getText();
+			String nameKOR = tfName.getText();
+			String nameENG = tfEName.getText();
+			String sex = tfSex.getText();;
+			String passport = tfPN.getText();
+			String birth = tfBir.getText();
+			String tel = tfTel.getText();
+			String email = tfEmail.getText();
+			
+			String sql = "DELETE FROM user\r\n"
+					+ "WHERE ID='" + ID + "' AND password = '" + password + "' AND nameKOR = '" + nameKOR +"' AND nameENG = '" + nameENG
+					+ "' AND sex = '" + sex + "' AND passport = '" + passport + "' AND birth = '" + birth + "'AND tel = '" + tel + "'AND email = '" + email + "'";
+			
+			int rs = databaseClass.delete(sql);
+			if(rs ==1) {
+				JOptionPane.showMessageDialog(this, "삭제 되었습니다.");
+				setUserTable(0, "");
+			}else if(rs == 0) {
+				JOptionPane.showMessageDialog(this, "삭제 실패했습니다.");
+			}
+			
+			tfId.setText("");
+			tfPw.setText("");
+			tfName.setText("");
+			tfEName.setText("");
+			tfSex.setText("");
+			tfPN.setText("");
+			tfBir.setText("");
+			tfTel.setText("");
+			tfEmail.setText("");
+			
+		}else if(obj == btnMod) {
+			//수정
+			String ID = tfId.getText();
+			String password = tfPw.getText();
+			String nameKOR = tfName.getText();
+			String nameENG = tfEName.getText();
+			String sex = tfSex.getText();;
+			String passport = tfPN.getText();
+			String birth = tfBir.getText();
+			String tel = tfTel.getText();
+			String email = tfEmail.getText();
+			
+			String sql = "UPDATE  user\r\n"
+					+ "SET ID='" + ID + "' , password = '" + password + "' , nameKOR = '" + nameKOR +"' , nameENG = '" + nameENG
+					+ "' , sex = '" + sex + "' , passport = '" + passport + "' , birth = '" + birth + "', tel = '" + tel + "', email = '" + email + "'"
+					+ "WHERE ID = '" + ID + "'";
+			
+			System.out.println(sql);
+			
+			int rs = databaseClass.update(sql);
+			if(rs ==1) {
+				JOptionPane.showMessageDialog(this, "수정 되었습니다.");
+				setUserTable(0, "");
+			}else if(rs == 0) {
+				JOptionPane.showMessageDialog(this, "수정 실패했습니다.");
+			}
+			tfId.setText("");
+			tfPw.setText("");
+			tfName.setText("");
+			tfEName.setText("");
+			tfSex.setText("");
+			tfPN.setText("");
+			tfBir.setText("");
+			tfTel.setText("");
+			tfEmail.setText("");
 		}
+
 	}
-	
 
 	
 	// jtable 생성
@@ -606,6 +730,51 @@ public class UserList extends JFrame implements ActionListener {
 		public boolean isCellEditable(int row, int column) {
 			return false;
 		}
+		
+	}
+
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		//선택한 값 텍스트필드에 표시
+		int row = jtUser.getSelectedRow();	
+		int col = jtUser.getSelectedColumn();
+		
+		tfId.setText((String)jtUser.getValueAt(row, 0));
+		tfPw.setText((String)jtUser.getValueAt(row, 1));
+		tfName.setText((String)jtUser.getValueAt(row, 2));
+		tfEName.setText((String)jtUser.getValueAt(row, 3));
+		tfSex.setText((String)jtUser.getValueAt(row, 4));
+		tfPN.setText((String)jtUser.getValueAt(row, 5));
+		tfBir.setText((String)jtUser.getValueAt(row, 6));
+		tfTel.setText((String)jtUser.getValueAt(row, 7));
+		tfEmail.setText((String)jtUser.getValueAt(row, 8));
+	
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 	}
