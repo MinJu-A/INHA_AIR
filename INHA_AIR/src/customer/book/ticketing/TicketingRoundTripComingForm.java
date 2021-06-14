@@ -883,7 +883,10 @@ public class TicketingRoundTripComingForm extends JFrame implements ActionListen
 		}
 		else if(obj == btnEcon)
 		{
-			finaltotalPay = totalPay + economyPay;
+//			finaltotalPay = totalPay + economyPay;
+//			totalPay = Math.round(economyPay * (numAdult + numChild*(0.8)));
+
+			finaltotalPay = totalPay + Math.round(economyPay * (numAdult + numChild*(0.8)));
 			lblTotalPayGoing.setText(finaltotalPay + "원");
 			
 			selectedSeatCom = "economy";
@@ -893,7 +896,8 @@ public class TicketingRoundTripComingForm extends JFrame implements ActionListen
 		}
 		else if(obj == btnBus)
 		{
-			finaltotalPay = totalPay + businessPay;
+//			finaltotalPay = totalPay + businessPay;
+			finaltotalPay = totalPay + Math.round(businessPay * (numAdult + numChild*(0.8)));
 			lblTotalPayGoing.setText(finaltotalPay + "원");	
 			selectedSeatCom = "business";
 //			jpFlight2.setBackground(crChange);
@@ -903,7 +907,8 @@ public class TicketingRoundTripComingForm extends JFrame implements ActionListen
 			}
 		else if(obj == btnFirs)
 		{
-			finaltotalPay = totalPay + firstPay;
+//			finaltotalPay = totalPay + firstPay;
+			finaltotalPay = totalPay + Math.round(firstPay * (numAdult + numChild*(0.8)));
 			lblTotalPayGoing.setText(finaltotalPay + "원");	
 			
 			selectedSeatCom = "first";
