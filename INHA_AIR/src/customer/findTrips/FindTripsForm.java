@@ -83,6 +83,15 @@ public class FindTripsForm extends JFrame implements ActionListener {
 //-------------------------------------	
 //-------------------------------------	
 		
+		public String getReserveNumF() {
+			return reserveNum;
+		}
+		
+		public String getID() {
+			return id;
+		}
+		
+		
 		private JPanel jpInquiry1; // 시간 선택시 비행기1
 		private JPanel jpInquiry2; // 비행기 2
 		private JPanel jpInquiry3; // 비행기 3
@@ -538,6 +547,7 @@ public class FindTripsForm extends JFrame implements ActionListener {
 			
 		} else if(obj == btnDetail1) {
 			detailForm = new MemberInquiryDetailForm(id);
+//			detailForm = new MemberInquiryDetailForm2(this);
 			this.setVisible(false);
 		}
 	}
