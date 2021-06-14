@@ -71,7 +71,7 @@ public class SignUpForm extends JFrame implements ActionListener{
 	private String sex, birthday; //데이터베이스에 입력될 성별, 생일 값
 	private int news, pro, sms; //데이터베이스에 입력될 뉴스레터, 프로모션, SMS 여부
 	private boolean telVCheck, emailVCheck, passportVCheck, idVCheck; //전화번호, 이메일, 여권번호, 아이디 중복여부 확
-	private boolean korVCheck, engVCheck; //한글이름 텍스트 확인, 영어이름 텍스트 확인
+	private boolean korVCheck, engVCheck, emaVCheck, idsetVCheck; //한글이름 텍스트 확인, 영어이름 텍스트 확인
 	
 	
 
@@ -80,7 +80,7 @@ public class SignUpForm extends JFrame implements ActionListener{
 	private String idset = "^[a-zA-Z0-9]"; //정규표현식 - 아이디
 	private String ema = "^[a-zA-Z0-9._%+-]+@"; //정규표현식 - 이메일
 
-			
+	
 			
 			
 	public SignUpForm() {
@@ -423,14 +423,23 @@ public class SignUpForm extends JFrame implements ActionListener{
 					if (!engCheck(tfLNEng.getText())) {
 						JOptionPane.showMessageDialog(null, "영어이름에 영어만 입력해주세요");
 					}
-				} else if (!telVCheck) {
+				} else if (!emaVCheck) {
+					if (!emaCheck(tfEmail.getText())) {
+						JOptionPane.showMessageDialog(null, "이메일을 제대로 입력해주세요");
+					}
+				} else if (!idSetCheck) {
+					if (!idSetCheck(tfID.getText())) {
+						JOptionPane.showMessageDialog(null, "아이디는 영어와 숫자로만 작성해주세요");
+					}
+				}
+				else if (!telVCheck) {
 					if (telCheck(tfPhone.getText())) {
 						JOptionPane.showMessageDialog(null, "중복된 전화번호입니다.");
 					}
 				} else if (!emailVCheck) {
 					if (emailCheck(tfEmail.getText())) {
 						JOptionPane.showMessageDialog(null, "중복된 이메일입니다.");
-					} 
+					}
 				} else if (!passportVCheck) {
 					if (passportCheck(tfPassport.getText()))
 						JOptionPane.showMessageDialog(null, "중복된 여권번호입니다.");
@@ -581,16 +590,16 @@ public class SignUpForm extends JFrame implements ActionListener{
 	private boolean engCheck(String engV) {
 		return engVCheck = engV.matches(eng);
 	}
-	
-	//영어이름 한글확인
-//	private boolean emaCheck(String emaV) {
-//		return engVCheck = engV.matches(eng);
-//	}
-//	
-//	//영어이름 한글확인
-//	private boolean idSetCheck(String idSet) {
-//		return engVCheck = engV.matches(eng);
-//	}
+
+	//이메일필드에 @ 들어가는지 확인
+	private boolean emaCheck(String emaV) {
+		return emaVCheck = emaV.matches(idset);
+	}
+
+	//아이디 영어+숫자만인지 확인(특수문자 없어야함)
+	private boolean idSetCheck(String idSet) {
+		return idsetVCheck = idSet.matches(ema);
+	}
 	
 }
 
