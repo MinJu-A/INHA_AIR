@@ -109,8 +109,6 @@ public class PaymentList extends JFrame implements ActionListener {
 	private int monthPay = 0;
 	private int totalPay = 0;
 	
-	
-	
 
 	
 	public PaymentList() {

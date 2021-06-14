@@ -527,6 +527,7 @@ Object obj = e.getSource();
 		else if(obj == btnser) {
 			// 검색
 			String code = tfSer.getText();
+		
 			
 			if(code.length() > 3) {
 				setAirportTable(0, "");

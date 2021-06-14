@@ -9,6 +9,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -96,11 +98,6 @@ public class AirwayList extends JFrame implements ActionListener {
 	private JLabel lblNew, lblsche, lblflightNo, lblDep, lblDepday, lblDepTime, lblArr, lblArrDay, lblArrTime, lblserach;
 	private JTextField tfSche, tfFlightNo, tfDep, tfDepDay, tfDepTime, tfArr, tfArrDay, tffArrTime, tfSer;
 	
-
-	
-	
-
-	
 	public AirwayList() {
 		
 		
@@ -115,6 +112,7 @@ public class AirwayList extends JFrame implements ActionListener {
 		String dbID="inhaair";
 		String dbPassword="1234";
 		databaseClass.connect(dbURL, dbID, dbPassword);
+		
 		
 		// 레이아웃 설정
 		setLayout(null);
@@ -140,7 +138,7 @@ public class AirwayList extends JFrame implements ActionListener {
 		//수정창
 		setUserEdit();
 		
-		
+		setAirwayTable();
 
 		
 		setVisible(true);
@@ -148,7 +146,45 @@ public class AirwayList extends JFrame implements ActionListener {
 	}
 
 
+	//스케줄 조회 테이블
+			private void setAirwayTable() {
+				
+				//전체 사용자 조회
+				String sql = "SELECT scheduleNo, flightCode, from, fromDate,  to, toDate\r\n"
+						+ "FROM airSchedule\r\n"
+						+ "ORDER BY fromDate,flightCode ";
+				
+				//테이블 초기화
+				model.setNumRows(0);
+				
+				//결제 금액 검색
+				ResultSet rs = databaseClass.select(sql);
+				try {
+					while(rs.next()) {
+						String scheduleNo = rs.getString("scheduleNo");
+						String flightcode = rs.getString("flightCode");
+						String from = rs.getString("from");
+						String fromDate = rs.getString("fromDate");
+						String to = rs.getString("to");
+						String toDate = rs.getString("toDate");
+						
+						String[] airway = {scheduleNo, flightcode, from, fromDate,  to, toDate};
+						model.addRow(airway);
+						
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				
+				
+			}
 	
+
+
+
+
+
+
 
 
 	private void setUserEdit() {
@@ -203,28 +239,20 @@ public class AirwayList extends JFrame implements ActionListener {
 	 	lblDepday = new JLabel("출발일  ");
 	 	lblDepday.setFont(fontNanumGothic15);
 	 	lblDepday.setHorizontalAlignment(JLabel.CENTER);
-	 	lblDepTime = new JLabel("출발시  ");
-	 	lblDepTime.setFont(fontNanumGothic15);
-	 	lblDepTime.setHorizontalAlignment(JLabel.CENTER);
 	 	lblArr = new JLabel("도착지  ");
 	 	lblArr.setFont(fontNanumGothic15);
 	 	lblArr.setHorizontalAlignment(JLabel.CENTER);
 	 	lblArrDay = new JLabel("도착일  ");
 	 	lblArrDay.setFont(fontNanumGothic15);
 	 	lblArrDay.setHorizontalAlignment(JLabel.CENTER);
-	 	lblArrTime = new JLabel("도착시  ");
-	 	lblArrTime.setFont(fontNanumGothic15);
-	 	lblArrTime.setHorizontalAlignment(JLabel.CENTER);
 	 			
 	 	//폼 텍스트필드 
 	 	tfSche = new JTextField("ex)AKLTOI-1",30);
 	 	tfFlightNo = new JTextField("ex)IH1222",30);
 	 	tfDep = new JTextField("ex)AKL",30);
 	 	tfDepDay = new JTextField("ex)1998-12-22",30);
-	 	tfDepTime = new JTextField("ex)12:22:00",30);
 	 	tfArr = new JTextField("ex)ICN",30);
 	 	tfArrDay = new JTextField("ex)2000-02-16",30);
-	 	tffArrTime = new JTextField("ex)02:16:00",30);
 	 	
 	 	//붙이기
 	 	jpNew.add(lblsche);
@@ -235,14 +263,10 @@ public class AirwayList extends JFrame implements ActionListener {
 	 	jpNew.add(tfDep);
 	 	jpNew.add(lblDepday);
 	 	jpNew.add(tfDepDay);
-	 	jpNew.add(lblDepTime);
-	 	jpNew.add(tfDepTime);
 	 	jpNew.add(lblArr);
 	 	jpNew.add(tfArr);
 	 	jpNew.add(lblArrDay);
 	 	jpNew.add(tfArrDay);
-	 	jpNew.add(lblArrTime);
-	 	jpNew.add(tffArrTime);
 	 	
 	 	jpEdit.add(jpNew);
 	 	
@@ -323,10 +347,8 @@ public class AirwayList extends JFrame implements ActionListener {
 		jtAirway.getColumn("편명").setCellRenderer(Center);
 		jtAirway.getColumn("출발지").setCellRenderer(Center);
 		jtAirway.getColumn("출발일").setCellRenderer(Center);
-		jtAirway.getColumn("출발시").setCellRenderer(Center);
 		jtAirway.getColumn("도착지").setCellRenderer(Center);
 		jtAirway.getColumn("도착일").setCellRenderer(Center);
-		jtAirway.getColumn("도착시").setCellRenderer(Center);
 		
 		jtAHeader = jtAirway.getTableHeader();
 		jtAHeader.setReorderingAllowed(false); //컬럼 이동 금지

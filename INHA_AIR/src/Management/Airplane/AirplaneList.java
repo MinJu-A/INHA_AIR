@@ -2,7 +2,6 @@ package Management.Airplane;
 
 //이것도 건들지 마세용
 import java.awt.BorderLayout;
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -11,6 +10,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -21,7 +22,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -87,8 +87,7 @@ public class AirplaneList extends JFrame implements ActionListener {
 	private DefaultTableModel model;
 	private CreateTable jtAirway;
 	private String[][] datas = new String[0][0];
-	private String[] StableTitle = {"스케줄No.","편명","출발지","출발일","출발시","도착지","도착일","도착시"};
-	private String[] PtableTitle = {"스케줄No.","편명","출발지","출발일","출발시","도착지","도착일","도착시"};
+	private String[] StableTitle = {"편명", "출발지","도착지","이코노미","비즈니스","퍼스트", "가격-이코노미", "가격-비즈니스","가격-퍼스트"};
 	private DefaultTableCellRenderer Center; //테이블 정렬
 	private JTableHeader jtAHeader;
 	private JScrollPane sp;
@@ -96,8 +95,10 @@ public class AirplaneList extends JFrame implements ActionListener {
 	//수정
 	private JPanel jpAll, jpBtn, jpEdit, jpNew, jpSer;
 	private JButton btnOk, btnBye, btnDel, btnMod, btnser;
-	private JLabel lblNew, lblsche, lblflightNo, lblDep, lblDepday, lblDepTime, lblArr, lblArrDay, lblArrTime, lblserach;
-	private HintTextField tfSche, tfFlightNo, tfDep, tfDepDay, tfDepTime, tfArr, tfArrDay, tffArrTime, tfSer;
+	private JLabel lblNew, lblsche, lbleconomy, lblbesiness, lblfirst, lblDepTime, lblArr, lblArrDay, lblArrTime, lblserach,
+	lblDep,lblPeconomy, lblPbesiness, lblPfirst;
+	private HintTextField tfSche, tfeconomy, tfBusiness, tffirst, tfDepTime, tfArr, tfArrDay, tffArrTime, tfSer,
+	tfDep, tfPeconomy, tfPBusiness, tfPfirst;
 	
 
 	
@@ -140,16 +141,52 @@ public class AirplaneList extends JFrame implements ActionListener {
 		// 좌석테이블
 		setSeatlist();
 		
-		// 비행기테이블
-		setPlanelist();
 		
 		//수정창
 		setUserEdit();
 		
-		
+		//검색
+		setPlaneTable();
 
 		
 		setVisible(true);
+		
+	}
+
+	
+	//유저 조회 테이블
+	private void setPlaneTable() {
+		
+		//전체 사용자 조회
+		String sql = "SELECT *\r\n"
+				+ "FROM airplane\r\n"
+				+ "ORDER BY flightCode";
+		
+		//테이블 초기화
+		model.setNumRows(0);
+		
+		//결제 금액 검색
+		ResultSet rs = databaseClass.select(sql);
+		try {
+			while(rs.next()) {
+				String flightCode = rs.getString("flightCode");
+				String Dep = rs.getString("from");
+				String Arr = rs.getString("to");
+				String economy = rs.getString("economy");
+				String business = rs.getString("business");
+				String first = rs.getString("first");
+				String Peconomy = rs.getString("economyPay");
+				String pbusiness = rs.getString("businessPay");
+				String Pfirst = rs.getString("firstPay");
+				
+				String[] Airline = {flightCode, Dep, Arr, economy, business, first, Peconomy, pbusiness, Pfirst};
+				model.addRow(Airline);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		
 	}
 
@@ -189,64 +226,72 @@ public class AirplaneList extends JFrame implements ActionListener {
 		
 	 	//폼 패널
 	 	jpNew  = new JPanel();	
-	 	jpNew.setLayout(new GridLayout(8, 2));
+	 	jpNew.setLayout(new GridLayout(9, 2));
 	 	jpNew.setBackground(Color.WHITE);
 	 	jpNew.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 	 	jpNew.setPreferredSize(new Dimension(400, 300));
 	 	
+	 	
 	 	//폼 라벨
-	 	lblsche = new JLabel("스케줄No.  ");
+	 	lblsche = new JLabel("편명No.  ");
 	 	lblsche.setFont(fontNanumGothic15);
 	 	lblsche.setHorizontalAlignment(JLabel.CENTER);
-	 	lblflightNo = new JLabel("편명  ");
-	 	lblflightNo.setFont(fontNanumGothic15);
-	 	lblflightNo.setHorizontalAlignment(JLabel.CENTER);
 	 	lblDep = new JLabel("출발지  ");
 	 	lblDep.setFont(fontNanumGothic15);
 	 	lblDep.setHorizontalAlignment(JLabel.CENTER);
-	 	lblDepday = new JLabel("출발일  ");
-	 	lblDepday.setFont(fontNanumGothic15);
-	 	lblDepday.setHorizontalAlignment(JLabel.CENTER);
-	 	lblDepTime = new JLabel("출발시  ");
-	 	lblDepTime.setFont(fontNanumGothic15);
-	 	lblDepTime.setHorizontalAlignment(JLabel.CENTER);
 	 	lblArr = new JLabel("도착지  ");
 	 	lblArr.setFont(fontNanumGothic15);
 	 	lblArr.setHorizontalAlignment(JLabel.CENTER);
-	 	lblArrDay = new JLabel("도착일  ");
-	 	lblArrDay.setFont(fontNanumGothic15);
-	 	lblArrDay.setHorizontalAlignment(JLabel.CENTER);
-	 	lblArrTime = new JLabel("도착시  ");
-	 	lblArrTime.setFont(fontNanumGothic15);
-	 	lblArrTime.setHorizontalAlignment(JLabel.CENTER);
+	 	lbleconomy = new JLabel("이코노미  ");
+	 	lbleconomy.setFont(fontNanumGothic15);
+	 	lbleconomy.setHorizontalAlignment(JLabel.CENTER);
+	 	lblbesiness = new JLabel("비즈니스  ");
+	 	lblbesiness.setFont(fontNanumGothic15);
+	 	lblbesiness.setHorizontalAlignment(JLabel.CENTER);
+	 	lblfirst = new JLabel("퍼스트  ");
+	 	lblfirst.setFont(fontNanumGothic15);
+	 	lblfirst.setHorizontalAlignment(JLabel.CENTER);
+	 	lblPeconomy = new JLabel("가격-이코노미  ");
+	 	lblPeconomy.setFont(fontNanumGothic15);
+	 	lblPeconomy.setHorizontalAlignment(JLabel.CENTER);
+	 	lblPbesiness = new JLabel("가격-비즈니스  ");
+	 	lblPbesiness.setFont(fontNanumGothic15);
+	 	lblPbesiness.setHorizontalAlignment(JLabel.CENTER);
+	 	lblPfirst = new JLabel("가격-퍼스트  ");
+	 	lblPfirst.setFont(fontNanumGothic15);
+	 	lblPfirst.setHorizontalAlignment(JLabel.CENTER);
 	 			
+	 	
 	 	//폼 텍스트필드 
 	 	tfSche = new HintTextField("ex)AKLTOI-1");
-	 	tfFlightNo = new HintTextField("ex)IH1222");
 	 	tfDep = new HintTextField("ex)AKL");
-	 	tfDepDay = new HintTextField("ex)1998-12-22");
-	 	tfDepTime = new HintTextField("ex)12:22:00");
-	 	tfArr = new HintTextField("ex)ICN");
-	 	tfArrDay = new HintTextField("ex)2000-02-16");
-	 	tffArrTime = new HintTextField("ex)02:16:00");
+	 	tfArr = new HintTextField("ex)AKL");
+	 	tfeconomy = new HintTextField("좌석수만입력해주세요");
+	 	tfBusiness = new HintTextField("좌석수만입력해주세요");
+	 	tffirst = new HintTextField("좌석수만입력해주세요");
+	 	tfPeconomy = new HintTextField("금액만 입력해주세요");
+	 	tfPBusiness = new HintTextField("금액만 입력해주세요");
+	 	tfPfirst = new HintTextField("금액만 입력해주세요");
 	 	
 	 	//붙이기
 	 	jpNew.add(lblsche);
 	 	jpNew.add(tfSche);
-	 	jpNew.add(lblflightNo);
-	 	jpNew.add(tfFlightNo);
 	 	jpNew.add(lblDep);
 	 	jpNew.add(tfDep);
-	 	jpNew.add(lblDepday);
-	 	jpNew.add(tfDepDay);
-	 	jpNew.add(lblDepTime);
-	 	jpNew.add(tfDepTime);
 	 	jpNew.add(lblArr);
 	 	jpNew.add(tfArr);
-	 	jpNew.add(lblArrDay);
-	 	jpNew.add(tfArrDay);
-	 	jpNew.add(lblArrTime);
-	 	jpNew.add(tffArrTime);
+	 	jpNew.add(lbleconomy);
+	 	jpNew.add(tfeconomy);
+	 	jpNew.add(lblbesiness);
+	 	jpNew.add(tfBusiness);
+	 	jpNew.add(lblfirst);
+	 	jpNew.add(tffirst);
+	 	jpNew.add(lblPeconomy);
+	 	jpNew.add(tfPeconomy);
+	 	jpNew.add(lblPbesiness);
+	 	jpNew.add(tfPBusiness);
+	 	jpNew.add(lblPfirst);
+	 	jpNew.add(tfPfirst);
 	 	
 	 	jpEdit.add(jpNew);
 	 	
@@ -320,14 +365,15 @@ public class AirplaneList extends JFrame implements ActionListener {
 		
 		Center = new DefaultTableCellRenderer(); //테이블 정렬
 		Center.setHorizontalAlignment(JLabel.CENTER); //가운데정렬
-		jtAirway.getColumn("스케줄No.").setCellRenderer(Center);
 		jtAirway.getColumn("편명").setCellRenderer(Center);
 		jtAirway.getColumn("출발지").setCellRenderer(Center);
-		jtAirway.getColumn("출발일").setCellRenderer(Center);
-		jtAirway.getColumn("출발시").setCellRenderer(Center);
 		jtAirway.getColumn("도착지").setCellRenderer(Center);
-		jtAirway.getColumn("도착일").setCellRenderer(Center);
-		jtAirway.getColumn("도착시").setCellRenderer(Center);
+		jtAirway.getColumn("이코노미").setCellRenderer(Center);
+		jtAirway.getColumn("비즈니스").setCellRenderer(Center);
+		jtAirway.getColumn("퍼스트").setCellRenderer(Center);
+		jtAirway.getColumn("가격-이코노미").setCellRenderer(Center);
+		jtAirway.getColumn("가격-비즈니스").setCellRenderer(Center);
+		jtAirway.getColumn("가격-퍼스트").setCellRenderer(Center);
 		
 		jtAHeader = jtAirway.getTableHeader();
 		jtAHeader.setReorderingAllowed(false); //컬럼 이동 금지
@@ -344,46 +390,6 @@ public class AirplaneList extends JFrame implements ActionListener {
 	}
 	
 	
-	private void setPlanelist() {
-		jpTable = new JPanel(new BorderLayout());
-		jpTable.setSize(600, 520);
-		jpTable.setLocation(465,45);
-		jpTable.setBackground(Color.WHITE);
-		
-		model = new DefaultTableModel(datas, PtableTitle);
-		
-		jtAirway = new CreateTable(model);
-		jtAirway.setFont(fontNanumGothic13);
-		jtAirway.setRowHeight(20);
-		jtAirway.setFillsViewportHeight(true); //스크롤팬에 꽉 차서 보이게 하기
-		jtAirway.setBackground(Color.WHITE);
-		
-		Center = new DefaultTableCellRenderer(); //테이블 정렬
-		Center.setHorizontalAlignment(JLabel.CENTER); //가운데정렬
-		jtAirway.getColumn("스케줄No.").setCellRenderer(Center);
-		jtAirway.getColumn("편명").setCellRenderer(Center);
-		jtAirway.getColumn("출발지").setCellRenderer(Center);
-		jtAirway.getColumn("출발일").setCellRenderer(Center);
-		jtAirway.getColumn("출발시").setCellRenderer(Center);
-		jtAirway.getColumn("도착지").setCellRenderer(Center);
-		jtAirway.getColumn("도착일").setCellRenderer(Center);
-		jtAirway.getColumn("도착시").setCellRenderer(Center);
-		
-		
-		jtAHeader = jtAirway.getTableHeader();
-		jtAHeader.setReorderingAllowed(false); //컬럼 이동 금지
-		jtAHeader.setResizingAllowed(false); //컬럼 크기 변경 금지
-		jtAHeader.setBackground(colorBtn);
-		jtAHeader.setFont(fontNanumGothic15);
-		jtAHeader.setForeground(Color.white);
-		jtAHeader.setPreferredSize(new Dimension(0,25));
-		
-		sp = new JScrollPane(jtAirway, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		
-		jpTable.add(sp);
-		jpUser.add(jpTable);
-		
-		}
 		
 	
 
@@ -530,9 +536,9 @@ Object obj = e.getSource();
 			if(result == JOptionPane.YES_OPTION) {
 				JOptionPane.showMessageDialog(null, "입력이 취소되었습니다.");
 				tfSche.setText("");
-			 	tfFlightNo.setText("");
-			 	tfDep.setText("");
-			 	tfDepDay.setText("");
+			 	tfeconomy.setText("");
+			 	tfBusiness.setText("");
+			 	tffirst.setText("");
 			 	tfDepTime.setText("");
 			 	tfArr.setText("");
 			 	tfArrDay.setText("");

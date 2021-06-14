@@ -545,7 +545,32 @@ public class UserList extends JFrame implements ActionListener {
 			dispose();
 			airplanelist = new AirplaneList();
 		} else if(obj == btnOk) {
+			//값 입력됐는지 먼저 확인
+			if(tfId.getText().equals("")||tfId.getText().equals("ex)japboss")){
+				JOptionPane.showMessageDialog(null, "아이디를 입력하세요");
+			}else if(tfPw.getText().equals("")||tfPw.getText().equals("ex)1234")) {
+				JOptionPane.showMessageDialog(null, "비밀번호를 입력하세요");
+			}else if(tfName.getText().equals("")||tfName.getText().equals("ex)김민주")) {
+				JOptionPane.showMessageDialog(null, "이름를 입력하세요");
+			}else if(tfEName.getText().equals("")||tfEName.getText().equals("ex)KIMMINJU")) {
+				JOptionPane.showMessageDialog(null, "영문이름를 입력하세요");
+			}else if(tfSex.getText().equals("")||tfSex.getText().equals("ex)여")) {
+				JOptionPane.showMessageDialog(null, "성별을 입력하세요");
+			}else if(tfPN.getText().equals("")||tfPN.getText().equals("ex)jap-981222")) {
+				JOptionPane.showMessageDialog(null, "여권번호를 입력하세요");
+			}else if(tfBir.getText().equals("")||tfBir.getText().equals("ex)1998-12-22")) {
+				JOptionPane.showMessageDialog(null, "생년월일을 입력하세요");
+			}else if(tfTel.getText().equals("")||tfTel.getText().equals("ex)010-1998-1222")) {
+				JOptionPane.showMessageDialog(null, "전화번호를 입력하세요");
+			}else if(tfEmail.getText().equals("")||tfEmail.getText().equals("ex)japboss@naver.com")) {
+				JOptionPane.showMessageDialog(null, "이메일를 입력하세요");
+			}
 			
+			
+		}else if(obj == btnser) {
+			String code = tfSer.getText();
+			
+			setUserTable();
 		}
 	}
 	
