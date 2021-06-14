@@ -38,6 +38,7 @@ import Management.Main.MainForm;
 import Management.Payment.PaymentList;
 import Management.User.UserList;
 import be.sign.SignIn;
+import customer.login.LoginForm;
 
 public class AirplaneList extends JFrame implements ActionListener, MouseListener {
 	// Title 및 사이즈 설정
@@ -47,7 +48,7 @@ public class AirplaneList extends JFrame implements ActionListener, MouseListene
 	//메뉴
 		private JPanel jpTOP, jpMenu;
 		private JButton btnLogo, btnUser, btnAirway, btnAirport, btnPay, btnLogout, btnAirplane;
-		private SignIn signIn;
+		private LoginForm signIn;
 		private UserList userlist, userList;
 		private PaymentList paymentlist;
 		private AirwayList airwaylist;
@@ -530,7 +531,7 @@ Object obj = e.getSource();
 			if(result == JOptionPane.YES_OPTION ) {
 				JOptionPane.showMessageDialog(null, "시스템을 종료합니다");
 				dispose();
-				signIn = new SignIn();
+				signIn = new LoginForm();
 			} else {
 				JOptionPane.showMessageDialog(null, "로그아웃을 취소합니다.");
 			}
@@ -565,7 +566,7 @@ Object obj = e.getSource();
 				tfArr.setText("");
 				tfeconomy.setText("");
 				tfBusiness.setText("");
-				tfPfirst.setText("");
+				tffirst.setText("");
 				tfPeconomy.setText("");
 				tfPBusiness.setText("");
 				tfPfirst.setText("");
@@ -596,7 +597,7 @@ Object obj = e.getSource();
 			String Pfirst = tfPfirst.getText();
 			
 			String sql = "DELETE FROM airplane\r\n"
-					+ "WHERE = flightCode'" + plane + "' AND `from` = '" + Dep + "' AND `to` = '" + Arr +"' AND economy = '" + economy
+					+ "WHERE  flightCode = '" + plane + "' AND `from` = '" + Dep + "' AND `to` = '" + Arr +"' AND economy = '" + economy
 					+ "' AND business = '" + business + "' AND first = '" + first + "' AND economyPay = '" + Peconomy + "'AND businessPay = '" + Pbusiness + "'AND firstPay = '" + Pfirst + "'";
 
 			System.out.println(sql);
@@ -616,7 +617,7 @@ Object obj = e.getSource();
 			tfArr.setText("");
 			tfeconomy.setText("");
 			tfBusiness.setText("");
-			tfPfirst.setText("");
+			tffirst.setText("");
 			tfPeconomy.setText("");
 			tfPBusiness.setText("");
 			tfPfirst.setText("");
@@ -693,7 +694,7 @@ Object obj = e.getSource();
 			String Pfirst = tfPfirst.getText();
 			
 			String sql = "INSERT INTO airplane(flightCode, `from`, `to`, economy, business, first, economyPay, businessPay, firstPay )\r\n"
-					+ "VALUES('" + plane +"','" + Dep +"','" + Arr +"','" + economy +"','" + business + "','" + first + "','" + Peconomy + "','" + Pbusiness + "', '" +tfPfirst + "')";
+					+ "VALUES('" + plane +"','" + Dep +"','" + Arr +"','" + economy +"','" + business + "','" + first + "','" + Peconomy + "','" + Pbusiness + "', '" +Pfirst + "')";
 			System.out.println(sql);
 			
 			int rs = databaseClass.insert(sql);
