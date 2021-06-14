@@ -61,7 +61,7 @@ public class SignUpForm extends JFrame implements ActionListener{
 	private JButton btnchk, btnSignUp; //아이디 중복체크 버튼, 회원가입 버튼
 	private JLabel lblTitle, lblLNEng, lblLNKor, lblID, lblPW, lblPWchk;	//제목, 영어이름, 한국어이름, 아이디, 비밀번호, 비밀번호확인 라벨
 	private JLabel lblBirth, lblSex, lblEmail, lblPhone, lblAdd; //생일, 성별, 이메일, 핸드폰번호, 정보동의 라벨
-	private JLabel  lblEmailEx, lblPhoneEx, lblPassportEx, lblBirthE, lblPassport; //이메일 예시, 핸드폰번호 예시, 여권번호 예시, 생년월일 예시, 여권번호 라벨
+	private JLabel  lblEmailEx, lblPhoneEx, lblPassportEx, lblBirthEx, lblPassport; //이메일 예시, 핸드폰번호 예시, 여권번호 예시, 생년월일 예시, 여권번호 라벨
 	
 	private JTextField tfID, tfEmail, tfLNEng, tfLNKor; //아이디, 이메일, 한글이름, 영어이름 텍스트필드
 	private JFormattedTextField tfBirth, tfPhone, tfPassport; //생일, 핸드폰번호, 여권번호 입력형식 설정
@@ -583,14 +583,14 @@ public class SignUpForm extends JFrame implements ActionListener{
 	}
 	
 	//영어이름 한글확인
-	private boolean emaCheck(String emaV) {
-		return engVCheck = engV.matches(eng);
-	}
-	
-	//영어이름 한글확인
-	private boolean idSetCheck(String idSet) {
-		return engVCheck = engV.matches(eng);
-	}
+//	private boolean emaCheck(String emaV) {
+//		return engVCheck = engV.matches(eng);
+//	}
+//	
+//	//영어이름 한글확인
+//	private boolean idSetCheck(String idSet) {
+//		return engVCheck = engV.matches(eng);
+//	}
 	
 }
 
