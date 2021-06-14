@@ -49,72 +49,75 @@ public class SelectPassenger extends JFrame implements ActionListener{
 	Font fontArial = new Font("Arial", Font.PLAIN, 12);					// 영어
 	
 	
-	private ImageIcon qsIcon = new ImageIcon("imgs/questionMark.png");
+	private ImageIcon qsIcon = new ImageIcon("imgs/questionMark.png"); //물음표 이미지
 	private Image imgQs = qsIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 	private ImageIcon imgQuestionIcon = new ImageIcon(imgQs);
 	
-	private ImageIcon plusIcon = new ImageIcon("imgs/plus.png");
+	private ImageIcon plusIcon = new ImageIcon("imgs/plus.png"); //플러스 이미지
 	private Image imgPlus = plusIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 	private ImageIcon imgPlusIcon = new ImageIcon(imgPlus);
 	
 	
-	private ImageIcon minusIcon = new ImageIcon("imgs/minus.png");
+	private ImageIcon minusIcon = new ImageIcon("imgs/minus.png"); //마이너스 이미지
 	private Image imgMinus = minusIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 	private ImageIcon imgMinusIcon = new ImageIcon(imgMinus);
 	
 	
-	private JPanel jpTitle;
-	private JLabel lblTitle;
-	private JPanel jpAge;
-	private JPanel jpNumSelect;
-	private JPanel jpAgeCal;
-	private JLabel lblAdult;
-	private JLabel lblInfant;
-	private JLabel lblChild;
-	private JButton btnAdult;
-	private JButton btnInfant;
-	private JButton btnChild;
-	private JButton btnPlusAdult;
-	private JButton btnMinusAdult;
-	private JButton btnPlusInfant;
-	private JButton btnMinusInfant;
-	private JButton btnPlusChild;
-	private JButton btnMinusChild;
-	private JLabel lblNumAdult;
-	private JLabel lblNumInfant;
-	private JLabel lblNumChild;
-	private JLabel lblAgeCal;
-	private JLabel lblAgeGuide;
-	private JFormattedTextField tfAge;
-	private JButton btnCalculate;
-	private JButton btnOk;
+	private JPanel jpTitle; //제목패널
+	private JLabel lblTitle; //제목라벨
+	private JPanel jpAge; //나이 패널
+	private JPanel jpNumSelect; //인원선택패널
+	private JPanel jpAgeCal; //나이계산기 패널
+	private JLabel lblAdult; //성인나이
+	private JLabel lblInfant; //소아나이
+	private JLabel lblChild; //유아나이
+	private JButton btnAdult; //성인버튼
+	private JButton btnInfant; //소아버튼
+	private JButton btnChild; //유아버튼
+	private JButton btnPlusAdult; //성인 인원 추가 버튼
+	private JButton btnMinusAdult; //성인 인원 감소 버튼
+	private JButton btnPlusInfant; //소아 인원 추가 버튼
+	private JButton btnMinusInfant; //소아 인원 감소 버튼
+	private JButton btnPlusChild; //유아 인원 추가 버튼
+	private JButton btnMinusChild; //유아 인원 감소 버튼
+	private JLabel lblNumAdult; //성인라벨
+	private JLabel lblNumInfant; //소아라벨
+	private JLabel lblNumChild; //유아라벨
+	private JLabel lblAgeCal; //나이계산기 라벨
+	private JLabel lblAgeGuide; //나이계산기 예시 라벨
+	private JFormattedTextField tfAge; //나이계산기 포맷텍스트필드
+	private JButton btnCalculate; //나이계산 버튼
+	private JButton btnOk; //확인 버튼
 	private BookForm bookForm;
 	
 	
-	
+	//성인, 소아, 유아, 총인원 값
 	private int numAdult = 0;
 	private int numInfant = 0;
 	private int numChild = 0;
 	private int numTotal = 0;
 	private JPanel jpTotal;
-	private JLabel lblTotal;
-	private JLabel lblTotalNum;
 	
-	private String goDay = "";
-	private String birthday;
-	private Date dtGoday;
-	private Date dtBirthday;
-	private int compare;
-	private int birthYear;
-	private int birthMonthDay;
-	private int goDayYear;
-	private int goMonthDay;
+	private JLabel lblTotal; //총인원 라벨
+	private JLabel lblTotalNum; //총인원 값 라벨
+	
+	
+	private String goDay = ""; //가는날 값
+	private String birthday; //생년월일 값
+	private Date dtGoday; //가는 날 date 값
+	private Date dtBirthday; //오는 날 date 값
+	private int compare; //비교
+	private int birthYear; //생년월일 년도
+	private int birthMonthDay; //생년월일 월
+	private int goDayYear; //가는날 년도
+	private int goMonthDay; //가는날 일
 	
 	public SelectPassenger(BookForm bookForm) {
 		
 		//this.mainForm = mainForm;
 		this.bookForm = bookForm; //bookForm에 대한 정보
 		
+		//다시 열었을 때 값 설정
 		this.numAdult = bookForm.getNumAdult();
 		this.numInfant = bookForm.getNumInfant();
 		this.numChild = bookForm.getNumChild();
@@ -159,6 +162,7 @@ public class SelectPassenger extends JFrame implements ActionListener{
 		jpTitle.setSize(200, 60);
 		jpTitle.setLocation(20, 20);
 		jpTitle.setBackground(Color.white);
+		
 		lblTitle = new JLabel("승객 선택"); 		//제목라벨
 		lblTitle.setFont(fontNanumGothic20);
 		lblTitle.setSize(150, 40);
@@ -172,11 +176,13 @@ public class SelectPassenger extends JFrame implements ActionListener{
 		jpTotal.setSize(130, 60);
 		jpTotal.setLocation(290, 20);
 		jpTotal.setBackground(Color.white);
-		lblTotal = new JLabel("총인원"); 		//제목라벨
+		
+		lblTotal = new JLabel("총인원"); 		//총인원 라벨
 		lblTotal.setFont(fontNanumGothic20);
 		lblTotal.setSize(150, 40);
 		lblTotal.setLocation(0, 10);
-		lblTotalNum = new JLabel(numTotal + " 명"); 		//제목라벨
+		
+		lblTotalNum = new JLabel(numTotal + " 명"); 		//명 라벨
 		lblTotalNum.setFont(fontNanumGothic20);
 		lblTotalNum.setSize(150, 40);
 		lblTotalNum.setLocation(70, 10);
@@ -191,24 +197,27 @@ public class SelectPassenger extends JFrame implements ActionListener{
 		jpAge.setBackground(Color.white);
 		jpAge.setLayout(new GridLayout(3, 2));
 		
-		lblAdult = new JLabel("성인"); 
+		lblAdult = new JLabel("성인"); 	//성인라벨
 		lblAdult.setFont(fontNanumGothic18);
 		btnAdult = new JButton(imgQuestionIcon); //국제선 만 12세 이상, 국내선 만 13세 이상
 		btnAdult.setBorderPainted(false); //버튼 윤곽선 제거
 		btnAdult.setContentAreaFilled(false); //버튼배경 제거
 		btnAdult.addActionListener(this);
-		lblInfant = new JLabel("소아");
+		
+		lblInfant = new JLabel("소아"); //소아라벨
 		lblInfant.setFont(fontNanumGothic18);
 		btnInfant = new JButton(imgQuestionIcon); //국제선 만 12세 미만, 국내선 만 13세 미만
 		btnInfant.setBorderPainted(false); //버튼 윤곽선 제거
 		btnInfant.setContentAreaFilled(false); //버튼배경 제거
 		btnInfant.addActionListener(this);
-		lblChild = new JLabel("유아");
+		
+		lblChild = new JLabel("유아"); //유아라벨
 		lblChild.setFont(fontNanumGothic18);
 		btnChild = new JButton(imgQuestionIcon); //만 2세 미만
 		btnChild.setBorderPainted(false); //버튼 윤곽선 제거
 		btnChild.setContentAreaFilled(false); //버튼배경 제거
 		btnChild.addActionListener(this);
+		
 		jpAge.add(lblAdult);
 		jpAge.add(btnAdult);
 		jpAge.add(lblInfant);
@@ -225,38 +234,44 @@ public class SelectPassenger extends JFrame implements ActionListener{
 		jpNumSelect.setBackground(Color.white);
 		jpNumSelect.setLayout(new GridLayout(3, 3));
 		
-		btnPlusAdult = new JButton(imgPlusIcon); //성인 인원라벨, +버튼, -버튼
+		btnPlusAdult = new JButton(imgPlusIcon); //성인 인원 +버튼
 		btnPlusAdult.setBorderPainted(false); //버튼 윤곽선 제거
 		btnPlusAdult.setContentAreaFilled(false); //버튼배경 제거
 		btnPlusAdult.addActionListener(this);
-		lblNumAdult = new JLabel("0");
+		
+		lblNumAdult = new JLabel("0"); //성인인원
 		lblNumAdult.setFont(fontNanumGothic18);
 		lblNumAdult.setHorizontalAlignment(JLabel.CENTER);
-		btnMinusAdult = new JButton(imgMinusIcon);
+		
+		btnMinusAdult = new JButton(imgMinusIcon); //성인인원 -버튼
 		btnMinusAdult.setBorderPainted(false); //버튼 윤곽선 제거
 		btnMinusAdult.setContentAreaFilled(false); //버튼배경 제거
 		btnMinusAdult.addActionListener(this);
 		
-		btnPlusInfant = new JButton(imgPlusIcon); //소아 인원라벨, +버튼, -버튼
+		btnPlusInfant = new JButton(imgPlusIcon); //소아인원 +버튼
 		btnPlusInfant.setBorderPainted(false); //버튼 윤곽선 제거
 		btnPlusInfant.setContentAreaFilled(false); //버튼배경 제거
 		btnPlusInfant.addActionListener(this);
-		lblNumInfant = new JLabel("0");
+		
+		lblNumInfant = new JLabel("0"); //소아인원 라벨
 		lblNumInfant.setFont(fontNanumGothic18);
 		lblNumInfant.setHorizontalAlignment(JLabel.CENTER);
-		btnMinusInfant = new JButton(imgMinusIcon);
+		
+		btnMinusInfant = new JButton(imgMinusIcon); //소아인원 -버튼
 		btnMinusInfant.setBorderPainted(false); //버튼 윤곽선 제거
 		btnMinusInfant.setContentAreaFilled(false); //버튼배경 제거
 		btnMinusInfant.addActionListener(this);
 		
-		btnPlusChild = new JButton(imgPlusIcon); //유아 인원라벨, +버튼, -버튼
+		btnPlusChild = new JButton(imgPlusIcon); //유아 인원 +버튼
 		btnPlusChild.setBorderPainted(false); //버튼 윤곽선 제거
 		btnPlusChild.setContentAreaFilled(false); //버튼배경 제거
 		btnPlusChild.addActionListener(this);
-		lblNumChild = new JLabel("0");
+		
+		lblNumChild = new JLabel("0"); //유아 인원 라벨
 		lblNumChild.setFont(fontNanumGothic18);
 		lblNumChild.setHorizontalAlignment(JLabel.CENTER);
-		btnMinusChild = new JButton(imgMinusIcon);
+		
+		btnMinusChild = new JButton(imgMinusIcon); //유아 인원 -버튼
 		btnMinusChild.setBorderPainted(false); //버튼 윤곽선 제거
 		btnMinusChild.setContentAreaFilled(false); //버튼배경 제거
 		btnMinusChild.addActionListener(this);
@@ -278,18 +293,18 @@ public class SelectPassenger extends JFrame implements ActionListener{
 		jpAgeCal.setLocation(20, 300);
 		jpAgeCal.setBackground(Color.white);
 		
-		lblAgeCal = new JLabel("나이계산기"); //나이계산기
+		lblAgeCal = new JLabel("나이계산기"); //나이계산기 라벨
 		lblAgeCal.setFont(fontNanumGothic12);
 		lblAgeCal.setSize(150, 40);
 		lblAgeCal.setLocation(10, 20);
-		lblAgeGuide = new JLabel("생년월일(예: 20020214)"); //예시
+		lblAgeGuide = new JLabel("생년월일(예: 20020214)"); //나이계산기 예시
 		lblAgeGuide.setFont(fontNanumGothic12);
 		lblAgeGuide.setSize(150, 40);
 		lblAgeGuide.setLocation(80, 20);
 		lblAgeGuide.setForeground(Color.gray);
 		
 		try {
-			MaskFormatter format = new MaskFormatter("########");
+			MaskFormatter format = new MaskFormatter("########"); //생년월일 포맷
 			tfAge = new JFormattedTextField(format); //생년월일 입력 필드
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -298,6 +313,7 @@ public class SelectPassenger extends JFrame implements ActionListener{
 		tfAge.setFont(fontNanumGothic12);
 		tfAge.setSize(300, 30);
 		tfAge.setLocation(10, 50);
+		
 		btnCalculate = new JButton("계산하기"); //계산하기 버튼
 		btnCalculate.setFont(fontNanumGothic12);
 		btnCalculate.setSize(100, 30);
@@ -316,7 +332,6 @@ public class SelectPassenger extends JFrame implements ActionListener{
 		btnOk.setBackground(new Color(10,90,150));
 		btnOk.addActionListener(this);
 		
-		
 		jpAgeCal.add(lblAgeCal);
 		jpAgeCal.add(lblAgeGuide);
 		jpAgeCal.add(tfAge);
@@ -331,10 +346,6 @@ public class SelectPassenger extends JFrame implements ActionListener{
 		
 	}
 
-
-	public static void main(String[] args) {
-		//new SelectPassenger();
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -387,39 +398,39 @@ public class SelectPassenger extends JFrame implements ActionListener{
 		
 		if (obj == btnCalculate) {		//나이계산기 버튼 눌렀을 때
 			
-			if (goDay.isEmpty()) {
+			if (goDay.isEmpty()) { //탑승일 선택 안 했을 경우
 				JOptionPane.showMessageDialog(null, "탑승일 선택 후 나이계산이 가능합니다.", "나이계산", JOptionPane.OK_CANCEL_OPTION);
-			} else {
+			} else { //탑승일 선택 했으면
 				
-				birthday = tfAge.getText();
+				birthday = tfAge.getText(); //생년월일 값 받아오기
 				
 				
 				try {
 					
-					LocalDate parsedBirthDate = LocalDate.parse(birthday, DateTimeFormatter.ofPattern("yyyyMMdd"));
+					LocalDate parsedBirthDate = LocalDate.parse(birthday, DateTimeFormatter.ofPattern("yyyyMMdd")); //생년월일 값 date에 넣어보기
 					birthYear = parsedBirthDate.getYear();
 					birthMonthDay = Integer.parseInt(birthday.substring(5,8));
 					
-					LocalDate parsedgoDay = LocalDate.parse(goDay, DateTimeFormatter.ofPattern("yyyyMMdd"));
+					LocalDate parsedgoDay = LocalDate.parse(goDay, DateTimeFormatter.ofPattern("yyyyMMdd")); //생년월일 값 date에 넣어보기
 					goDayYear = parsedgoDay.getYear();
 					goMonthDay = Integer.parseInt(goDay.substring(5,8));
 					
 					int age = goDayYear - birthYear;	//나이 구하기
 					
 					
-					if (age == 19) {
+					if (age == 19) { //19세일 경우 생일 지났으면 그대로 후 성인, 안 지났으면 1살 줄이고 미성년
 						if (birthMonthDay <= goMonthDay) {
 							JOptionPane.showMessageDialog(null, "가는 날(" + goDay + ") 기준 만" + age + "세 성인입니다.", "나이계산", JOptionPane.OK_CANCEL_OPTION);
 						} else {
 							JOptionPane.showMessageDialog(null, "가는 날(" + goDay + ") 기준 만" + (age-1) + "세 미성년입니다.", "나이계산", JOptionPane.OK_CANCEL_OPTION);
 						}
-					} else if(age > 19){
+					} else if(age > 19){ //19세 이상일 경우 성인, 생일 안 지났으면 1살 줄이기
 						if (birthMonthDay <= goMonthDay) {
 							JOptionPane.showMessageDialog(null, "가는 날(" + goDay + ") 기준 만" + age + "세 성인입니다.", "나이계산", JOptionPane.OK_CANCEL_OPTION);
 						} else {
 							JOptionPane.showMessageDialog(null, "가는 날(" + goDay + ") 기준 만" + (age-1) + "세 성인입니다.", "나이계산", JOptionPane.OK_CANCEL_OPTION);
 						}
-					} else {
+					} else { //19살 이하일 경우 미성년, 생일 안 지났으면 1살 줄이기
 						if (birthMonthDay <= goMonthDay) {
 							JOptionPane.showMessageDialog(null, "가는 날(" + goDay + ") 기준 만" + age + "세 미성년입니다.", "나이계산", JOptionPane.OK_CANCEL_OPTION);
 						} else {
@@ -427,7 +438,7 @@ public class SelectPassenger extends JFrame implements ActionListener{
 						}
 					}
 					
-				} catch (DateTimeParseException e2) {
+				} catch (DateTimeParseException e2) { //생년월일 값 date에 넣었을 때 오류나면 잘못 입력한 것이므로 설정
 					JOptionPane.showMessageDialog(null, "값을 제대로 입력해주세요", "나이계산기", JOptionPane.OK_CANCEL_OPTION);
 				}
 				
@@ -435,12 +446,12 @@ public class SelectPassenger extends JFrame implements ActionListener{
 			
 		}
 		
-		numTotal = numAdult + numInfant + numChild;
+		numTotal = numAdult + numInfant + numChild; //총인원 구하기
 		lblTotalNum.setText(numTotal + "명");
 		
 		if (obj == btnOk) { //확인버튼 눌렀을 때
 			
-			if (numTotal > 0) {
+			if (numTotal > 0) { //총인원 값이 1명 이상이면 값 입력하기
 				int result = JOptionPane.showConfirmDialog(null, "성인 " + numAdult + "명, 소아 " + numInfant + "명, 유아 " + numChild + "명으로 총 " + numTotal + "명이 맞습니까?", "탑승인원 선택", JOptionPane.YES_NO_OPTION);
 				
 				if(result == JOptionPane.YES_OPTION) {
@@ -454,7 +465,7 @@ public class SelectPassenger extends JFrame implements ActionListener{
 					setVisible(false);
 					
 				}
-			} else {
+			} else { //인원 선택 안 했으면 선택하라고 띄우기
 				JOptionPane.showMessageDialog(null, "1명 이상으로 선택해주세요", "인원선택", JOptionPane.OK_CANCEL_OPTION);
 			}
 		}
