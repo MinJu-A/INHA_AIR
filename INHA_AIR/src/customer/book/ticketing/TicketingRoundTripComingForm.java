@@ -21,6 +21,7 @@ import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import java.awt.BorderLayout;
@@ -870,16 +871,6 @@ public class TicketingRoundTripComingForm extends JFrame implements ActionListen
 			mainMenuForm.setId(ID);
 			this.setVisible(false);
 			
-		} else if(obj == btnNext)
-		{
-			
-//			tkRTComForm= new customer.book.ticketing.TicketingRoundTripComingFormX();
-//			this.setVisible(false);
-//			
-			Insert();
-			
-			reservation = new ReservationDetailForm(reserveNum, ID);
-			this.setVisible(false);
 		}
 		else if(obj == btnEcon)
 		{
@@ -916,6 +907,22 @@ public class TicketingRoundTripComingForm extends JFrame implements ActionListen
 
 //			btnFirs.setBackground(crNext);
 
+			}
+		 else if(obj == btnNext)
+			{
+				if(finaltotalPay == totalPay) {
+					JOptionPane.showMessageDialog(null, "오는 편을 선택하세요", "알림", JOptionPane.WARNING_MESSAGE);
+				}
+//				tkRTComForm= new customer.book.ticketing.TicketingRoundTripComingFormX();
+//				this.setVisible(false);
+//				
+				else {
+					
+				
+				Insert();
+				
+				reservation = new ReservationDetailForm(reserveNum, ID);
+				this.setVisible(false);}
 			}
 		
 	}

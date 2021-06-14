@@ -22,6 +22,7 @@ import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import java.awt.BorderLayout;
@@ -785,61 +786,72 @@ public TicketingRoundTripGoingForm(BookForm sel) {
 		
 		
 	}
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		Object obj = e.getSource();
+	
+	
+//----------------------------------------
+//----------------------------------------
+//----------------------------------------
+
+@Override
+public void actionPerformed(ActionEvent e) {
+	Object obj = e.getSource();
+	
+	if(obj == btnMainMenu) {
+		mainMenuForm = new MainMenuForm();
+		this.setVisible(false);
 		
-		if(obj == btnMainMenu) {
-			mainMenuForm = new MainMenuForm();
-			this.setVisible(false);
-			
-		} else if(obj == btnNext)
-		{
-			tkRTComForm= new customer.book.ticketing.TicketingRoundTripComingForm(this);
-			this.setVisible(false);
-			
-			Insert();
-		}
-		else if(obj == btnEcon)
-		{
+	} 
+	else if(obj == btnEcon)
+	{
 //			totalPay = economyPay * (numAdult + numChild*(0.8));
-			totalPay = Math.round(economyPay * (numAdult + numChild*(0.8)));
-			lblTotalPayGoing.setText(totalPay + "원");
-			
-			selectedSeatGo = "economy";
-			setTotalPay(totalPay);
-			
+		totalPay = Math.round(economyPay * (numAdult + numChild*(0.8)));
+		lblTotalPayGoing.setText(totalPay + "원");
+		
+		selectedSeatGo = "economy";
+		setTotalPay(totalPay);
+		
 //			GoPay = totalPay;
-			
+		
 //			btnEcon.setBackground(crNext);
-			
+		
 //			jpFlight1.setBackground(crChange);
-		}
-		else if(obj == btnBus)
-		{
+	}
+	else if(obj == btnBus)
+	{
 //			totalPay = businessPay;
-			totalPay = Math.round(businessPay * (numAdult + numChild*(0.8)));
-			lblTotalPayGoing.setText(totalPay + "원");	
-			selectedSeatGo = "business";
+		totalPay = Math.round(businessPay * (numAdult + numChild*(0.8)));
+		lblTotalPayGoing.setText(totalPay + "원");	
+		selectedSeatGo = "business";
 //			jpFlight2.setBackground(crChange);
 //			GoPay = totalPay;
-			
+		
 //			btnBus.setBackground(crNext);
-
-			}
-		else if(obj == btnFirs)
-		{
-			totalPay = Math.round(firstPay * (numAdult + numChild*(0.8)));
-			lblTotalPayGoing.setText(totalPay + "원");	
-			
-			selectedSeatGo = "first";
-//			jpFlight3.setBackground(crChange);
-//			GoPay = totalPay;
-			
-//			btnFirs.setBackground(crNext);
-
-			}
 		
 	}
+	else if(obj == btnFirs)
+	{
+		totalPay = Math.round(firstPay * (numAdult + numChild*(0.8)));
+		lblTotalPayGoing.setText(totalPay + "원");	
+		
+		selectedSeatGo = "first";
+//			jpFlight3.setBackground(crChange);
+//			GoPay = totalPay;
+		
+//			btnFirs.setBackground(crNext);
+		
+	}else if(obj == btnNext)
+	{
+		if(totalPay == 0) {
+			JOptionPane.showMessageDialog(null, "가는 편을 선택하세요", "알림", JOptionPane.WARNING_MESSAGE);
+
+		}
+		else {
+		tkRTComForm= new customer.book.ticketing.TicketingRoundTripComingForm(this);
+		this.setVisible(false);
+		
+		Insert();}
+	}
 	
+}
+
 }
