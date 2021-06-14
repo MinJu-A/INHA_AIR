@@ -171,11 +171,13 @@ public class AirplaneList extends JFrame implements ActionListener, MouseListene
 			sql = "SELECT *\r\n"
 					+ "FROM airplane\r\n"
 					+ "ORDER BY flightCode";
+			System.out.println(sql);
 		} else if(i==1) {
 			sql = "SELECT *\r\n"
 					+ "FROM airplane\r\n"
-					+ "WHERE Code flightCode = '" +codename+ "'\r\n"
+					+ "WHERE flightCode = '" +codename+ "'\r\n"
 					+ "ORDER BY flightCode";
+			System.out.println(sql);
 		}
 		
 		//결제 금액 검색
@@ -582,19 +584,22 @@ Object obj = e.getSource();
 				setPlaneTable(1, code);
 			}
 		}else if(obj == btnDel) {
-			String Plane = tfPlane.getText();
+			//삭제
+			String plane = tfPlane.getText();
 			String Dep = tfDep.getText();
 			String Arr = tfArr.getText();
 			String economy = tfeconomy.getText();
 			String business = tfBusiness.getText();
-			String first = tfPfirst.getText();
+			String first = tffirst.getText();
 			String Peconomy = tfPeconomy.getText();
 			String Pbusiness = tfPBusiness.getText();
 			String Pfirst = tfPfirst.getText();
 			
 			String sql = "DELETE FROM airplane\r\n"
-					+ "WHERE = flightCode'" + Plane + "' AND from = '" + Dep + "' AND to = '" + Arr +"' AND economy = '" + economy
-					+ "' AND business = '" + business + "' AND first = '" + first + "' AND Peconomy = '" + Peconomy + "'AND Pbusiness = '" + Pbusiness + "'AND Pfirst = '" + Pfirst + "'";
+					+ "WHERE = flightCode'" + plane + "' AND `from` = '" + Dep + "' AND `to` = '" + Arr +"' AND economy = '" + economy
+					+ "' AND business = '" + business + "' AND first = '" + first + "' AND economyPay = '" + Peconomy + "'AND businessPay = '" + Pbusiness + "'AND firstPay = '" + Pfirst + "'";
+
+			System.out.println(sql);
 			
 			int rs = databaseClass.delete(sql);
 			if(rs ==1) {
@@ -624,16 +629,17 @@ Object obj = e.getSource();
 			String Arr = tfArr.getText();
 			String economy = tfeconomy.getText();
 			String business = tfBusiness.getText();
-			String first = tfPfirst.getText();
+			String first = tffirst.getText();
 			String Peconomy = tfPeconomy.getText();
 			String Pbusiness = tfPBusiness.getText();
 			String Pfirst = tfPfirst.getText();
 			
 			
 			String sql = " UPDATE airplane\r\n"
-					+ "SET = flightCode'" + plane + "' , from = '" + Dep + "' , to = '" + Arr +"' , economy = '" + economy
-					+ "' , business = '" + business + "' , first = '" + first + "' , Peconomy = '" + Peconomy + "', Pbusiness = '" + Pbusiness + "', Pfirst = '" + Pfirst + "'"
-					+"WHERE = flightCode '" +plane+"'";
+					+ "SET  flightCode = '" + plane + "' , `from` = '" + Dep + "' , `to` = '" + Arr +"' , economy = '" + economy
+					+ "' , business = '" + business + "' , first = " + first + " , economyPay = " + Peconomy + ", businessPay = " + Pbusiness + ", firstPay = " + Pfirst + ""
+					+" WHERE  flightCode ='" +plane+"'";
+			System.out.println(sql);
 			
 			int rs = databaseClass.update(sql);
 			if(rs ==1) {
@@ -650,7 +656,60 @@ Object obj = e.getSource();
 			tfArr.setText("");
 			tfeconomy.setText("");
 			tfBusiness.setText("");
+			tffirst.setText("");
+			tfPeconomy.setText("");
+			tfPBusiness.setText("");
 			tfPfirst.setText("");
+		} else if(obj == btnOk) {
+			//등록
+			if(tfPlane.getText().equals("")||tfPlane.getText().equals("ex)IH1222")){
+			JOptionPane.showMessageDialog(null, "편명을 입력하세요");
+			}else if(tfDep.getText().equals("")||tfDep.getText().equals("ex)IH1222")){
+			JOptionPane.showMessageDialog(null, "출발지를 입력하세요");
+			}else if(tfArr.getText().equals("")||tfArr.getText().equals("ex)IH1222")){
+			JOptionPane.showMessageDialog(null, "도착지를 입력하세요");
+			}else if(tfeconomy.getText().equals("")||tfeconomy.getText().equals("ex)IH1222")){
+			JOptionPane.showMessageDialog(null, "좌석수를 입력하세요");
+			}else if(tfBusiness.getText().equals("")||tfBusiness.getText().equals("ex)IH1222")) {
+			JOptionPane.showMessageDialog(null, "좌석수를 입력하세요");
+			}else if(tffirst.getText().equals("")||tffirst.getText().equals("ex)IH1222")) {
+			JOptionPane.showMessageDialog(null, "좌석수를 입력하세요");
+			}else if(tfPeconomy.getText().equals("")||tfPeconomy.getText().equals("ex)IH1222")) {
+			JOptionPane.showMessageDialog(null, "금액을 입력하세요");
+			}else if(tfPBusiness.getText().equals("")||tfPBusiness.getText().equals("ex)IH1222")) {
+			JOptionPane.showMessageDialog(null, "금액을 입력하세요");
+			}else if(tfPfirst.getText().equals("")||tfPfirst.getText().equals("ex)IH1222")) {
+			JOptionPane.showMessageDialog(null, "금액을 입력하세요");
+			}
+			
+			String plane = tfPlane.getText();
+			String Dep = tfDep.getText();
+			String Arr = tfArr.getText();
+			String economy = tfeconomy.getText();
+			String business = tfBusiness.getText();
+			String first = tffirst.getText();
+			String Peconomy = tfPeconomy.getText();
+			String Pbusiness = tfPBusiness.getText();
+			String Pfirst = tfPfirst.getText();
+			
+			String sql = "INSERT INTO airplane(flightCode, `from`, `to`, economy, business, first, economyPay, businessPay, firstPay )\r\n"
+					+ "VALUES('" + plane +"','" + Dep +"','" + Arr +"','" + economy +"','" + business + "','" + first + "','" + Peconomy + "','" + Pbusiness + "', '" +tfPfirst + "')";
+			System.out.println(sql);
+			
+			int rs = databaseClass.insert(sql);
+			if(rs==1) {
+				JOptionPane.showMessageDialog(this, "등록 되었습니다.");
+				setPlaneTable(0, "");
+			} else if(rs==0) {
+				JOptionPane.showMessageDialog(this, "등록 실패했습니다.");
+			}
+			tfSer.setText("");
+			tfPlane.setText("");
+			tfDep.setText("");
+			tfArr.setText("");
+			tfeconomy.setText("");
+			tfBusiness.setText("");
+			tffirst.setText("");
 			tfPeconomy.setText("");
 			tfPBusiness.setText("");
 			tfPfirst.setText("");
