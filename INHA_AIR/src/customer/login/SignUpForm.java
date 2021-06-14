@@ -427,7 +427,7 @@ public class SignUpForm extends JFrame implements ActionListener{
 					if (!emaCheck(tfEmail.getText())) {
 						JOptionPane.showMessageDialog(null, "이메일을 제대로 입력해주세요");
 					}
-				} else if (!idSetCheck) {
+				} else if (!idsetVCheck) {
 					if (!idSetCheck(tfID.getText())) {
 						JOptionPane.showMessageDialog(null, "아이디는 영어와 숫자로만 작성해주세요");
 					}
