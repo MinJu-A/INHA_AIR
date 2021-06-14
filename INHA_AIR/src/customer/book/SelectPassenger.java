@@ -90,6 +90,8 @@ public class SelectPassenger extends JFrame implements ActionListener{
 	private JButton btnOk;
 	private BookForm bookForm;
 	
+	
+	
 	private int numAdult = 0;
 	private int numInfant = 0;
 	private int numChild = 0;

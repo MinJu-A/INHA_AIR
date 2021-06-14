@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 //연우 - 아이디찾기
 public class FindIdForm extends JFrame implements ActionListener {
 	
+	//화면설정
 	private String title = "아이디 찾기";
 	private int width = 400, height = 300;
 	private JLabel lblId;

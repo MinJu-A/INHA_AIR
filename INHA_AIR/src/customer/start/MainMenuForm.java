@@ -25,6 +25,7 @@ import be.main.MainForm;
 import be.menu.MenuBar;
 import customer.book.BookForm;
 import customer.findTrips.FindTripsForm;
+import customer.findTrips.FindTripsFormTEST;
 import customer.flightSchedule.FlightStatusForm;
 import customer.login.LoginForm;
 
