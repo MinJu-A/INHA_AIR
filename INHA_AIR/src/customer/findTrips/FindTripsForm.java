@@ -428,7 +428,7 @@ public class FindTripsForm extends JFrame implements ActionListener {
 			this.setVisible(false);
 			
 		} else if(obj == btnDetail1) {
-			detailForm = new MemberInquiryDetailForm(id);
+			detailForm = new MemberInquiryDetailForm(id, reserveNum);
 			this.setVisible(false);
 		}
 	}
