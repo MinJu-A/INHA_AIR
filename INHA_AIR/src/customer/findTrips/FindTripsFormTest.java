@@ -24,7 +24,7 @@ import customer.start.MainMenuForm;
 
 
 
-public class FindTripsForm extends JFrame implements ActionListener {
+public class FindTripsFormTest extends JFrame implements ActionListener {
 	// Title 및 사이즈 설정
 	private String title = "INHA AIR";
 	private int width = 1120, height = 770;
@@ -126,7 +126,7 @@ public class FindTripsForm extends JFrame implements ActionListener {
 		private String COMscheduleNo;
 		private String GOfromDate;
 
-	public FindTripsForm(String id) {
+	public FindTripsFormTest(String id) {
 //		this.mainMenuForm=mainMenuForm;
 		
 //		this.id = mainMenuForm.getId();
