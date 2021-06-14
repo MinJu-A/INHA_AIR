@@ -150,7 +150,7 @@ public class AirwayList extends JFrame implements ActionListener {
 			private void setAirwayTable() {
 				
 				//전체 사용자 조회
-				String sql = "SELECT scheduleNo, flightCode, from, fromDate,  to, toDate\r\n"
+				String sql = "SELECT scheduleNo, flightCode, `from`, fromDate,  `to`, toDate\r\n"
 						+ "FROM airSchedule\r\n"
 						+ "ORDER BY fromDate,flightCode ";
 				
