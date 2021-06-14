@@ -35,6 +35,8 @@ public class BookForm extends JFrame implements ActionListener {
 	private String title = "INHA AIR - 예매하기";
 	private int width = 1120, height = 770;
 	
+	//infant유아 child소아
+	
 	// 폰트
 	Font fontArial30 = new Font("Arial", Font.BOLD | Font.ITALIC, 30);
 	Font fontNanumGothic15 = new Font("NanumGothic", Font.BOLD, 15);	// 나눔고딕 18
