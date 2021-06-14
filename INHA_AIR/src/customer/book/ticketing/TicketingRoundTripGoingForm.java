@@ -78,7 +78,7 @@ public class TicketingRoundTripGoingForm extends JFrame implements ActionListene
 		String COMclass;
 		String COMscheduleNo;
 //		private String ID = "test1" ;
-		private int totalPay; //---삭제
+		private double totalPay; //---삭제
 
 		 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		 Calendar c = Calendar.getInstance();
@@ -91,7 +91,7 @@ public class TicketingRoundTripGoingForm extends JFrame implements ActionListene
 //         System.out.println(fourteen_format .format(date_now)); // 기본 포멧으로 출력한다
 		 
 //		String reserveNum = GoDay.substring(0, 3) + ComeDay.substring(2,5) + ID.substring(0,3) + strToday.substring(3,6) ;
-private int TotalPay;
+private double TotalPay;
 
 		//reserveNum, GOscheduleNo, COMscheduleNo, ID, adult,child ,infant,pay,GOclass,COMclass
 		//reserveNum, GOscheduleNo,COMscheduleNo,ID, AdultP,ChildP ,InfantP,totalPay,selectedSeatGo,COMclass
@@ -123,7 +123,7 @@ private int TotalPay;
 		public void setInfantP(int infantP) {
 			numInfant = infantP;
 		}
-		public void setTotalPay(int totalPay) {
+		public void setTotalPay(double totalPay) {
 			TotalPay = totalPay;
 		}
 		
@@ -163,7 +163,7 @@ private int TotalPay;
 		public int getInfantP() {
 			return numInfant;
 		}
-		public int getTotalPay() {
+		public double getTotalPay() {
 			return totalPay;
 		}
 		public String getSelectedSeat() {
@@ -802,7 +802,7 @@ public TicketingRoundTripGoingForm(BookForm sel) {
 		}
 		else if(obj == btnEcon)
 		{
-			totalPay = economyPay;
+			totalPay = economyPay * (numAdult + numChild*(0.8));
 			lblTotalPayGoing.setText(totalPay + "원");
 			
 			selectedSeatGo = "economy";

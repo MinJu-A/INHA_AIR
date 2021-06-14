@@ -269,7 +269,7 @@ public class TicketingRoundTripComingForm extends JFrame implements ActionListen
 		private JLabel lblGoingPayF;
 		private String selectedSeatGo;
 		private String GOscheduleNo;
-		private int finaltotalPay;
+		private double finaltotalPay;
 		private String selectedSeatCom;
 		private Color crChange;
 		private String comeDay;
@@ -283,7 +283,7 @@ public class TicketingRoundTripComingForm extends JFrame implements ActionListen
 		private String airportD;
 		private String airportA;
 		private String reserveNum;
-		private int totalPay;
+		private double totalPay;
 		
 		public TicketingRoundTripComingForm(TicketingRoundTripGoingForm rtg) {
 
@@ -555,7 +555,7 @@ public class TicketingRoundTripComingForm extends JFrame implements ActionListen
 		String sql = "UPDATE reservation set COMscheduleNo=?, pay=?, COMclass=? WHERE reserveNum=?";
 		ps = conn.prepareStatement(sql);
 		ps.setString(1,COMscheduleNo);
-		ps.setInt(2,finaltotalPay);
+		ps.setDouble(2,finaltotalPay);
 		ps.setString(3,selectedSeatCom);
 		ps.setString(4,reserveNum);
 		
