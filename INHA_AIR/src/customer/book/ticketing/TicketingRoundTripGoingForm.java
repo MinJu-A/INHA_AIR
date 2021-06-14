@@ -802,7 +802,8 @@ public TicketingRoundTripGoingForm(BookForm sel) {
 		}
 		else if(obj == btnEcon)
 		{
-			totalPay = economyPay * (numAdult + numChild*(0.8));
+//			totalPay = economyPay * (numAdult + numChild*(0.8));
+			totalPay = Math.round(economyPay * (numAdult + numChild*(0.8)));
 			lblTotalPayGoing.setText(totalPay + "원");
 			
 			selectedSeatGo = "economy";
@@ -817,7 +818,7 @@ public TicketingRoundTripGoingForm(BookForm sel) {
 		else if(obj == btnBus)
 		{
 //			totalPay = businessPay;
-			totalPay = businessPay * (numAdult + numChild*(0.8));
+			totalPay = Math.round(businessPay * (numAdult + numChild*(0.8)));
 			lblTotalPayGoing.setText(totalPay + "원");	
 			selectedSeatGo = "business";
 //			jpFlight2.setBackground(crChange);
@@ -828,7 +829,7 @@ public TicketingRoundTripGoingForm(BookForm sel) {
 			}
 		else if(obj == btnFirs)
 		{
-			totalPay = firstPay * (numAdult + numChild*(0.8));
+			totalPay = Math.round(firstPay * (numAdult + numChild*(0.8)));
 			lblTotalPayGoing.setText(totalPay + "원");	
 			
 			selectedSeatGo = "first";
