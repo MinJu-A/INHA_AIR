@@ -16,20 +16,19 @@ public class FindIdForm extends JFrame implements ActionListener {
 	//화면설정
 	private String title = "아이디 찾기";
 	private int width = 400, height = 300;
-	private JLabel lblId;
+	private JLabel lblId;	//아이디 라벨
 	
 	private FindIdPwForm findIdPwForm;
-	private String id;
+	private String id;	//아이디값
 	
 	Font fontNanumGothic18 = new Font("NanumGothic", Font.BOLD, 18);	// 나눔고딕 18
-	private JButton btnExit;
-	private JLabel lblIdValue;
+	private JLabel lblIdValue;	//아이디값 라벨
 	
 	public FindIdForm(FindIdPwForm findIdPwForm) {
 		
 		this.findIdPwForm = findIdPwForm;
 		
-		id = findIdPwForm.getIdFound();
+		id = findIdPwForm.getIdFound();	//아이디값 가져오기
 		
 		setTitle(title);
 		setSize(width, height);
@@ -49,26 +48,19 @@ public class FindIdForm extends JFrame implements ActionListener {
 
 	private void setFindPw() {
 		
-		lblId= new JLabel("회원님의 아이디");
+		lblId= new JLabel("회원님의 아이디");	//회원아이디 설명 라벨
 		lblId.setSize(300, 30);
 		lblId.setLocation(10, 30);
 		lblId.setFont(fontNanumGothic18);
 		add(lblId);
 		
-		lblIdValue = new JLabel(id);
+		lblIdValue = new JLabel(id);		//회원아이디 값 라벨
 		lblIdValue.setSize(300, 60);
 		lblIdValue.setLocation(10, 40);
 		lblIdValue.setFont(fontNanumGothic18);
 		add(lblIdValue);
 		
-//		btnExit = new JButton("닫기");
-//		btnExit.setSize(100, 30);
-//		btnExit.setLocation(150, 200);
-//		btnExit.setBackground(new Color(10,90,150));
-//		btnExit.setForeground(Color.white); //버튼 폰트 색 변경
-//		btnExit.setFont(fontNanumGothic18);
-//		btnExit.addActionListener(this);
-//		add(btnExit);
+\\
 		
 	}
 
