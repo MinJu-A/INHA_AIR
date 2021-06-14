@@ -77,8 +77,8 @@ public class SignUpForm extends JFrame implements ActionListener{
 
 	private String kor = "^[가-힣]+$"; //정규표현식 - 한글
 	private String eng = "^[a-zA-Z]+$"; //정규표현식 - 영어
-	private String idset = "^[a-zA-Z0-9]+$"; //정규표현식 - 아이디
-	private String ema = "^[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z]{2,6}+$"; //정규표현식 - 이메일
+//	private String idset = "^[a-zA-Z0-9]+$"; //정규표현식 - 아이디
+//	private String ema = "^[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z]{2,6}+$"; //정규표현식 - 이메일
 	
 			
 			
@@ -423,15 +423,16 @@ public class SignUpForm extends JFrame implements ActionListener{
 					if (!engCheck(tfLNEng.getText())) {
 						JOptionPane.showMessageDialog(null, "영어이름에 영어만 입력해주세요");
 					}
-				} else if (!emaVCheck) { //이메일 필드 형식 확인
-					if (!emaCheck(tfEmail.getText())) {
-						JOptionPane.showMessageDialog(null, "이메일을 제대로 입력해주세요");
-					}
-				} else if (!idsetVCheck) {	//아이디필드 형식 확인
-					if (!idSetCheck(tfID.getText())) {
-						JOptionPane.showMessageDialog(null, "아이디는 영어와 숫자로만 작성해주세요");
-					}
 				}
+//					else if (!emaVCheck) { //이메일 필드 형식 확인
+//					if (!emaCheck(tfEmail.getText())) {
+//						JOptionPane.showMessageDialog(null, "이메일을 제대로 입력해주세요");
+//					}
+//				} else if (!idsetVCheck) {	//아이디필드 형식 확인
+//					if (!idSetCheck(tfID.getText())) {
+//						JOptionPane.showMessageDialog(null, "아이디는 영어와 숫자로만 작성해주세요");
+//					}
+//				}
 				else if (!telVCheck) {	//핸드폰번호 중복확인
 					if (telCheck(tfPhone.getText())) {
 						JOptionPane.showMessageDialog(null, "중복된 전화번호입니다.");
@@ -593,14 +594,14 @@ public class SignUpForm extends JFrame implements ActionListener{
 		return engVCheck = engV.matches(eng); //정규표현식과 비교
 	}
 
-	//이메일필드에 @ 들어가는지 확인
-	private boolean emaCheck(String emaV) {
-		return emaVCheck = emaV.matches(ema); //정규표현식과 비교
-	}
-
-	//아이디 영어+숫자만인지 확인(특수문자 없어야함)
-	private boolean idSetCheck(String idSet) {
-		return idsetVCheck = idSet.matches(idset); //정규표현식과 비교
-	}
+//	//이메일필드에 @ 들어가는지 확인
+//	private boolean emaCheck(String emaV) {
+//		return emaVCheck = emaV.matches(ema); //정규표현식과 비교
+//	}
+//
+//	//아이디 영어+숫자만인지 확인(특수문자 없어야함)
+//	private boolean idSetCheck(String idSet) {
+//		return idsetVCheck = idSet.matches(idset); //정규표현식과 비교
+//	}
 	
 }
