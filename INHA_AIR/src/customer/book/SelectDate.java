@@ -349,40 +349,16 @@ public class SelectDate extends JFrame implements ActionListener {
 		cal.set(calDayYear, calDayMonth-1, 1); //캘린더 객체에 년도, 달 설정과 Date 1로 설정
 		
 		
-		
-		//if (toDaycal.YEAR > cal.YEAR)
-		
 		if (obj == btnSelect) //날짜선택버튼 클릭
 		{
 			
-			if (objText.equals("날짜 선택")) {
+			if (objText.equals("날짜 선택")) { //버튼 텍스트가 날짜선택이면 날짜 선택 안 한 것이기 때문에 팝업창 띄우기
 				
 				JOptionPane.showMessageDialog(null, "날짜를 선택해주세요.", "탑승일 선택", JOptionPane.OK_CANCEL_OPTION);
 				
 			}
-			
-//			if (objText.equals("편도 선택")) {
-//				
-//				//System.out.print("편도");
-//				int result = JOptionPane.showConfirmDialog(null, "가는날 - " + goDay + "으로 편도 선택되었습니다.", "편도 선택", JOptionPane.YES_NO_OPTION);
-//				
-//				if(result == JOptionPane.YES_OPTION) {
-//					
-//					goDay = goDay+"";
-//					roundTrip = 0;
-//					
-//					bookForm.setGoDay(goDay);
-//					bookForm.setRoundTrip(roundTrip);
-//					bookForm.setDate();
-//					
-//					setVisible(false);
-//					
-//				}
-//				
-//			}
-			if (objText.equals("왕복 선택")) {
+			if (objText.equals("왕복 선택")) { //버튼이 왕복선택이면 날짜선택 완료한 것이므로 실행
 				
-				//System.out.print("왕복");
 				int result = JOptionPane.showConfirmDialog(null, "가는날 - " + goDay + "     오는 날 -" + comeDay + "으로 왕복 선택되었습니다.", "왕복 선택", JOptionPane.YES_NO_OPTION);
 				
 				if(result == JOptionPane.YES_OPTION) {
@@ -408,7 +384,7 @@ public class SelectDate extends JFrame implements ActionListener {
 		
 		
 		
-		else if (obj == btnReselect) {
+		else if (obj == btnReselect) { //모두 다시선택, 값 초기화
 			
 			btnSelect.setText("날짜 선택");
 			tfGo.setText("");
@@ -418,7 +394,7 @@ public class SelectDate extends JFrame implements ActionListener {
 			
 		}
 		
-		else if ((obj == btnLeft) || (obj==btnRight)) {
+		else if ((obj == btnLeft) || (obj==btnRight)) { //달력 왼쪽으로 바꾸거나 오른쪽으로 바꾸기
 			
 			if (obj == btnLeft) { //이전 달 달력 값 설정
 				
@@ -479,21 +455,20 @@ public class SelectDate extends JFrame implements ActionListener {
 			lblstringMonth = lblMonth.getText().substring(0,lblMonth.getText().length()-1);
 			
 
-			if (objText.isEmpty()) {
+			if (objText.isEmpty()) { //버튼 텍스트가 비어있으면 날짜 없으니 액션 안 넣기
 				
-			} else {
+			} else { //버튼에 텍스트가 있으면 실행
 				
-				
-				if(Integer.parseInt(lblstringMonth)<10)
-					lblstringMonth = 0 + lblstringMonth;
-				if(Integer.parseInt(objText)<10)
+				if(Integer.parseInt(lblstringMonth)<10)     //달 값이 10보다 작으면, 해당 페이지의 달 값 설정
+					lblstringMonth = 0 + lblstringMonth;	//한 자리수를 두 자리수로 설정
+				if(Integer.parseInt(objText)<10)		    //일 값도 10보다 값 작으면 설정
 					objText = 0 + objText;
 				
-				if(todayMonth < 10)
+				if(todayMonth < 10) //10보다 작으면 두자리수 설정
 					stTodayMonth = "0" + todayMonth;
 				else
 					stTodayMonth = todayMonth;
-				if(todayDate < 10)
+				if(todayDate < 10) //10보다 작으면 두자리수 설정
 					stTodayDate = "0" + todayDate;
 				else
 					stTodayDate = String.valueOf(todayDate);
@@ -506,31 +481,28 @@ public class SelectDate extends JFrame implements ActionListener {
 				if (day1 - day2 < 0) {
 					JOptionPane.showMessageDialog(null, "오늘 이전의 날은 선택할 수 없습니다.", "날짜선택", JOptionPane.OK_CANCEL_OPTION);
 				} else {
-					if (selectindex == 0) {
+					if (selectindex == 0) { //선택 안 했으면 goDay에 값 설정
 						
 						goDay = lblstringYear+lblstringMonth+objText;
-						
-						//tfGo.setText(lblstringYear + "/" + lblstringMonth + "/" + objText);
 						tfGo.setText(goDay);
 						tfCome.setText("");
 						btnSelect.setText("날짜 선택");
-						//btnSelect.setText("편도 선택");
 						selectindex++;
 											
 						
 						
-					} else if(selectindex == 1) {
+					} else if(selectindex == 1) { //선택했을 때
 						comeDay = lblstringYear+lblstringMonth+objText;
-						if(Integer.parseInt(goDay)<Integer.parseInt(comeDay)) {
+						
+						if(Integer.parseInt(goDay)<Integer.parseInt(comeDay)) { //goDay보다 값이 크면 comeDay에 설정
 							//tfCome.setText(lblstringYear + "/" + lblstringMonth + "/" + objText);
 							tfCome.setText(comeDay);
 							btnSelect.setText("왕복 선택");
 							selectindex--;
 							
 							
-						} else {
+						} else { //goDay보다 값이 작으면 goDay로 다시 설정
 							goDay = lblstringYear+lblstringMonth+objText;
-							//tfGo.setText(lblstringYear + "/" + lblstringMonth + "/" + objText);
 							btnSelect.setText("날짜 선택");
 							tfGo.setText(goDay);
 						}
