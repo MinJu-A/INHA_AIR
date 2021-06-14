@@ -60,7 +60,6 @@ public class FindIdForm extends JFrame implements ActionListener {
 		lblIdValue.setFont(fontNanumGothic18);
 		add(lblIdValue);
 		
-\\
 		
 	}
 

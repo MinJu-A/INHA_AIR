@@ -290,8 +290,8 @@ public TicketingRoundTripGoingForm(BookForm sel) {
 	
 	//승객 인원 값
 	this.numAdult = sel.getNumAdult();		//성인 수
-	this.numChild = sel.getNumChild();		//소아 수
-	this.numInfant = sel.getNumInfant();		//유아 수
+	this.numChild = sel.getNumInfant();		//소아 수
+	this.numInfant = sel.getNumChild();		//유아 수
 	this.numTotal = sel.getNumTotal();		//총 인원 수
 	
 	//출발지 값
