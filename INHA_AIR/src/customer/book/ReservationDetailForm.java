@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -449,13 +450,22 @@ public class ReservationDetailForm extends JFrame implements ActionListener {
 			// 편도인지 왕복인지 확인
 			if(COMscheduleNo == "") {
 				// 편도일 경우
+				// 정규식 확인
+				boolean rs = checkType();
+				
+				if(rs) {
 					insertInformationData(GOscheduleNo, 0);
+				}
 
 			} else {
 				// 왕복일 경우
-					// 동의 하고 좌석도 선택한 경우 정보 insert
-					// 가는날 정보 insert
+				// 동의 하고 좌석도 선택한 경우 정보 insert
+				// 가는날 정보 insert
+				boolean rs = checkType();
+				
+				if(rs) {
 					insertInformationData(GOscheduleNo, 1);
+				}
 			}
 
 		} else {
@@ -466,6 +476,63 @@ public class ReservationDetailForm extends JFrame implements ActionListener {
 	}
 
 
+	// 정규식확인
+	private boolean checkType() {
+		boolean status = false;
+		
+		status = checkKor(tfFamilyNameKor.getText().toString());
+		if(status) {
+			status = checkKor(tfNameKor.getText().toString());
+			if(status) {
+				status = checkEng(tfFamilyNameEng.getText().toString());
+				if(status) {
+					status = checkEng(tfNameEng.getText().toString());
+					if(status) {
+						status = checkPassport(tfPassport.getText().toString());
+						if(status) {
+							status = checkNum(tfBirth.getText().toString());
+							if(status) {
+								if(tfBirth.getText().toString().length() == 8) {
+									status = checkTel(tfTel.getText().toString());
+									if(status) {
+										if(tfTel.getText().toString().length() == 11) {
+											status = checkEmail(tfEmail.getText().toString());
+											if(status) {
+												return status;
+											} else {
+												JOptionPane.showMessageDialog(null, "이메일을 확인해주십시오.", "입력 안내", JOptionPane.INFORMATION_MESSAGE);
+											}
+										} else {
+											JOptionPane.showMessageDialog(null, "전화번호를 확인해주십시오.", "입력 안내", JOptionPane.INFORMATION_MESSAGE);	
+										}
+										
+									} else {
+										JOptionPane.showMessageDialog(null, "전화번호를 확인해주십시오.", "입력 안내", JOptionPane.INFORMATION_MESSAGE);
+									}
+								} else {
+									JOptionPane.showMessageDialog(null, "생년월일을 8자리로 입력해주십시오.", "입력 안내", JOptionPane.INFORMATION_MESSAGE);
+								}
+							} else {
+								JOptionPane.showMessageDialog(null, "생년월일을 숫자로 입력해주십시오.", "입력 안내", JOptionPane.INFORMATION_MESSAGE);
+							}
+						} else {
+							JOptionPane.showMessageDialog(null, "여권번호를 영문과 숫자로 입력해주십시오.", "입력 안내", JOptionPane.INFORMATION_MESSAGE);
+						}
+					} else {
+						JOptionPane.showMessageDialog(null, "영문 이름을 영문으로 입력해주십시오.", "입력 안내", JOptionPane.INFORMATION_MESSAGE);
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "영문 성을 영문으로 입력해주십시오.", "입력 안내", JOptionPane.INFORMATION_MESSAGE);
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, "한글 이름을 한글로 입력해주십시오.", "입력 안내", JOptionPane.INFORMATION_MESSAGE);
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "한글 성을 한글로 입력해주십시오.", "입력 안내", JOptionPane.INFORMATION_MESSAGE);
+		}
+		
+		return status;
+	}
 
 	// reservation 테이블에서 해당 예매 삭제
 	private int delReservation() {
@@ -615,5 +682,47 @@ public class ReservationDetailForm extends JFrame implements ActionListener {
 		tfEmail.setText("");
 		tfBirth.setText("");
 		cbAgree.setSelected(false);
+	}
+
+	// 한글 확인
+	private boolean checkKor(String str) {
+		String checkStr = "^[ㄱ-ㅎ가-힣]*$";
+		boolean result = Pattern.matches(checkStr, str);
+		return result;
+	}
+	
+	// 영문 확인
+	private boolean checkEng(String str) {
+		String checkStr = "^[a-zA-Z]*$";
+		boolean result = Pattern.matches(checkStr, str);
+		return result;
+	}
+	
+	// 숫자 확인
+	private boolean checkNum(String str) {
+		String checkStr = "^[0-9]*$";
+		boolean result = Pattern.matches(checkStr, str);
+		return result;
+	}
+	
+	// 여권번호
+	private boolean checkPassport(String str) {
+		String checkStr = "^[0-9a-zA-Z]*$";
+		boolean result = Pattern.matches(checkStr, str);
+		return result;
+	}
+	
+	// 이메일 확인
+	private boolean checkEmail(String str) {
+		String checkStr = "[0-9a-zA-Z]+(.[_a-z0-9]+)*@(?:\\w+\\.)+\\w+$";
+		boolean result = Pattern.matches(checkStr, str);
+		return result;
+	}
+	
+	// 전화번호 확인
+	private boolean checkTel(String str) {
+		String checkStr = "^01(?:0|1|[6-9])(?:\\d{3}|\\d{4})\\d{4}$";
+		boolean result = Pattern.matches(checkStr, str);
+		return result;
 	}
 }
