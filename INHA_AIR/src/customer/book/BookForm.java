@@ -36,6 +36,7 @@ public class BookForm extends JFrame implements ActionListener {
 	private int width = 1120, height = 770;
 	
 	//infant유아 child소아
+	private ImageIcon imgAirport, imgDate, imgPeople, imgSeat, imgSwap;
 	
 	// 폰트
 	Font fontArial30 = new Font("Arial", Font.BOLD | Font.ITALIC, 30);
@@ -97,6 +98,7 @@ public class BookForm extends JFrame implements ActionListener {
 	private String SelectArr = "";
 	private String SelectArrCode = "";
 	private JButton btnReset;
+	Image img = new ImageIcon("imgs/swap.png").getImage();
 	
 	//도착지 값 받아오기
 	public String getSelectArr() {
@@ -378,9 +380,7 @@ public class BookForm extends JFrame implements ActionListener {
 		imgSeat = new ImageIcon("image/seat.png");
 		lblSeat = new JLabel("좌석", imgSeat, SwingUtilities.LEFT);
 		lblSeat.setFont(fontNanumGothic18);
-		cbSeat = new JComboBox<String>(seat);
-		cbSeat.setFont(fontNanumGothic15);
-		cbSeat.setBackground(Color.white);
+		
 		
 		jpCalNum.add(lblDate);
 		jpCalNum.add(btnDate);
