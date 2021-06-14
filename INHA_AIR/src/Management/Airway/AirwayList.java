@@ -563,7 +563,7 @@ Object obj = e.getSource();
 			String ArrDay = tfArrDay.getText();
 			String ArrTime = tffArrTime.getText();
 			
-			String sql = "INSERT INTO airplane( scheduleNo, flightCode, `from`, fromDate,fromTime,  `to`, toDate,toTime)\r\n"
+			String sql = "INSERT INTO airSchedule( scheduleNo, flightCode, `from`, fromDate,fromTime,  `to`, toDate,toTime)\r\n"
 					+ "VALUES('" + sche +"','" + flightNo +"','" + Dep +"','" + DepDay +"','" + DepTime + "','" + Arr + "','" + ArrDay + "','" + ArrTime + "'";
 			
 			System.out.println(sql);
@@ -622,7 +622,7 @@ Object obj = e.getSource();
 			String ArrDay = tfArrDay.getText();
 			String ArrTime = tffArrTime.getText();
 			
-			String sql = "DELETE FROM airplane\r\n"
+			String sql = "DELETE FROM airSchedule\r\n"
 					+ "WHERE scheduleNo='" + sche + "' AND flightCode = '" + flightNo + "' AND `from` = '" + Dep +"' AND fromDate = '" + DepDay
 					+ "' fromDate sex = '" + DepTime + "' AND `to` = '" + Arr + "' AND toDate = '" + ArrDay + "'AND toTime = '" + ArrTime + "'";
 			
@@ -652,7 +652,7 @@ Object obj = e.getSource();
 			String ArrDay = tfArrDay.getText();
 			String ArrTime = tffArrTime.getText();
 			
-			String sql = "UPDATE airplane\r\n"
+			String sql = "UPDATE airschedule\r\n"
 					+ "SET scheduleNo='" + sche + "' , flightCode = '" + flightNo + "' , `from` = '" + Dep +"' , fromDate = '" + DepDay
 					+ "' fromDate sex = '" + DepTime + "' , `to` = '" + Arr + "' , toDate = '" + ArrDay + "', toTime = '" + ArrTime + "'";
 			System.out.println(sql);
