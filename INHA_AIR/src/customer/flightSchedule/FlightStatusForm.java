@@ -138,14 +138,15 @@ public class FlightStatusForm extends JFrame implements ActionListener {
 	// 공항 정보 가져오기 - 운행되고 있는 공항만 가져옴
 	private void setCity() {
 		// 국내 공항 먼저
-		String sql = "SELECT code, country, city FROM airport \r\n"
+		String sqlIn = "SELECT code, country, city FROM airport \r\n"
 				+ "WHERE terminal='국내' AND code IN (SELECT DISTINCT `from` FROM airplane)\r\n"
 				+ "ORDER BY city";
 		
-		ResultSet rs = databaseClass.select(sql);
+		// 국내 공항 정보 가져와서 콤보박스에 추가
+		ResultSet rsIn = databaseClass.select(sqlIn);
 		try {
-			while(rs.next()) {
-				city.add(rs.getString("city") + "/" + rs.getString("code"));
+			while(rsIn.next()) {
+				city.add(rsIn.getString("city") + "/" + rsIn.getString("code"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -153,14 +154,15 @@ public class FlightStatusForm extends JFrame implements ActionListener {
 		}
 	
 		// 국내 뒤에 국제 공항 정보 나오도록
-		String sql2 = "SELECT code, country, city FROM airport \r\n"
+		String sqlOut = "SELECT code, country, city FROM airport \r\n"
 				+ "WHERE terminal='국제' AND code IN (SELECT DISTINCT `from` FROM airplane)\r\n"
 				+ "ORDER BY country, city";
 		
-		ResultSet rs2 = databaseClass.select(sql2);
+		// 국제 공항 정보 가져와서 콤보박스에 추가
+		ResultSet rsOut = databaseClass.select(sqlOut);
 		try {
-			while(rs2.next()) {
-				city.add(rs2.getString("city") + "/" + rs2.getString("code"));
+			while(rsOut.next()) {
+				city.add(rsOut.getString("city") + "/" + rsOut.getString("code"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -170,14 +172,14 @@ public class FlightStatusForm extends JFrame implements ActionListener {
 		// 출발지 가장 첫번째 값을 기준으로 도착지 정보 가져옴
 		String dept = city.get(0);
 		dept = dept.substring(dept.lastIndexOf("/")+1);
-		String sql3 = "SELECT code, country, city FROM airport WHERE code IN (SELECT `to` "
+		String sqlDesn = "SELECT code, country, city FROM airport WHERE code IN (SELECT `to` "
 				+ "FROM airplane "
 				+ "WHERE `from`='" + dept + "')";
 		
-		ResultSet rs3 = databaseClass.select(sql3);
+		ResultSet rsDesn = databaseClass.select(sqlDesn);
 		try {
-			while(rs3.next()) {
-				destination.add(rs3.getString("city") + "/" + rs3.getString("code"));
+			while(rsDesn.next()) {
+				destination.add(rsDesn.getString("city") + "/" + rsDesn.getString("code"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -249,7 +251,6 @@ public class FlightStatusForm extends JFrame implements ActionListener {
 		
 		model = new DefaultTableModel(datas, tableTitle);
 		
-//		jtSchedule = new JTable(model);
 		jtSchedule = new CreateTable(model);
 		jtSchedule.setFont(fontNanumGothic15);
 		jtSchedule.setRowHeight(30);
