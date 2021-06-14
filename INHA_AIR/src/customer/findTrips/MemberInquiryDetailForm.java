@@ -48,39 +48,10 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 			Connection conn = null; 
 			Statement state = null; 
 	
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-			
-			//reserveDetail
-//			String reserveNum = "test001010";
-//			String scheduleNo = "CTOG-39";
-//			String nameKOR = "이은선";
-//			String nameENG = "leeunsdk";
-//			String sex = "여";
-//			String passport = "dkjslkfjkl";	
-//			String birth = "2000-02-02";	
-//			String tel = "dkjflsjflk";
-//			String email = "sdjlfksjdklfsjd";	
 			int agree;	
 			int baggage;
 			
-			//airschedule
-//			String flightCode = "IH5898";
-//			String from = "CJU";
-//			String fromDate ="2021-07-08";
-//			String fromTime = "12:00:00";
-//			String to = "GMP";
-//			String toDate;
-//			String toTime = "13:30:00";
-			
-			//reservation
-//			String GOclass = "e";
-//			String ID = "test1";
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-			
-//			//reserveDetail
+
 			String reserveNum;
 			String scheduleNo;
 			String nameKOR ;
@@ -90,10 +61,7 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 			String birth = " ";	
 			String tel;
 			String email;	
-//			int agree;	
-//			int baggage;
 			
-			//airschedule
 			String GOflightCode;
 			String from;
 			String GOfromDate;
@@ -102,7 +70,6 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 			String toDate;
 			String GOtoTime;
 			
-			//reservation
 			String GOclass;
 			String id;
 //------------------------------------------------------------------------------------------------------------------
@@ -177,10 +144,6 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 
 	public MemberInquiryDetailForm(String id) {
 		
-//		this.mainMenuForm=mainMenuForm;
-		
-//		this.id = mainMenuForm.getId();
-		
 		this.id = id;
 		
 		setTitle(title);
@@ -216,7 +179,6 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 		lblInquiryTitle = new JLabel("예약 상세"); //큰 제목
 		lblInquiryTitle.setBounds(70,85 , 200, 60);
 		lblInquiryTitle.setFont(fontNanumGothic22);
-//		lblInquiryTitle.setForeground(crNavy);;
 		
 		jpInquiryDetailTop = new JPanel(); //고객이 선택한 정보를 표시하는 바
 		jpInquiryDetailTop.setLayout(null);
@@ -274,11 +236,6 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 		lblSeat.setBounds(690, 10, 200, 20);
 		lblSeat.setFont(fontNanumGothic15);
 		
-//		btnCheckIn = new JButton("체크인");
-//		btnCheckIn.setBounds(880, 70, 90, 35);
-//		btnCheckIn.setFont(fontNanumGothic12);
-//		btnCheckIn.setBackground(crPaleblue);
-		
 		jpInquiryDetailTop.add(lblPName);
 		jpInquiryDetailTop.add(lblPassengerDetail);
 		jpInquiryDetailTop.add(lblPNum);
@@ -304,7 +261,6 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 		jpInquiry2.setSize(1000,180);
 		jpInquiry2.setLocation(70,454);
 		jpInquiry2.setBackground(crInfo);
-//		jpInquiry2.add(btnCheckIn);
 		
 		add(lblInquiryTitle);
 		add(jpInquiryDetailTop);
@@ -315,7 +271,8 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 		//---------------------------------------
 		//---------------------------------------
 		
-		lblnameKOR = new JLabel(nameKOR + " · " + sex);
+//		lblnameKOR = new JLabel(nameKOR + " · " + sex); //이름
+		lblnameKOR = new JLabel(nameKOR); //이름과 성별
 		lblnameKOR.setBounds(50, 20, 80, 20);
 		lblnameKOR.setFont(fontNanumGothic15);
 		
@@ -323,7 +280,6 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 		lblnameENG.setBounds(47, 45, 150, 20);
 		lblnameENG.setFont(fontNanumGothic15Plain);
 		
-//		lblSexBirth = new JLabel(birth.substring(0,4)+"-"+birth.substring(4,6)+"-"+birth.substring(6,8) + "  ·  " + sex);
 		lblSexBirth = new JLabel(birth + " ·  "+sex);
 		lblSexBirth.setBounds(250, 20, 250, 20);
 		lblSexBirth.setFont(fontNanumGothic15Plain);
@@ -352,11 +308,6 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 		lblInfant.setBounds(850, 80, 300, 20);
 		lblInfant.setFont(fontNanumGothic15Plain);
 		
-//		lblTotalNum = new JLabel(passport);
-//		lblTotalNum.setBounds(690, 20, 300, 20);
-//		lblTotalNum.setFont(fontNanumGothic15Plain);
-//		
-		//---------------------------------------
 		//---------------------------------------
 		
 		jpInquiry1.add(lblnameKOR);
@@ -396,7 +347,6 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 		lblToFromP.setBounds(270, 100, 150, 20);
 		lblToFromP.setFont(fontNanumGothic18);
 		
-//		lblFromToD = new JLabel(GOfromDate.substring(0,4)+"년 " + GOfromDate.substring(5,7) + "월 " + GOfromDate.substring(7,9) + "일");
 		lblFromToD = new JLabel(GOfromDate);
 		lblFromToD.setBounds(460, 20, 150, 20);
 		lblFromToD.setFont(fontNanumGothic15Plain);
@@ -413,10 +363,6 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 		lblCOMfromTime.setBounds(460, 130, 200, 20);
 		lblCOMfromTime.setFont(fontNanumGothic15Plain);
 		
-//		if(GOclass == "economy") {seatClass = "이코노미";}
-//		else if(GOclass == "business") {seatClass = "비즈니스";}
-//		else if(GOclass == "first"){seatClass = "퍼스트";}
-//		
 		lblGOSeatInfo = new JLabel("클래스 : " + GOclass );
 		lblGOSeatInfo.setBounds(690, 20, 300, 20);
 		lblGOSeatInfo.setFont(fontNanumGothic15Plain);
@@ -431,8 +377,6 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 		jpInquiry2.add(lblGOFlightcode);
 		jpInquiry2.add(lblCOMFlightcode);
 		
-//		jpInquiry2.add(lblGOScheduleNo);
-//		jpInquiry2.add(lblCOMscheduleNo);
 		jpInquiry2.add(lblFromToP);
 		jpInquiry2.add(lblToFromP);
 		jpInquiry2.add(lblFromToD);
@@ -457,7 +401,8 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 			
 			String sql;
 			sql = "SELECT * FROM reservation WHERE `ID` = '"+ id +"' ";
-			
+			//reservation테이블에서 id 이용하여 예매 상세 정보를 검색
+
 			ResultSet rs = state.executeQuery(sql);
 			while (rs.next()) {
 				reserveNum = rs.getString("reserveNum");
@@ -478,14 +423,6 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 				this.adult = adult;
 				this.child = child;
 				this.infant = infant;
-				
-//				if(GOclass == "economy") {seatClass = "이코노미";}
-//				else if(GOclass == "business") {seatClass = "비즈니스";}
-//				else if(GOclass == "first"){seatClass = "퍼스트";}
-//				
-//				
-				System.out.println(GOclass);
-//				System.out.println(seatClass);
 				
 			}
 			rs.close();
@@ -508,7 +445,8 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 
 		String sql;
 		sql = "SELECT * FROM reservationDetail WHERE `reserveNum` = '"+ reserveNum +"' ";
-		
+		//reservationDetail테이블에서 reserveNum 이용하여 예매 상세 정보를 검색
+
 		ResultSet rs = state.executeQuery(sql);
 		while (rs.next()) {
 			nameKOR = rs.getString("nameKOR");
@@ -531,9 +469,6 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 			this.agree = agree;
 			this.baggage = baggage;
 			
-			System.out.println(tel);
-			
-			
 		}
 		rs.close();
 		state.close();
@@ -555,7 +490,8 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 
 		String sql;
 		sql = "SELECT * FROM airSchedule WHERE `scheduleNo` = '"+ GOscheduleNo +"' ";
-		
+		//airSchedule테이블에서 스케줄번호 이용하여 항공편 상세 정보를 검색
+
 		ResultSet rs = state.executeQuery(sql);
 		while (rs.next()) {
 			GOflightCode = rs.getString("flightCode");
@@ -584,19 +520,15 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 		
 		String sql;
 		sql = "SELECT * FROM airSchedule WHERE `scheduleNo` = '"+ COMscheduleNo +"' ";
-		
+		//airSchedule테이블에서 스케줄번호 이용하여 항공편 상세 정보를 검색
+
 		ResultSet rs = state.executeQuery(sql);
 		while (rs.next()) {
 			COMflightCode = rs.getString("flightCode");
-//			from = rs.getString("from");
 			COMfromDate = rs.getString("fromDate");
 			COMfromTime = rs.getString("fromTime");
 			COMtoTime = rs.getString("toTime");
 
-			
-			
-//			to = rs.getString("to");
-//			toTime = rs.getString("toTime");
 		}
 		rs.close();
 		state.close();

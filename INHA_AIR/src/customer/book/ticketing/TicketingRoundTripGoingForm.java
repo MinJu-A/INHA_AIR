@@ -317,7 +317,7 @@ public TicketingRoundTripGoingForm(BookForm sel) {
 	crInfo = new Color(240,240,240);//고객이 선택한 정보를 나타내는 바의 색 
 	crTop = new Color(230,230,235);//고객이 선택한 정보를 나타내는 바의 색 
 	crClass = new Color(213, 230, 250);//좌석 등급 선택 버튼의 색
-//	crSelect = new Color(120,180,250);
+	crSelect = new Color(120,180,250);
 	crNext = new Color(10,90,150); //다음 버튼 색깔
 	
 	jpSelectedInfo = new JPanel(); //고객이 선택한 정보를 표시하는 바

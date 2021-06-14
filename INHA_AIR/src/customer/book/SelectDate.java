@@ -467,7 +467,7 @@ public class SelectDate extends JFrame implements ActionListener {
 				if(todayMonth < 10) //10보다 작으면 두자리수 설정
 					stTodayMonth = "0" + todayMonth;
 				else
-					stTodayMonth = todayMonth;
+					stTodayMonth = String.valueOf(todayMonth);
 				if(todayDate < 10) //10보다 작으면 두자리수 설정
 					stTodayDate = "0" + todayDate;
 				else

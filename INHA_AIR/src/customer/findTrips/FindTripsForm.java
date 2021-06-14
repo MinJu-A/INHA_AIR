@@ -113,27 +113,7 @@ public class FindTripsForm extends JFrame implements ActionListener {
 		private String GOfromDate;
 
 	public FindTripsForm(String id) {
-//		this.mainMenuForm=mainMenuForm;
-		
-//		this.id = mainMenuForm.getId();
 		this.id = id;
-		
-		
-//		this.id ="test2";
-//		
-//		this.nameKOR = nameKOR;		
-//		this.scheduleNo = scheduleNo;		
-//		this.from = from;		
-//		this.to = to;		
-//		this.fromDate = fromDate;	
-//		this.reserveNum = reserveNum;	
-//		
-//		this.nameKOR = " ";		
-//		this.scheduleNo =" ";		
-//		this.from =" ";		
-//		this.to = " ";			
-//		this.fromDate = " ";	
-//		this.reserveNum = " ";		
 		
 		setTitle(title);
 		setSize(width, height);
@@ -191,10 +171,6 @@ public class FindTripsForm extends JFrame implements ActionListener {
 		lblRArr.setBounds(700, 10, 80, 20);
 		lblRArr.setFont(fontNanumGothic15);
 		
-//		lblRSeat = new JLabel("좌석");
-//		lblRSeat.setBounds(770, 10, 80, 20);
-//		lblRSeat.setFont(fontNanumGothic15);
-			
 		btnDetail1 = new JButton("예매 상세");
 		btnDetail1.setBounds(880, 40, 90, 35);
 		btnDetail1.setFont(fontNanumGothic12);
@@ -215,13 +191,12 @@ public class FindTripsForm extends JFrame implements ActionListener {
 		btnDetail4.setBounds(880, 40, 90, 35);
 		btnDetail4.setFont(fontNanumGothic12);
 		btnDetail4.setBackground(crPaleblue);
-//		
+		
 		jpInquiryTop.add(lblRNum);
 		jpInquiryTop.add(lblRName);
 		jpInquiryTop.add(lblRDate);
 		jpInquiryTop.add(lblRDep);
 		jpInquiryTop.add(lblRArr);
-//		jpInquiryTop.add(lblRSeat);
 		
 		jpInquiry1 = new JPanel(); //3개의 시간표 중 선택 1
 		jpInquiry1.setLayout(null);
@@ -229,29 +204,8 @@ public class FindTripsForm extends JFrame implements ActionListener {
 		jpInquiry1.setLocation(70,152);
 		jpInquiry1.setBackground(crInfo);
 		
-//		jpInquiry2 = new JPanel();//선택 2
-//		jpInquiry2.setLayout(null);
-//		jpInquiry2.setSize(1000,110);
-//		jpInquiry2.setLocation(70,274);
-//		jpInquiry2.setBackground(crInfo);
-//		
-//		jpInquiry3 = new JPanel();// 선택 3
-//		jpInquiry3.setLayout(null);
-//		jpInquiry3.setSize(1000,110);
-//		jpInquiry3.setLocation(70,396);
-//		jpInquiry3.setBackground(crInfo);
-//		
-//		jpInquiry4 = new JPanel();// 선택 3
-//		jpInquiry4.setLayout(null);
-//		jpInquiry4.setSize(1000,110);
-//		jpInquiry4.setLocation(70,518);
-//		jpInquiry4.setBackground(crInfo);
-		
 		jpInquiry1.add(btnDetail1);
-//		jpInquiry2.add(btnDetail2);
-//		jpInquiry3.add(btnDetail3);
-//		jpInquiry4.add(btnDetail4);
-//		
+		
 		add(jpInquiryTop);
 		add(jpInquiry1);
 
@@ -305,10 +259,11 @@ public class FindTripsForm extends JFrame implements ActionListener {
 
 			String sql;
 			sql = "SELECT * FROM reservation WHERE `ID` = '"+ id +"' ORDER BY date DESC LIMIT 1";
+			//reservation테이블에서 id를 이용하여 가장 최신의 예매 정보를 검색
 			
 			ResultSet rs = state.executeQuery(sql);
 			
-			int count = 0;
+//			int count = 0;
 			while (rs.next()) {
 				
 				
@@ -323,7 +278,7 @@ public class FindTripsForm extends JFrame implements ActionListener {
 				
 				System.out.println(reserveNum);
 				
-				count++;
+//				count++;
 			}
 //			rs.close();
 //			state.close();
@@ -345,7 +300,8 @@ public class FindTripsForm extends JFrame implements ActionListener {
 
 		String sql;
 		sql = "SELECT * FROM reservationDetail WHERE `reserveNum` = '"+ reserveNum +"' ";
-		
+		//reservationDetail테이블에서 예매번호를 이용하여 가장 최신의 예매자 이름 검색
+
 		ResultSet rs = state.executeQuery(sql);
 		while (rs.next()) {
 			
@@ -374,7 +330,7 @@ public class FindTripsForm extends JFrame implements ActionListener {
 		
 		String sql;
 		sql = "SELECT * FROM reservation WHERE `reserveNum` = '"+ reserveNum +"' ";
-		
+		//reservation테이블에서 예매 번호를 이용하여 가는편 스케줄번호와 오는 편의 스케줄 번호를 검색
 		ResultSet rs = state.executeQuery(sql);
 		while (rs.next()) {
 			GOscheduleNo = rs.getString("GOscheduleNo");
@@ -405,7 +361,8 @@ public class FindTripsForm extends JFrame implements ActionListener {
 
 		String sql;
 		sql = "SELECT * FROM airSchedule WHERE `scheduleNo` = '"+ GOscheduleNo +"' ";
-		
+		//airSchedule테이블에서 스케줄번호를 이용하여 항공편 정보를 검색
+
 		ResultSet rs = state.executeQuery(sql);
 		while (rs.next()) {
 			from = rs.getString("from");
@@ -435,7 +392,8 @@ public class FindTripsForm extends JFrame implements ActionListener {
 		
 		String sql;
 		sql = "SELECT * FROM airSchedule WHERE `scheduleNo` = '"+ COMscheduleNo +"' ";
-		
+		//airSchedule테이블에서 스케줄번호를 이용하여 항공편 정보를 검색
+
 		ResultSet rs = state.executeQuery(sql);
 		while (rs.next()) {
 			COMfromDate = rs.getString("fromDate");
