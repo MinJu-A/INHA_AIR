@@ -39,6 +39,7 @@ import Management.Form.HintTextField;
 import Management.Main.MainForm;
 import Management.Payment.PaymentList;
 import be.sign.SignIn;
+import customer.login.LoginForm;
 
 public class UserList extends JFrame implements ActionListener, MouseListener {
 	// Title 및 사이즈 설정
@@ -48,7 +49,7 @@ public class UserList extends JFrame implements ActionListener, MouseListener {
 	//메뉴
 		private JPanel jpTOP, jpMenu;
 		private JButton btnLogo, btnUser, btnAirway, btnAirport, btnPay, btnLogout, btnser,btnAirplane;
-		private SignIn signIn;
+		private LoginForm signIn;
 		private UserList userlist, userList;
 		private PaymentList paymentlist;
 		private AirwayList airwaylist;
@@ -524,7 +525,7 @@ public class UserList extends JFrame implements ActionListener, MouseListener {
 			if(result == JOptionPane.YES_OPTION ) {
 				JOptionPane.showMessageDialog(null, "시스템을 종료합니다");
 				dispose();
-				signIn = new SignIn();
+				signIn = new LoginForm();
 			} else {
 				JOptionPane.showMessageDialog(null, "로그아웃을 취소합니다.");
 			}

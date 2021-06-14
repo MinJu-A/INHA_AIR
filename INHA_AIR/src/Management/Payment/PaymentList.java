@@ -38,6 +38,7 @@ import Management.Airway.AirwayList;
 import Management.Main.MainForm;
 import Management.User.UserList;
 import be.sign.SignIn;
+import customer.login.LoginForm;
 
 public class PaymentList extends JFrame implements ActionListener {
 	// Title 및 사이즈 설정
@@ -47,7 +48,7 @@ public class PaymentList extends JFrame implements ActionListener {
 	//메뉴
 		private JPanel jpTOP, jpMenu;
 		private JButton btnLogo, btnUser, btnAirway, btnAirport, btnPay, btnLogout, btnser, btnAirplane;
-		private SignIn signIn;
+		private LoginForm signIn;
 		private UserList userlist, userList;
 		private PaymentList paymentlist;
 		private AirwayList airwaylist;
@@ -460,7 +461,7 @@ Object obj = e.getSource();
 			if(result == JOptionPane.YES_OPTION ) {
 				JOptionPane.showMessageDialog(null, "시스템을 종료합니다");
 				dispose();
-				signIn = new SignIn();
+				signIn = new LoginForm();
 			} else {
 				JOptionPane.showMessageDialog(null, "로그아웃을 취소합니다.");
 			}

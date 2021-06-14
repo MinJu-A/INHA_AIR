@@ -18,6 +18,7 @@ import Management.Airway.AirwayList;
 import Management.Payment.PaymentList;
 import Management.User.UserList;
 import be.sign.SignIn;
+import customer.login.LoginForm;
 
 public class MainForm extends JFrame implements ActionListener {
 	// Title 및 사이즈 설정
@@ -27,7 +28,7 @@ public class MainForm extends JFrame implements ActionListener {
 	//변수
 	private JPanel jpTOP, jpMenu;
 	private JButton btnLogo, btnUser, btnAirway, btnAirline, btnAirport, btnLogout, btnPay, btnAirplane;
-	private SignIn signIn;
+	private LoginForm signIn;
 	private UserList userlist;
 	private PaymentList paymentlist;
 	private AirwayList airwaylist;
@@ -201,7 +202,7 @@ public class MainForm extends JFrame implements ActionListener {
 			if(result == JOptionPane.YES_OPTION ) {
 				JOptionPane.showMessageDialog(null, "로그아웃 되었습니다.");
 				dispose();
-				signIn = new SignIn();
+				signIn = new LoginForm();
 			} else {
 				JOptionPane.showMessageDialog(null, "로그아웃을 취소합니다.");
 			}
