@@ -64,7 +64,7 @@ public class MainMenuForm extends JFrame implements ActionListener {
 	// Forms
 	private BookForm bookForm;
 	private FlightStatusForm flightStatusForm;
-	private FindTripsFormTEST findTripsForm;
+	private FindTripsForm findTripsForm;
 	private JButton btnSignOut;
 	
 	public MainMenuForm() {
@@ -165,7 +165,7 @@ public class MainMenuForm extends JFrame implements ActionListener {
 			this.setVisible(false);
 			
 		} else if(obj == btnFindTrips) {
-			findTripsForm = new FindTripsFormTEST(id);
+			findTripsForm = new FindTripsForm(id);
 			this.setVisible(false);
 			
 		} else if(obj == btnFilghtStatus) {

@@ -277,8 +277,8 @@ public class FindTripsForm extends JFrame implements ActionListener {
 		
 		add(jpInquiryTop);
 		add(jpInquiry1);
-		add(jpInquiry2);
-		add(jpInquiry3);
+//		add(jpInquiry2);
+//		add(jpInquiry3);
 //		add(jpInquiry4);
 
 		//------------------------------------------
@@ -333,16 +333,14 @@ public class FindTripsForm extends JFrame implements ActionListener {
 			state = conn.createStatement();	
 
 			String sql;
-			sql = "SELECT * FROM reservation WHERE `ID` = '"+ id +"' ORDER BY date DESC";
+			sql = "SELECT * FROM reservation WHERE `ID` = '"+ id +"' ORDER BY date DESC LIMIT 1";
 			
 			ResultSet rs = state.executeQuery(sql);
 			
 			int count = 0;
 			while (rs.next()) {
 				
-				if(count>2) {
-					break;
-				}
+				
 				reserveNum = rs.getString("reserveNum");
 				GOscheduleNo = rs.getString("GOscheduleNo");
 				COMscheduleNo = rs.getString("COMscheduleNo");
