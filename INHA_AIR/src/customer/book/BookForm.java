@@ -51,7 +51,7 @@ public class BookForm extends JFrame implements ActionListener {
 	private JButton btnMainMenu;
 	private JPanel jpBook;
 	
-	//
+	//id값 받아오기
 	private String id;
 
 	public String getId() {

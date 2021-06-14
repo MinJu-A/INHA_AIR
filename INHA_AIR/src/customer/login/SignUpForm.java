@@ -40,9 +40,6 @@ public class SignUpForm extends JFrame implements ActionListener{
 	static String dbID="inhaair";
 	static String dbPassword="1234";
 	
-	Font fontGothic = new Font("Gothic", Font.BOLD, 13);
-	Font fontNanumGothic = new Font("NanumGothic", Font.BOLD, 20);
-	
 	private String title="INHA AIR - 회원가입";
 	private int width = 800, height = 700;
 	
@@ -55,46 +52,40 @@ public class SignUpForm extends JFrame implements ActionListener{
 	Font fontNanumGothic20 = new Font("NanumGothic", Font.BOLD, 20);	// 나눔고딕 20
 	Font fontNanumGothic22 = new Font("NanumGothic", Font.BOLD, 22);	// 나눔고딕 20
 	Font fontNanumGothic25 = new Font("NanumGothic", Font.BOLD, 25);	// 나눔고딕 25
+	Font fontGothic = new Font("Gothic", Font.BOLD, 13);
+	Font fontNanumGothic = new Font("NanumGothic", Font.BOLD, 20);
 
 	
-	private JPanel jpInfL;
-	private JCheckBox chkNewsLetter, chkPromotion, chkSMS;
-	private JButton btnchk, btnSignUp;
-	private JLabel lblLNEng, lblAdd,lblLNKor, lblID, lblPW, lblPWchk, lblBirth, lblSex, lblEmail, lblPhone;
+	private JPanel jpTitle, jpInfL, jpInfR; //제목패널, 왼쪽정보패널, 오른쪽정보패널
+	private JCheckBox chkNewsLetter, chkPromotion, chkSMS; //체크박스 - 뉴스레터, 프로모션, SMS
+	private JButton btnchk, btnSignUp; //아이디 중복체크 버튼, 회원가입 버튼
+	private JLabel lblTitle, lblLNEng, lblLNKor, lblID, lblPW, lblPWchk;	//제목, 영어이름, 한국어이름, 아이디, 비밀번호, 비밀번호확인 라벨
+	private JLabel lblBirth, lblSex, lblEmail, lblPhone, lblAdd; //생일, 성별, 이메일, 핸드폰번호, 정보동의 라벨
+	private JLabel  lblEmailEx, lblPhoneEx, lblPassportEx, lblBirthE, lblPassport; //이메일 예시, 핸드폰번호 예시, 여권번호 예시, 생년월일 예시, 여권번호 라벨
 	
-	private JTextField tfID, tfEmail, tfLNEng, tfLNKor;
+	private JTextField tfID, tfEmail, tfLNEng, tfLNKor; //아이디, 이메일, 한글이름, 영어이름 텍스트필드
+	private JFormattedTextField tfBirth, tfPhone, tfPassport; //생일, 핸드폰번호, 여권번호 입력형식 설정
+	private JPasswordField tfPW, tfPWchk; //비밀번호, 비밀번호확인 라벨
+	private ButtonGroup rg; //성별 라디오그룹
+	private JRadioButton rbMan, rbWoman; //남성 라디오버튼, 여성 라디오버튼
+	private String sex, birthday; //데이터베이스에 입력될 성별, 생일 값
+	private int news, pro, sms; //데이터베이스에 입력될 뉴스레터, 프로모션, SMS 여부
+	private boolean telVCheck, emailVCheck, passportVCheck, idVCheck; //전화번호, 이메일, 여권번호, 아이디 중복여부 확
+	private boolean korVCheck, engVCheck; //한글이름 텍스트 확인, 영어이름 텍스트 확인
 	
-	private JFormattedTextField tfBirth, tfPhone, tfPassport;
-	
-	private JPasswordField tfPW, tfPWchk;
-	private ButtonGroup rg;
-	private JRadioButton rbMan, rbWoman;
-	private JPanel jpTitle;
-	private JLabel lblTitle;
-	private JPanel jpInfR;
-	private JLabel lblEmailEx;
-	private JLabel lblPhoneEx;
-	private JLabel lblBirthEx;
-	private boolean idVCheck = false;
-	private String sex;
-	private int news, pro, sms;
-	private JLabel lblPassport;
-	private boolean telVCheck;
-	private boolean emailVCheck;
-	private boolean passportVCheck;
-	private String birthday;
-	private JLabel lblPassportEx;
-	
-	private boolean korVCheck;
-	private boolean engVCheck;
 	
 
-	private String kor = "^[가-힣]+$";
-	private String eng = "^[a-zA-Z]+$";
+	private String kor = "^[가-힣]+$"; //정규표현식 - 한글
+	private String eng = "^[a-zA-Z]+$"; //정규표현식 - 영어
+	private String idset = "^[a-zA-Z0-9]"; //정규표현식 - 아이디
+	private String ema = "^[a-zA-Z0-9._%+-]+@"; //정규표현식 - 이메일
 
-
+			
+			
+			
 	public SignUpForm() {
 		
+		//화면 설정
 		setTitle(title);
 		setSize(width, height);
 		setResizable(false);
@@ -588,6 +579,16 @@ public class SignUpForm extends JFrame implements ActionListener{
 	
 	//영어이름 한글확인
 	private boolean engCheck(String engV) {
+		return engVCheck = engV.matches(eng);
+	}
+	
+	//영어이름 한글확인
+	private boolean emaCheck(String emaV) {
+		return engVCheck = engV.matches(eng);
+	}
+	
+	//영어이름 한글확인
+	private boolean idSetCheck(String idSet) {
 		return engVCheck = engV.matches(eng);
 	}
 	
