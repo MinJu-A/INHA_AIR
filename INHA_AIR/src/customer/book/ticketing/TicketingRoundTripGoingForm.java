@@ -812,14 +812,14 @@ public TicketingRoundTripGoingForm(BookForm sel) {
 			
 //			btnEcon.setBackground(crNext);
 			
-			jpFlight1.setBackground(crChange);
+//			jpFlight1.setBackground(crChange);
 		}
 		else if(obj == btnBus)
 		{
 			totalPay = businessPay;
 			lblTotalPayGoing.setText(totalPay + "원");	
 			selectedSeatGo = "business";
-			jpFlight2.setBackground(crChange);
+//			jpFlight2.setBackground(crChange);
 //			GoPay = totalPay;
 			
 //			btnBus.setBackground(crNext);
@@ -831,7 +831,7 @@ public TicketingRoundTripGoingForm(BookForm sel) {
 			lblTotalPayGoing.setText(totalPay + "원");	
 			
 			selectedSeatGo = "first";
-			jpFlight3.setBackground(crChange);
+//			jpFlight3.setBackground(crChange);
 //			GoPay = totalPay;
 			
 //			btnFirs.setBackground(crNext);

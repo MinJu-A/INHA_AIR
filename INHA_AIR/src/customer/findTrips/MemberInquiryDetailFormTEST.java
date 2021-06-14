@@ -104,7 +104,7 @@ public class MemberInquiryDetailFormTEST extends JFrame implements ActionListene
 			
 			//reservation
 			String GOclass;
-			String ID = "test1";
+//			String ID = "test1";
 //------------------------------------------------------------------------------------------------------------------
 		private JPanel jpInquiry1; // 시간 선택시 비행기1
 		private JPanel jpInquiry2; // 비행기 2
@@ -153,6 +153,7 @@ public class MemberInquiryDetailFormTEST extends JFrame implements ActionListene
 		private JLabel lblFromToD;
 		private Component lblSeatInfo;
 		private String seatClass;
+		private String id;
 
 	public MemberInquiryDetailFormTEST() {
 		setTitle(title);
@@ -367,12 +368,13 @@ public class MemberInquiryDetailFormTEST extends JFrame implements ActionListene
 			Class.forName(driver);
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 			String sql;
-			sql = "SELECT * FROM reservation WHERE `ID` = '"+ ID +"' ";
+			sql = "SELECT * FROM reservation WHERE `ID` = '"+ id +"' ";
 			
 			ResultSet rs = state.executeQuery(sql);
 			while (rs.next()) {
 				reserveNum = rs.getString("reserveNum");
 				GOclass = rs.getString("GOclass");
+				
 				System.out.println(reserveNum);
 			}
 			rs.close();

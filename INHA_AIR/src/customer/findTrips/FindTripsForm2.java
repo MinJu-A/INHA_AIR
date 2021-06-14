@@ -24,7 +24,7 @@ import customer.start.MainMenuForm;
 
 
 
-public class FindTripsForm extends JFrame implements ActionListener {
+public class FindTripsForm2 extends JFrame implements ActionListener {
 	// Title 및 사이즈 설정
 	private String title = "INHA AIR";
 	private int width = 1120, height = 770;
@@ -69,7 +69,7 @@ public class FindTripsForm extends JFrame implements ActionListener {
 		private String scheduleNo;		
 		private String from;		
 		private String to;		
-//		private String GOfromDate;	
+		private String fromDate;	
 //		String ID;
 	//-------------------------------------	
 	//-------------------------------------	
@@ -120,13 +120,10 @@ public class FindTripsForm extends JFrame implements ActionListener {
 		private JLabel lblFromDate;
 		private JLabel lblDepP;
 		private Component lblArrP;
-		private String COMfromDate;
+		private String toDate;
 		private JLabel lblToDate;
-		private String GOscheduleNo;
-		private String COMscheduleNo;
-		private String GOfromDate;
 
-	public FindTripsForm(String id) {
+	public FindTripsForm2(String id) {
 //		this.mainMenuForm=mainMenuForm;
 		
 //		this.id = mainMenuForm.getId();
@@ -193,8 +190,8 @@ public class FindTripsForm extends JFrame implements ActionListener {
 		lblRName.setBounds(240, 10, 80, 20);
 		lblRName.setFont(fontNanumGothic15);
 		
-		lblRDate = new JLabel("날짜 (출발 / 도착)");
-		lblRDate.setBounds(360, 10, 150, 20);
+		lblRDate = new JLabel("날짜");
+		lblRDate.setBounds(420, 10, 80, 20);
 		lblRDate.setFont(fontNanumGothic15);
 		
 		lblRDep = new JLabel("출발");
@@ -283,12 +280,12 @@ public class FindTripsForm extends JFrame implements ActionListener {
 		lblName.setFont(fontNanumGothic15Plain);
 		
 //		lblDate = new JLabel(fromDate.substring(0,4)+"년 " + fromDate.substring(4,6) + "월 " + fromDate.substring(6,8) + "일");
-		lblFromDate = new JLabel(GOfromDate);
-		lblFromDate.setBounds(370, 30, 200, 20);
+		lblFromDate = new JLabel(fromDate);
+		lblFromDate.setBounds(370, 40, 200, 20);
 		lblFromDate.setFont(fontNanumGothic15Plain);
 		
-		lblToDate = new JLabel(COMfromDate);
-		lblToDate.setBounds(370, 60, 200, 20);
+		lblToDate = new JLabel(toDate);
+		lblToDate.setBounds(370, 80, 200, 20);
 		lblToDate.setFont(fontNanumGothic15Plain);
 		
 		lblDepP = new JLabel(from);
@@ -329,15 +326,9 @@ public class FindTripsForm extends JFrame implements ActionListener {
 			ResultSet rs = state.executeQuery(sql);
 			while (rs.next()) {
 				reserveNum = rs.getString("reserveNum");
-				GOscheduleNo = rs.getString("GOscheduleNo");
-				COMscheduleNo = rs.getString("COMscheduleNo");
-				
 				
 				this.reserveNum = reserveNum;
-				this.GOscheduleNo = GOscheduleNo;
-				this.COMscheduleNo = COMscheduleNo;
-				
-				System.out.println(reserveNum);
+//				System.out.println(reserveNum);
 			}
 //			rs.close();
 //			state.close();
@@ -363,42 +354,13 @@ public class FindTripsForm extends JFrame implements ActionListener {
 		ResultSet rs = state.executeQuery(sql);
 		while (rs.next()) {
 			
+			scheduleNo = rs.getString("secheduleNo");
 			nameKOR = rs.getString("nameKOR");
 			
 //			this.scheduleNo = scheduleNo;
 			this.nameKOR = nameKOR;
 			System.out.println(nameKOR);
-//			System.out.println(scheduleNo);
-			
-		}
-//		rs.close();
-//		state.close();
-//		conn.close();
-	}
-	catch (Exception e) {
-	}finally {try {if(state!=null)state.close();}
-	catch (SQLException ex1) {}
-	try {if(conn!=null)conn.close();}
-	catch (SQLException ex2) {}
-	}
-	//-------------------------------------------
-	//-------------------------------------------
-	try{
-		Class.forName(driver);
-		conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
-		state = conn.createStatement();	
-		
-		String sql;
-		sql = "SELECT * FROM reservation WHERE `reserveNum` = '"+ reserveNum +"' ";
-		
-		ResultSet rs = state.executeQuery(sql);
-		while (rs.next()) {
-			GOscheduleNo = rs.getString("GOscheduleNo");
-			COMscheduleNo = rs.getString("COMscheduleNo");
-
-			this.GOscheduleNo = GOscheduleNo;
-			this.COMscheduleNo = COMscheduleNo;
-			System.out.println(GOscheduleNo);
+			System.out.println(scheduleNo);
 			
 		}
 //		rs.close();
@@ -420,21 +382,20 @@ public class FindTripsForm extends JFrame implements ActionListener {
 		state = conn.createStatement();	
 
 		String sql;
-		sql = "SELECT * FROM airSchedule WHERE `scheduleNo` = '"+ GOscheduleNo +"' ";
-//		sql = "SELECT * FROM airSchedule WHERE `GOscheduleNo` = '"+ scheduleNo +"' and  `from` = '"+ from +"'";
+		sql = "SELECT * FROM airSchedule WHERE `scheduleNo` = '"+ scheduleNo +"' ";
 		
 		ResultSet rs = state.executeQuery(sql);
 		while (rs.next()) {
 			from = rs.getString("from");
-			GOfromDate = rs.getString("fromDate");
+			fromDate = rs.getString("fromDate");
 			to = rs.getString("to");
-//			toDate = rs.getString("toDate");
+			toDate = rs.getString("toDate");
 			this.from = from;
 			this.to = to;
-			this.GOfromDate=GOfromDate;
-//			this.toDate=toDate;
-//					System.out.println(from);
-//					System.out.println(to);
+			this.fromDate=fromDate;
+			this.toDate=toDate;
+					System.out.println(from);
+					System.out.println(to);
 
 			
 		}
@@ -448,77 +409,6 @@ public class FindTripsForm extends JFrame implements ActionListener {
 	try {if(conn!=null)conn.close();}
 	catch (SQLException ex2) {}
 	}
-//	
-//----------------------------------------
-//----------------------------------------
-	try{
-		Class.forName(driver);
-		conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
-		state = conn.createStatement();	
-		
-		String sql;
-		sql = "SELECT * FROM airSchedule WHERE `scheduleNo` = '"+ COMscheduleNo +"' ";
-		
-		ResultSet rs = state.executeQuery(sql);
-		while (rs.next()) {
-//			from = rs.getString("from");
-			COMfromDate = rs.getString("fromDate");
-//			to = rs.getString("to");
-//			toDate = rs.getString("toDate");
-//			this.from = from;
-//			this.to = to;
-			this.COMfromDate=COMfromDate;
-//			this.toDate=toDate;
-//			System.out.println(from);
-//			System.out.println(to);
-			
-			
-		}
-		rs.close();
-		state.close();
-		conn.close();
-	}
-	catch (Exception e) {
-	}finally {try {if(state!=null)state.close();}
-	catch (SQLException ex1) {}
-	try {if(conn!=null)conn.close();}
-	catch (SQLException ex2) {}
-	}
-//----------------------------------------
-//----------------------------------------
-//	try{
-//		Class.forName(driver);
-//		conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
-//		state = conn.createStatement();	
-//		
-//		String sql;
-//		sql = "SELECT * FROM airSchedule WHERE `secheduleNo` = '"+ COMscheduleNo +"' ";//----->철자
-//		
-//		ResultSet rs = state.executeQuery(sql);
-//		while (rs.next()) {
-////			from = rs.getString("from");
-//			COMfromDate = rs.getString("fromDate");
-////			to = rs.getString("to");
-////			toDate = rs.getString("toDate");
-////			this.from = from;
-////			this.to = to;
-//			this.COMfromDate=COMfromDate;
-////			this.toDate=toDate;
-////			System.out.println(from);
-////			System.out.println(to);
-//			
-//			
-//		}
-//		rs.close();
-//		state.close();
-//		conn.close();
-//	}
-//	catch (Exception e) {
-//	}finally {try {if(state!=null)state.close();}
-//	catch (SQLException ex1) {}
-//	try {if(conn!=null)conn.close();}
-//	catch (SQLException ex2) {}
-//	}
 }
 	
 	// 상단 
