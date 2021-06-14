@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
 import DataBase.databaseClass;
+import Management.User.UserList;
 import be.main.MainForm;
 import be.menu.MenuBar;
 import customer.start.MainMenuForm;
@@ -62,6 +63,7 @@ public class LoginForm extends JFrame implements ActionListener {
 	private MainMenuForm mainMenuForm;
 	private SignUpForm signUpForm;
 	private FindIdPwForm findIdPwForm;
+	private UserList adminForm;
 	
 	public LoginForm() {
 		setTitle(title);
@@ -205,9 +207,15 @@ public class LoginForm extends JFrame implements ActionListener {
 				if(check) {
 					//System.out.println("로그인 성공!");
 					JOptionPane.showMessageDialog(null, id + "님 안녕하세요.", "로그인 성공", JOptionPane.INFORMATION_MESSAGE);
-					mainMenuForm = new MainMenuForm();
-					mainMenuForm.setId(id);
-					this.setVisible(false);
+					
+					if(id.equals("admin")) {
+						adminForm = new UserList();
+						this.setVisible(false);
+					} else {
+						mainMenuForm = new MainMenuForm();
+						mainMenuForm.setId(id);
+						this.setVisible(false);
+					}
 				} else {
 					//System.out.println("로그인 실패!");
 					JOptionPane.showMessageDialog(null, "아이디 또는 비밀번호를 확인해주세요.", "로그인 실패", JOptionPane.OK_CANCEL_OPTION);
