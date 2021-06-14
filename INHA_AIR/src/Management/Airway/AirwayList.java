@@ -9,6 +9,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -38,7 +40,7 @@ import Management.Payment.PaymentList;
 import Management.User.UserList;
 import be.sign.SignIn;
 
-public class AirwayList extends JFrame implements ActionListener {
+public class AirwayList extends JFrame implements ActionListener, MouseListener {
 	// Title 및 사이즈 설정
 	private String title = "Management";
 	private int width = 1120, height = 770;
@@ -139,7 +141,7 @@ public class AirwayList extends JFrame implements ActionListener {
 		//수정창
 		setUserEdit();
 		
-		setAirwayTable();
+		setAirwayTable(0,"");
 
 		
 		setVisible(true);
@@ -148,12 +150,25 @@ public class AirwayList extends JFrame implements ActionListener {
 
 
 	//스케줄 조회 테이블
-			private void setAirwayTable() {
+			private void setAirwayTable(int i ,String codename) {
 				
 				//전체 사용자 조회
 				String sql = "SELECT scheduleNo, flightCode, `from`, fromDate,fromTime,  `to`, toDate,toTime\r\n"
 						+ "FROM airSchedule\r\n"
 						+ "ORDER BY fromDate,flightCode ";
+				
+				
+				
+				if(i==0) {
+					sql = "SELECT scheduleNo, flightCode, `from`, fromDate,fromTime,  `to`, toDate,toTime\r\n"
+							+ "FROM airSchedule\r\n"
+							+ "ORDER BY fromDate,flightCode ";
+				}else if(i==1) {
+					sql = "SELECT scheduleNo, flightCode, `from`, fromDate,fromTime,  `to`, toDate,toTime\r\n"
+							+ "FROM airSchedule\r\n"
+							+ "WHERE scheduleNo = '" + codename + "'"
+							+ "ORDER BY fromDate,flightCode ";
+				}
 				
 				//테이블 초기화
 				model.setNumRows(0);
@@ -350,6 +365,7 @@ public class AirwayList extends JFrame implements ActionListener {
 		jtAirway.setRowHeight(20);
 		jtAirway.setFillsViewportHeight(true); //스크롤팬에 꽉 차서 보이게 하기
 		jtAirway.setBackground(Color.WHITE);
+		jtAirway.addMouseListener(this);
 		
 		Center = new DefaultTableCellRenderer(); //테이블 정렬
 		Center.setHorizontalAlignment(JLabel.CENTER); //가운데정렬
@@ -499,22 +515,27 @@ Object obj = e.getSource();
 				JOptionPane.showMessageDialog(null, "로그아웃을 취소합니다.");
 			}
 		}  else if(obj == btnUser) {
+			//회원관리창
 			dispose();
 			userList = new UserList();
 		} else if(obj == btnAirway) {
+			//항공편
 			dispose();
 			airwaylist = new AirwayList();
 		} else if(obj == btnAirport) {
+			//공항
 			dispose();
 			airportlist = new AirportList();
 		} else if(obj == btnPay) {
+			//매출
 			dispose();
 			paymentlist = new PaymentList();
 		}else if(obj == btnAirplane) {
+			//비행기
 			dispose();
 			airplanelist = new AirplaneList();
 		}else if(obj == btnOk) {
-			//값 입력됐는지 확인
+			//등록
 			if(tfSche.toString().equals("")||tfSche.toString().equals("ex)AKLTOI-1")) {
 				JOptionPane.showMessageDialog(null, "아이디를 입력하세요");
 			}else if(tfFlightNo.toString().equals("")||tfFlightNo.toString().equals("ex)IH1222")) {
@@ -532,6 +553,126 @@ Object obj = e.getSource();
 			}else if(tffArrTime.toString().equals("")||tffArrTime.toString().equals("ex)02:16:00")) {
 				JOptionPane.showMessageDialog(null, "도착시간을 입력하세요");
 			}
+			
+			String sche = tfSche.getText();
+			String flightNo = tfFlightNo.getText();
+			String Dep = tfDep.getText();
+			String DepDay = tfDepDay.getText();
+			String DepTime = tfDepTime.getText();;
+			String Arr = tfArr.getText();
+			String ArrDay = tfArrDay.getText();
+			String ArrTime = tffArrTime.getText();
+			
+			String sql = "INSERT INTO airplane( scheduleNo, flightCode, `from`, fromDate,fromTime,  `to`, toDate,toTime)\r\n"
+					+ "VALUES('" + sche +"','" + flightNo +"','" + Dep +"','" + DepDay +"','" + DepTime + "','" + Arr + "','" + ArrDay + "','" + ArrTime + "'";
+			
+			System.out.println(sql);
+			
+			int rs = databaseClass.insert(sql);
+			if(rs == 1) {
+				JOptionPane.showMessageDialog(this, "등록 되었습니다.");
+				setAirwayTable(0, "");
+			}else if(rs==0) {
+				JOptionPane.showMessageDialog(this, "등록 실패했습니다.");
+			}
+			tfSer.setText("");
+			tfSche.setText("");
+			tfFlightNo.setText("");
+			tfDep.setText("");
+			tfDepDay.setText("");
+			tfDepTime.setText("");
+			tfArr.setText("");
+			tfArrDay.setText("");
+			tffArrTime.setText("");
+			
+		}else if(obj == btnBye) {
+			//취소버튼
+			int result = JOptionPane.showConfirmDialog(this, "입력을 취소하시겠습니까?", "입력 취소",JOptionPane.YES_NO_OPTION); 
+			if(result == JOptionPane.YES_OPTION) {
+				JOptionPane.showMessageDialog(null, "입력이 취소되었습니다");
+				tfSer.setText("");
+				tfSche.setText("");
+				tfFlightNo.setText("");
+				tfDep.setText("");
+				tfDepDay.setText("");
+				tfDepTime.setText("");
+				tfArr.setText("");
+				tfArrDay.setText("");
+				tffArrTime.setText("");
+			}else {
+				JOptionPane.showConfirmDialog(null, "계속 입력해주세요");
+			}
+		}else if(obj == btnser) {
+			//검색
+			String code = tfSer.getText();
+			
+			if(code.equals("")||code.equals("ex)AKLTOI-1")) {
+				setAirwayTable(0, "");
+			}else {
+				setAirwayTable(1, code);
+			}
+		}else if(obj == btnDel) {
+			//삭제
+			String sche = tfSche.getText();
+			String flightNo = tfFlightNo.getText();
+			String Dep = tfDep.getText();
+			String DepDay = tfDepDay.getText();
+			String DepTime = tfDepTime.getText();;
+			String Arr = tfArr.getText();
+			String ArrDay = tfArrDay.getText();
+			String ArrTime = tffArrTime.getText();
+			
+			String sql = "DELETE FROM airplane\r\n"
+					+ "WHERE scheduleNo='" + sche + "' AND flightCode = '" + flightNo + "' AND `from` = '" + Dep +"' AND fromDate = '" + DepDay
+					+ "' fromDate sex = '" + DepTime + "' AND `to` = '" + Arr + "' AND toDate = '" + ArrDay + "'AND toTime = '" + ArrTime + "'";
+			
+			int rs = databaseClass.delete(sql);
+			if(rs ==1 ) {
+				JOptionPane.showMessageDialog(this, "삭제 되었습니다.");
+				setAirwayTable(0, "");
+			}else if(rs==0) {
+				JOptionPane.showMessageDialog(this, "삭제 실패했습니다.");	
+			}
+			tfSer.setText("");
+			tfSche.setText("");
+			tfFlightNo.setText("");
+			tfDep.setText("");
+			tfDepDay.setText("");
+			tfDepTime.setText("");
+			tfArr.setText("");
+			tfArrDay.setText("");
+			tffArrTime.setText("");
+		}else if(obj == btnMod) {
+			String sche = tfSche.getText();
+			String flightNo = tfFlightNo.getText();
+			String Dep = tfDep.getText();
+			String DepDay = tfDepDay.getText();
+			String DepTime = tfDepTime.getText();;
+			String Arr = tfArr.getText();
+			String ArrDay = tfArrDay.getText();
+			String ArrTime = tffArrTime.getText();
+			
+			String sql = "UPDATE airplane\r\n"
+					+ "SET scheduleNo='" + sche + "' , flightCode = '" + flightNo + "' , `from` = '" + Dep +"' , fromDate = '" + DepDay
+					+ "' fromDate sex = '" + DepTime + "' , `to` = '" + Arr + "' , toDate = '" + ArrDay + "', toTime = '" + ArrTime + "'";
+			System.out.println(sql);
+			
+			int rs = databaseClass.update(sql);
+			if(rs==1) {
+				JOptionPane.showMessageDialog(this, "수정 되었습니다.");
+				setAirwayTable(0, "");
+			}else if(rs==0) {
+				JOptionPane.showMessageDialog(this, "수정 실패했습니다.");
+			}
+			tfSer.setText("");
+			tfSche.setText("");
+			tfFlightNo.setText("");
+			tfDep.setText("");
+			tfDepDay.setText("");
+			tfDepTime.setText("");
+			tfArr.setText("");
+			tfArrDay.setText("");
+			tffArrTime.setText("");
 		}
 	}
 	// jtable 생성
@@ -564,6 +705,50 @@ Object obj = e.getSource();
 		public boolean isCellEditable(int row, int column) {
 			return false;
 		}
+		
+	}
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		//선택한 값 텍스트필드에 표시
+		int row = jtAirway.getSelectedRow();
+		int col = jtAirway.getSelectedColumn();
+		
+		tfSche.setText((String)jtAirway.getValueAt(row, 0));
+		tfFlightNo.setText((String)jtAirway.getValueAt(row, 1));
+		tfDep.setText((String)jtAirway.getValueAt(row, 2));
+		tfDepDay.setText((String)jtAirway.getValueAt(row, 3));
+		tfDepTime.setText((String)jtAirway.getValueAt(row, 4));
+		tfArr.setText((String)jtAirway.getValueAt(row, 5));
+		tfArrDay.setText((String)jtAirway.getValueAt(row, 6));
+		tffArrTime.setText((String)jtAirway.getValueAt(row, 7));
+	}
+	
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 	}

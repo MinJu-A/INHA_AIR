@@ -97,9 +97,9 @@ public class AirplaneList extends JFrame implements ActionListener, MouseListene
 	//수정
 	private JPanel jpAll, jpBtn, jpEdit, jpNew, jpSer;
 	private JButton btnOk, btnBye, btnDel, btnMod, btnser;
-	private JLabel lblNew, lblsche, lbleconomy, lblbesiness, lblfirst, lblDepTime, lblArr, lblArrDay, lblArrTime, lblserach,
+	private JLabel lblNew, lblPland, lbleconomy, lblbesiness, lblfirst, lblDepTime, lblArr, lblArrDay, lblArrTime, lblserach,
 	lblDep,lblPeconomy, lblPbesiness, lblPfirst;
-	private HintTextField tfSche, tfeconomy, tfBusiness, tffirst, tfDepTime, tfArr, tfArrDay, tffArrTime, tfSer,
+	private HintTextField tfPlane, tfeconomy, tfBusiness, tffirst, tfDepTime, tfArr, tfArrDay, tffArrTime, tfSer,
 	tfDep, tfPeconomy, tfPBusiness, tfPfirst;
 	
 
@@ -216,12 +216,12 @@ public class AirplaneList extends JFrame implements ActionListener, MouseListene
 		jpSer.setPreferredSize(new Dimension(400, 30));
 		
 		//검색 라벨
-		lblserach = new JLabel("스케줄No.검색  ");
+		lblserach = new JLabel("편명 검색  ");
 		lblserach.setFont(fontNanumGothic15);
 		lblserach.setHorizontalAlignment(JLabel.CENTER);
 		
 		//검색 텍스트필드
-		tfSer = new HintTextField("ex)AKLTOI-1");
+		tfSer = new HintTextField("ex)IH1222");
 		tfSer.setPreferredSize(new Dimension(200, 25));	
 		
 		//검색 버튼
@@ -246,9 +246,9 @@ public class AirplaneList extends JFrame implements ActionListener, MouseListene
 	 	
 	 	
 	 	//폼 라벨
-	 	lblsche = new JLabel("편명No.  ");
-	 	lblsche.setFont(fontNanumGothic15);
-	 	lblsche.setHorizontalAlignment(JLabel.CENTER);
+	 	lblPland = new JLabel("편명No.  ");
+	 	lblPland.setFont(fontNanumGothic15);
+	 	lblPland.setHorizontalAlignment(JLabel.CENTER);
 	 	lblDep = new JLabel("출발지  ");
 	 	lblDep.setFont(fontNanumGothic15);
 	 	lblDep.setHorizontalAlignment(JLabel.CENTER);
@@ -276,7 +276,7 @@ public class AirplaneList extends JFrame implements ActionListener, MouseListene
 	 			
 	 	
 	 	//폼 텍스트필드 
-	 	tfSche = new HintTextField("ex)AKLTOI-1");
+	 	tfPlane = new HintTextField("ex)IH1222");
 	 	tfDep = new HintTextField("ex)AKL");
 	 	tfArr = new HintTextField("ex)AKL");
 	 	tfeconomy = new HintTextField("좌석수만입력해주세요");
@@ -287,8 +287,8 @@ public class AirplaneList extends JFrame implements ActionListener, MouseListene
 	 	tfPfirst = new HintTextField("금액만 입력해주세요");
 	 	
 	 	//붙이기
-	 	jpNew.add(lblsche);
-	 	jpNew.add(tfSche);
+	 	jpNew.add(lblPland);
+	 	jpNew.add(tfPlane);
 	 	jpNew.add(lblDep);
 	 	jpNew.add(tfDep);
 	 	jpNew.add(lblArr);
@@ -558,7 +558,7 @@ Object obj = e.getSource();
 			if(result == JOptionPane.YES_OPTION) {
 				JOptionPane.showMessageDialog(null, "입력이 취소되었습니다.");
 				tfSer.setText("");
-				tfSche.setText("");
+				tfPlane.setText("");
 				tfDep.setText("");
 				tfArr.setText("");
 				tfeconomy.setText("");
@@ -576,13 +576,13 @@ Object obj = e.getSource();
 			//검색
 			String code = tfSer.getText();
 			
-			if(code.equals("")||code.equals("ex)AKLTOI-1")) {
+			if(code.equals("")||code.equals("ex)IH1222")) {
 				setPlaneTable(0, "");
 			}else {
 				setPlaneTable(1, code);
 			}
 		}else if(obj == btnDel) {
-			String Schedule = tfSche.getText();
+			String Plane = tfPlane.getText();
 			String Dep = tfDep.getText();
 			String Arr = tfArr.getText();
 			String economy = tfeconomy.getText();
@@ -593,7 +593,7 @@ Object obj = e.getSource();
 			String Pfirst = tfPfirst.getText();
 			
 			String sql = "DELETE FROM airplane\r\n"
-					+ "WHERE = flightCode'" + Schedule + "' AND from = '" + Dep + "' AND to = '" + Arr +"' AND economy = '" + economy
+					+ "WHERE = flightCode'" + Plane + "' AND from = '" + Dep + "' AND to = '" + Arr +"' AND economy = '" + economy
 					+ "' AND business = '" + business + "' AND first = '" + first + "' AND Peconomy = '" + Peconomy + "'AND Pbusiness = '" + Pbusiness + "'AND Pfirst = '" + Pfirst + "'";
 			
 			int rs = databaseClass.delete(sql);
@@ -604,8 +604,9 @@ Object obj = e.getSource();
 			} else if(rs ==0) {
 				JOptionPane.showMessageDialog(this, "삭제 실패했습니다.");
 			}
+			
 			tfSer.setText("");
-			tfSche.setText("");
+			tfPlane.setText("");
 			tfDep.setText("");
 			tfArr.setText("");
 			tfeconomy.setText("");
@@ -614,7 +615,45 @@ Object obj = e.getSource();
 			tfPeconomy.setText("");
 			tfPBusiness.setText("");
 			tfPfirst.setText("");
+		
 		 	
+		}else if(obj==btnMod) {
+			//수정
+			String plane = tfPlane.getText();
+			String Dep = tfDep.getText();
+			String Arr = tfArr.getText();
+			String economy = tfeconomy.getText();
+			String business = tfBusiness.getText();
+			String first = tfPfirst.getText();
+			String Peconomy = tfPeconomy.getText();
+			String Pbusiness = tfPBusiness.getText();
+			String Pfirst = tfPfirst.getText();
+			
+			
+			String sql = " UPDATE airplane\r\n"
+					+ "SET = flightCode'" + plane + "' , from = '" + Dep + "' , to = '" + Arr +"' , economy = '" + economy
+					+ "' , business = '" + business + "' , first = '" + first + "' , Peconomy = '" + Peconomy + "', Pbusiness = '" + Pbusiness + "', Pfirst = '" + Pfirst + "'"
+					+"WHERE = flightCode '" +plane+"'";
+			
+			int rs = databaseClass.update(sql);
+			if(rs ==1) {
+				JOptionPane.showMessageDialog(this, "수정 되었습니다.");
+				setPlaneTable(0, "");
+				
+			} else if(rs ==0) {
+				JOptionPane.showMessageDialog(this, "수정 실패했습니다.");
+			}
+			
+			tfSer.setText("");
+			tfPlane.setText("");
+			tfDep.setText("");
+			tfArr.setText("");
+			tfeconomy.setText("");
+			tfBusiness.setText("");
+			tfPfirst.setText("");
+			tfPeconomy.setText("");
+			tfPBusiness.setText("");
+			tfPfirst.setText("");
 		}
 	}
 	// jtable 생성
@@ -654,14 +693,15 @@ Object obj = e.getSource();
 	 int row = jtAirway.getSelectedRow();	
 	 int col = jtAirway.getSelectedColumn();	
 	
-	 tfSche.setText((String)jtAirway.getValueAt(row, 0));
+	 tfPlane.setText((String)jtAirway.getValueAt(row, 0));
 	 tfDep.setText((String)jtAirway.getValueAt(row, 1));
 	 tfArr.setText((String)jtAirway.getValueAt(row, 2));
 	 tfeconomy.setText((String)jtAirway.getValueAt(row, 3));
 	 tfBusiness.setText((String)jtAirway.getValueAt(row, 4));
-	 tfPeconomy.setText((String)jtAirway.getValueAt(row, 5));
-	 tfPBusiness.setText((String)jtAirway.getValueAt(row, 6));
-	 tfPfirst.setText((String)jtAirway.getValueAt(row, 7));
+	 tffirst.setText((String)jtAirway.getValueAt(row, 5));
+	 tfPeconomy.setText((String)jtAirway.getValueAt(row, 6));
+	 tfPBusiness.setText((String)jtAirway.getValueAt(row, 7));
+	 tfPfirst.setText((String)jtAirway.getValueAt(row, 8));
 	 
 	}
 
