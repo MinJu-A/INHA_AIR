@@ -480,7 +480,7 @@ public class ReservationDetailForm extends JFrame implements ActionListener {
 		
 		// reservationDetail 테이블에 insert 하는 sql문
 		String sql = "INSERT INTO reservationDetail "
-				+ "(reserveNum, secheduleNo, nameKOR, nameENG, sex, passport, birth, tel, email, agree, baggage) "
+				+ "(reserveNum, scheduleNo, nameKOR, nameENG, sex, passport, birth, tel, email, agree, baggage) "
 				+ "VALUES('";
 		
 		nameKOR = tfFamilyNameKor.getText().toString() + tfNameKor.getText().toString();
