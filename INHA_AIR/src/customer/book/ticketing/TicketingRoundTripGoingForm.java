@@ -527,8 +527,8 @@ public TicketingRoundTripGoingForm(BookForm sel) {
 			ps.setString(3,null);
 			ps.setString(4,ID);
 			ps.setInt(5, numAdult);
-			ps.setInt(6,numInfant);
-			ps.setInt(7,numChild);
+			ps.setInt(6,numChild);
+			ps.setInt(7,numInfant);
 			ps.setInt(8,0);
 			ps.setString(9,selectedSeatGo);
 			ps.setString(10,null);
