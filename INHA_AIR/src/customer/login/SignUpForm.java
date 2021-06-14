@@ -595,12 +595,12 @@ public class SignUpForm extends JFrame implements ActionListener{
 
 	//이메일필드에 @ 들어가는지 확인
 	private boolean emaCheck(String emaV) {
-		return emaVCheck = emaV.matches(idset); //정규표현식과 비교
+		return emaVCheck = emaV.matches(ema); //정규표현식과 비교
 	}
 
 	//아이디 영어+숫자만인지 확인(특수문자 없어야함)
 	private boolean idSetCheck(String idSet) {
-		return idsetVCheck = idSet.matches(ema); //정규표현식과 비교
+		return idsetVCheck = idSet.matches(idset); //정규표현식과 비교
 	}
 	
 }

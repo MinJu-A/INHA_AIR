@@ -39,47 +39,45 @@ public class SelectDate extends JFrame implements ActionListener {
 	Font fontNanumGothic18 = new Font("NanumGothic", Font.BOLD, 18);	// 나눔고딕 18
 	Font fontNanumGothic20 = new Font("NanumGothic", Font.BOLD, 20);	// 나눔고딕 25
 	Font fontArial = new Font("Arial", Font.PLAIN, 12);					// 영어
-	private JPanel jpTitle, jpSelect, jpBtn, jpCal;
-	private JLabel lblTitle;
-	private JLabel lblCome;
-	private JLabel lblGo;
-	private JTextField tfGo;
-	private JTextField tfCome;
-	private JButton btnReselect;
-	private JButton btnSelect;
+	
+	private JPanel jpTitle, jpSelect, jpBtn, jpCal, jpDay; //제목패널, 선택패널, 버튼패널, 달력패널, 일 패널
+	private JLabel lblTitle; //제목
+	private JLabel lblCome; //오는날
+	private JLabel lblGo; //가는날
+	private JTextField tfGo; //가는날 텍스트필드
+	private JTextField tfCome; //오는날 텍스트필드
+	private JButton btnReselect; //다시선택
+	private JButton btnSelect; //선택하기
 	private static Calendar toDaycal = Calendar.getInstance(); //캘린더 객체 생성;
 	private static Calendar cal = Calendar.getInstance(); //캘린더 객체 생성;
 	
-	private String[] day = new String[] {"S", "M", "T", "W", "T", "F", "S"};
-	private JLabel lblday;
-	private JLabel lblYear;
-	private JLabel lblMonth;
-	private ArrayList<JButton> lstBtn = new ArrayList<JButton>();
-	private JButton btnDay;
-	private int calDayYear;
-	private int calDayMonth;
-	private JButton btnLeft;
-	private JButton btnRight;
-	private int selectindex = 0;
-	private int sDayNum;
-	private int endDate;
-	private int intDateNum;
-	private String lblstringYear;
-	private String lblstringMonth;
-	private JPanel jpDay;
-	private String goDay = "";
-	private String comeDay = "";
-	private int roundTrip;
-	private String objText = "";
+	private String[] day = new String[] {"S", "M", "T", "W", "T", "F", "S"}; //일요일 ~ 토요일
+	private JLabel lblday; //요일 라벨
+	private JLabel lblYear; //년도 라벨
+	private JLabel lblMonth; //월 라벨
+	private ArrayList<JButton> lstBtn = new ArrayList<JButton>(); //일 버튼리스트
+	private int calDayYear; //달력년도
+	private int calDayMonth; //달력월
+	private JButton btnLeft; //왼쪽버튼
+	private JButton btnRight; //오른쪽버튼
+	private int selectindex = 0; //날짜선택 (0이면 선택안한상태, 1이면 선택된상태)
+	private int sDayNum; //1일의 요일 얻어오기
+	private int endDate; //달의 마지막 일 받아오기
+	private int intDateNum; //1일부터 시작
+	private String lblstringYear; //년도라벨 값 받아오기
+	private String lblstringMonth; //월 라벨 값 받아오기
+	private String goDay = ""; //가는날 값
+	private String comeDay = ""; //오는날 값
+	private int roundTrip; //왕복 편도 값
+	private String objText = ""; //선택된 버튼의 텍스트값
 //	private JLabel lblEx;
 	private BookForm bookForm;
-	private int todayDate = toDaycal.get(Calendar.DATE);
-	private int todayYear = toDaycal.get(Calendar.YEAR);
-	private int todayMonth = toDaycal.get(Calendar.MONTH)+1;
+	private int todayDate = toDaycal.get(Calendar.DATE); //오늘 일 받아오기
+	private int todayYear = toDaycal.get(Calendar.YEAR); //오늘 년도 받아오기
+	private int todayMonth = toDaycal.get(Calendar.MONTH)+1; //오늘 달 받아오기
 	//cal.set(todayYear, todayMonth, todayDate);
-	private int compareVal;
-	private Object stTodayMonth;
-	private String stTodayDate;
+	private String stTodayMonth; //이번 달 문자열
+	private String stTodayDate; //이번 일 문자열
 	
 	
 	
@@ -93,10 +91,12 @@ public class SelectDate extends JFrame implements ActionListener {
 		//this.mainForm = mainForm;
 		this.bookForm = bookForm; //bookForm에 대한 정보
 		
+		//다시 열 때 값 받아오기
 		this.goDay = bookForm.getGoDay();
 		this.comeDay = bookForm.getComeDay();
 		this.roundTrip = bookForm.getRoundTrip();
 		
+		//창 설정
 		setTitle(title);
 		setSize(width, height);
 		setResizable(false);
@@ -163,8 +163,7 @@ public class SelectDate extends JFrame implements ActionListener {
 		tfCome.setLocation(100, 85);
 		tfCome.setEditable(false);	//입력제한
 		
-		
-//		jpSelect.add(lblEx);
+		//추가하기
 		jpSelect.add(lblGo);
 		jpSelect.add(tfGo);
 		jpSelect.add(lblCome);
@@ -179,8 +178,8 @@ public class SelectDate extends JFrame implements ActionListener {
 		jpCal.setBackground(Color.white);
 		
 		
-		calDayYear = cal.get(Calendar.YEAR);
-		calDayMonth = cal.get(Calendar.MONTH)+1;
+		calDayYear = cal.get(Calendar.YEAR); //오늘 년도 받아오기
+		calDayMonth = cal.get(Calendar.MONTH)+1; //오늘 달 받아오기 (자바는 달이 0부터 시작이라 1추가해서 오늘 달로 만들어주기)
 		cal.set(calDayYear, calDayMonth-1, 1); //캘린더 객체에 년도, 달 설정과 Date 1로 설정
 		
 		
@@ -281,7 +280,8 @@ public class SelectDate extends JFrame implements ActionListener {
 		btnReselect.setBackground(new Color(10,90,150)); //버튼 색 설정
 		btnReselect.setForeground(Color.white);
 		btnReselect.addActionListener(this);
-		btnSelect = new JButton("");
+		
+		btnSelect = new JButton("");	//선택버튼
 		if (goDay.isEmpty()) {
 			btnSelect.setText("날짜 선택");
 		} else {
@@ -294,7 +294,6 @@ public class SelectDate extends JFrame implements ActionListener {
 			btnSelect.setText("왕복 선택");
 			
 		}
-		
 		btnSelect.setFont(fontNanumGothic18);
 		btnSelect.setSize(130, 40);
 		btnSelect.setLocation(150, 0);
@@ -307,7 +306,7 @@ public class SelectDate extends JFrame implements ActionListener {
 		jpBtn.add(btnSelect);
 		
 		//캘린더 변경 버튼
-		btnLeft = new JButton("<");
+		btnLeft = new JButton("<");		//왼쪽으로 페이지 변경 버튼
 		btnLeft.setFont(fontNanumGothic12);
 		btnLeft.setSize(50, 250);
 		btnLeft.setLocation(10, 150);
@@ -315,7 +314,8 @@ public class SelectDate extends JFrame implements ActionListener {
 		btnLeft.setBackground(Color.white);
 		btnLeft.setBorder(BorderFactory.createEmptyBorder(0 , 0 , 0 , 0));
 		btnLeft.addActionListener(this);
-		btnRight = new JButton(">");
+		
+		btnRight = new JButton(">"); //오늘쪽으로 페이지 변경 버튼
 		btnRight.setFont(fontNanumGothic12);
 		btnRight.setSize(50, 250);
 		btnRight.setLocation(340, 150);
@@ -342,6 +342,7 @@ public class SelectDate extends JFrame implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 		Object obj = e.getSource();
 		objText = e.getActionCommand();
 		
@@ -351,8 +352,7 @@ public class SelectDate extends JFrame implements ActionListener {
 		
 		//if (toDaycal.YEAR > cal.YEAR)
 		
-		if (obj == btnSelect) 
-		
+		if (obj == btnSelect) //날짜선택버튼 클릭
 		{
 			
 			if (objText.equals("날짜 선택")) {
@@ -415,8 +415,6 @@ public class SelectDate extends JFrame implements ActionListener {
 			tfCome.setText("");
 			selectindex  = 0;
 			
-			
-		} else if (obj == btnDay) {
 			
 		}
 		

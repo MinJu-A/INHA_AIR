@@ -65,11 +65,10 @@ public class BookForm extends JFrame implements ActionListener {
 	}
 
 
-	private String [] seat = {"일등석", "비즈니스석", "이코노미석"};
-	private JPanel jpCountry, jpCalNum, jpDep, jpSwap, jpArr;
-	private ImageIcon imgAirport, imgDate, imgPeople, imgSeat, imgSwap;
-	private JLabel lblDate, lblPeople, lblSeat, lblDep, lblArr;
-	private JButton btnSearch, btnPeople, btnDate, btnDep, btnArr, btnSwap;
+	private JPanel jpCountry, jpCalNum, jpDep, jpSwap, jpArr; //나라, 출발지, 도착지, 승객인원, 교환
+//	private ImageIcon imgAirport, imgDate, imgPeople, imgSeat, imgSwap; //이미지
+	private JLabel lblDate, lblPeople, lblSeat, lblDep, lblArr; //날짜, 인원, 탑승일, 도착지, 선택지 등
+	private JButton btnSearch, btnPeople, btnDate, btnDep, btnArr, btnSwap; //찾기, 인원, 날짜, 출발지, 도착지, 교환버튼
 	private JComboBox<String> cbSeat;
 	private String swapText;
 	private String swapCode;
@@ -205,11 +204,6 @@ public class BookForm extends JFrame implements ActionListener {
 	}
 
 	public void setDate() {	//날짜 값 설정
-		//System.out.println(goDay);
-//		if (roundTrip == 1) 
-//			btnDate.setText(goDay+" ~ "+comeDay);
-//		else
-//			btnDate.setText(goDay);
 		btnDate.setText(goDay+" ~ "+comeDay);
 	}
 	
@@ -222,6 +216,7 @@ public class BookForm extends JFrame implements ActionListener {
 	public BookForm(String id) {
 		this.id = id;
 		
+		//창 설정
 		setTitle(title);
 		setSize(width, height);
 		setResizable(false);
@@ -271,17 +266,20 @@ public class BookForm extends JFrame implements ActionListener {
 		jpCountry.setBackground(Color.green);
 		jpCountry.setSize(500, 200);
 		jpCountry.setLocation(250, 50);
+		
+		//출발지
 		jpDep = new JPanel();
 		jpDep.setBackground(Color.white);
 		jpDep.setLayout(null);
 		jpDep.setSize(200, 200);
 		jpDep.setLocation(0, 0);
 		
-		lblDep = new JLabel("출발");
+		lblDep = new JLabel("출발"); //출발라벨
 		lblDep.setFont(fontNanumGothic25);
 		lblDep.setSize(150, 35);
 		lblDep.setLocation(75, 0);
-		btnDep = new JButton();
+		
+		btnDep = new JButton();	//출발버튼
 		//btnDep.setText("<HTML><body><h2><center>From</center></h2></body></HTML>");
 		btnDep.setLayout(null);
 		btnDep.setSize(150, 100);
@@ -295,15 +293,17 @@ public class BookForm extends JFrame implements ActionListener {
 		jpDep.add(btnDep);
 		
 		
-		jpSwap = new JPanel();
+		jpSwap = new JPanel(); //출발지 도착지 교환 패널
 		jpSwap.setBackground(Color.white);
 		jpSwap.setLayout(null);
 		jpSwap.setSize(100, 200);
 		jpSwap.setLocation(200, 0);
-		Image img = new ImageIcon("imgs/swap.png").getImage();
+		
+		Image img = new ImageIcon("imgs/swap.png").getImage(); //이미지 생성
 		Image changeimg = img.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
 		imgSwap = new ImageIcon(changeimg);
-		btnSwap = new JButton(imgSwap);
+		
+		btnSwap = new JButton(imgSwap); //출발지 도착지 교환 버튼
 		btnSwap.setLayout(null);
 		btnSwap.setSize(100, 100);
 		btnSwap.setLocation(0, 40);
@@ -313,16 +313,18 @@ public class BookForm extends JFrame implements ActionListener {
 //		btnswap.setContentAreaFilled(false); //버튼 색 투명
 		jpSwap.add(btnSwap);
 		
-		jpArr = new JPanel();
+		jpArr = new JPanel();	//도착지 패널
 		jpArr.setLayout(null);
 		jpArr.setBackground(Color.white);
 		jpArr.setSize(200, 200);
 		jpArr.setLocation(300, 0);
-		lblArr = new JLabel("도착");
+		
+		lblArr = new JLabel("도착");	//도착지 라벨
 		lblArr.setFont(fontNanumGothic25);
 		lblArr.setSize(150, 35);
 		lblArr.setLocation(75, 0);
-		btnArr = new JButton();
+		
+		btnArr = new JButton();	//도착지 버튼
 		btnArr.setLayout(null);
 		//btnArr.setText("<HTML><body><h2><center>To</center></h2></body></HTML>");
 		btnArr.setText("<HTML><body style = 'text-align:center;'>To<br>도착지</body></HTML>");
@@ -341,13 +343,13 @@ public class BookForm extends JFrame implements ActionListener {
 		jpCountry.add(jpArr);
 		
 		//날짜, 인원, 좌석 등급
-		jpCalNum = new JPanel();
+		jpCalNum = new JPanel();	//날짜 패널
 		jpCalNum.setBackground(Color.white);
 		jpCalNum.setLayout(null);
 		jpCalNum.setSize(500, 180);
 		jpCalNum.setLocation(250, 250);
 		
-		imgDate = new ImageIcon("image/calender.png");
+		imgDate = new ImageIcon("image/calender.png");	
 		lblDate = new JLabel("여행일정", imgDate, SwingUtilities.LEFT); //라벨에 이미지 삽입, 위치 주기
 		lblDate.setSize(150, 35);
 		lblDate.setLocation(20, 15);
@@ -432,12 +434,12 @@ public class BookForm extends JFrame implements ActionListener {
 		Object obj = e.getSource();
 		
 		if(obj == btnMainMenu) {
-			mainMenuForm = new MainMenuForm();
+			mainMenuForm = new MainMenuForm(); //메인버튼 누르면 메인화면 띄우기
 			mainMenuForm.setId(id);
 			this.setVisible(false);
-		} else if(obj == btnSearch) {
+		} else if(obj == btnSearch) { //조회버튼 눌렀을 때
 			
-			if(goDay.isEmpty() && numTotal==0 && SelectDepCode.isEmpty()) {
+			if(goDay.isEmpty() && numTotal==0 && SelectDepCode.isEmpty()) { //값이 비어있는지 확인하기
 				JOptionPane.showMessageDialog(null, "탑승지, 탑승일, 인원을 선택해주세요.", "조회", JOptionPane.OK_CANCEL_OPTION);
 			} else if (goDay.isEmpty() && numTotal == 0) {
 				JOptionPane.showMessageDialog(null, "탑승일과 인원을 선택해주세요", "조회", JOptionPane.OK_CANCEL_OPTION);
@@ -451,17 +453,19 @@ public class BookForm extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "인원을 1명 이상 선택해주세요", "조회", JOptionPane.OK_CANCEL_OPTION);
 			} else if (SelectDepCode.isEmpty()) {
 				JOptionPane.showMessageDialog(null, "탑승지를 선택해주세요", "조회", JOptionPane.OK_CANCEL_OPTION);
-			} else {
+			} else { //조회해보기
 				try {
 					tkRTGoForm = new TicketingRoundTripGoingForm(this);
 					this.setVisible(false);
-				} catch (StringIndexOutOfBoundsException e2) {
+				} catch (StringIndexOutOfBoundsException e2) { //만약 데이터베이스에 항공편현황이 없을 경우 띄우기
 					JOptionPane.showMessageDialog(null, "여행 일정이 없습니다. 항공편 현황을 확인해주세요.", "예매하기", JOptionPane.OK_CANCEL_OPTION);
 				}
 			}
 			
-		} else if (obj == btnReset) {
+		} else if (obj == btnReset) { //다시선택
 			
+			
+			//텍스트 설정, 값 설정
 			btnDep.setText("<HTML><body style ='text-align:center;'>From<br>출발지</body></HTML>");
 			btnArr.setText("<HTML><body style = 'text-align:center;'>To<br>도착지</body></HTML>");
 			btnDate.setText("");
@@ -482,7 +486,8 @@ public class BookForm extends JFrame implements ActionListener {
 			SelectArr = "";
 			SelectArrCode = "";
 			
-		} else if(obj == btnDate) {
+			//창 띄우기
+		} else if(obj == btnDate) { 
 			new customer.book.SelectDate(this);
 		} else if(obj == btnPeople) {
 			new customer.book.SelectPassenger(this);
@@ -490,15 +495,14 @@ public class BookForm extends JFrame implements ActionListener {
 			new customer.book.SelectDep(this);
 		} else if (obj == btnArr) {		
 			new customer.book.SelectArrived(this);
-		} else if (obj == btnSwap) {	
-			
-			if (SelectDep.isEmpty() && SelectArr.isEmpty()) {
+		} else if (obj == btnSwap) { //교환버튼 눌렀을 때	
+			if (SelectDep.isEmpty() && SelectArr.isEmpty()) { //선택확인
 				JOptionPane.showMessageDialog(null, "출발지와 도착지를 선택해주세요.", "탑승지 교환", JOptionPane.OK_CANCEL_OPTION);
 			} else if (SelectDep.isEmpty()) {
 				JOptionPane.showMessageDialog(null, "출발지를 선택해주세요.", "탑승지 교환", JOptionPane.OK_CANCEL_OPTION);
 			} else if (SelectArr.isEmpty()) {
 				JOptionPane.showMessageDialog(null, "도착지를 선택해주세요.", "탑승지 교환", JOptionPane.OK_CANCEL_OPTION);
-			} else {
+			} else { //모두 선택했으면 교환하기
 				swapText = SelectDep;
 				SelectDep = SelectArr;
 				SelectArr = swapText;

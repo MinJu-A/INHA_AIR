@@ -59,15 +59,15 @@ public class SelectArrived extends JFrame implements ActionListener{
 //	private String SelectCity;
 	
 	private BookForm bookForm;
-	private JPanel jpTitle;
-	private JLabel lblTitle;
-	private JScrollPane scrollPane;
-	private JPanel jpList;
+	private JPanel jpTitle; //제목패널
+	private JLabel lblTitle; //제목라벨
+	private JScrollPane scrollPane; //스크롤
+	private JPanel jpList; //테이블리스트 패널
 	
-	private JTable jtCountryList;
+	private JTable jtCountryList; //테이블
 	
-	private JButton btnSelect;
-	private DefaultTableModel model;
+	private JButton btnSelect; //조회버튼
+	private DefaultTableModel model; //테이블모델
 	
 
 	public SelectArrived(BookForm bookForm) {
@@ -75,10 +75,7 @@ public class SelectArrived extends JFrame implements ActionListener{
 		//this.mainForm = mainForm;
 		this.bookForm = bookForm; //bookForm에 대한 정보
 		
-//		this.goDay = bookForm.getGoDay();
-//		this.comeDay = bookForm.getComeDay();
-//		this.roundTrip = bookForm.getRoundTrip();
-		
+//		레이아웃 설정
 		setTitle(title);
 		setSize(width, height);
 		setResizable(false);
@@ -138,6 +135,7 @@ public class SelectArrived extends JFrame implements ActionListener{
 	
 		String[][] rows;
 		
+		//sql문으로 값 받아오기
 		String sql = "SELECT continent, country, city, code FROM airport ORDER BY terminal, continent, country";
 		ResultSet rs = databaseClass.select(sql);
 		
@@ -155,6 +153,7 @@ public class SelectArrived extends JFrame implements ActionListener{
 			e.printStackTrace();
 		}
 		
+		//항공편현황 테이블
 		jtCountryList = new JTable(model);
 		jtCountryList.setLayout(null);
 //		ForcedListSelectionModel(jtCountryList);
@@ -179,7 +178,7 @@ public class SelectArrived extends JFrame implements ActionListener{
 		scrollPane.getViewport().setBackground(Color.WHITE);//테이블 백그라운드 배경색
 		jpList.add(scrollPane);
 		
-		
+		//선택 버튼
 		btnSelect = new JButton("도착지 선택");
 		btnSelect.setFont(fontNanumGothic18);
 		btnSelect.setSize(160, 40);
@@ -204,7 +203,7 @@ public class SelectArrived extends JFrame implements ActionListener{
 		
 		if (obj == btnSelect) {
 			
-			int row = jtCountryList.getSelectedRow();
+			int row = jtCountryList.getSelectedRow(); //선택된 행의 값 가져오기 
 			if (row<0) return;			//선택된 행이 없으면 되돌리기
 			
 			//int col = jtCountryList.getSelectedColumn();
@@ -212,10 +211,11 @@ public class SelectArrived extends JFrame implements ActionListener{
 //			System.out.println(col);
 //			System.out.println(jtCountryList.getValueAt(row, col));
 			
-			SelectArr = String.valueOf(jtCountryList.getValueAt(row, 2));
-			SelectArrCode = String.valueOf(jtCountryList.getValueAt(row, 3));
-			int result = JOptionPane.showConfirmDialog(null, "도착지 " + SelectArr + "으로 선택되었습니다.", "출발지 선택", JOptionPane.YES_NO_OPTION);
 			
+			SelectArr = String.valueOf(jtCountryList.getValueAt(row, 2)); //도착지 값 받아오기
+			SelectArrCode = String.valueOf(jtCountryList.getValueAt(row, 3)); //출발지 코드 받아오기
+			
+			int result = JOptionPane.showConfirmDialog(null, "도착지 " + SelectArr + "으로 선택되었습니다.", "출발지 선택", JOptionPane.YES_NO_OPTION);
 			if(result == JOptionPane.YES_OPTION) {
 		
 				bookForm.setSelectArr(SelectArr);
