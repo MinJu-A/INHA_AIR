@@ -540,8 +540,6 @@ public TicketingRoundTripGoingForm(BookForm sel) {
 	}
 	private void Insert() {
 		
-		System.out.println("버튼");
-		
 		try{
 			Class.forName(driver);
 		}catch (ClassNotFoundException e) {
@@ -569,12 +567,12 @@ public TicketingRoundTripGoingForm(BookForm sel) {
 		ps.setString(10,null);
 		 int res = ps.executeUpdate();
 		 if(res>0) {
-			 System.out.println(sql);
+//			 System.out.println(sql);
 		}else {
-			 System.out.println("XXX");
+			 System.out.println("X");
 		 }
 		}catch (SQLException e) {
-			System.out.println("error");
+			System.out.println("X");
 			e.printStackTrace();
 		}
     }
