@@ -62,7 +62,7 @@ public class ReservationDetailForm extends JFrame implements ActionListener {
 	private ButtonGroup bgSex;
 	private JRadioButton rbWoman, rbMan;
 	private JCheckBox cbAgree;
-	private JButton btnOK, btnBaggage;//, btnSeat;
+	private JButton btnOK, btnBaggage;
 	
 	
 	// Forms
@@ -391,6 +391,7 @@ public class ReservationDetailForm extends JFrame implements ActionListener {
 		String sql = "SELECT COUNT(*) FROM reservationDetail WHERE reserveNum = '" + reserveNum + "'";
 		ResultSet rs = databaseClass.select(sql);
 					
+		//rouCount 에 해당 예약번호로 예약 진행중인 승객 수 저장
 		int rouCount = 0;
 		try {
 			while(rs.next()) {
@@ -400,10 +401,7 @@ public class ReservationDetailForm extends JFrame implements ActionListener {
 			e1.printStackTrace();
 		}
 					
-		System.out.println(rouCount);
-		
 		int resdel = 0;
-		
 		if(rouCount == 0) {
 			// 정보 입력된 승객이 없으면 
 			
@@ -420,15 +418,20 @@ public class ReservationDetailForm extends JFrame implements ActionListener {
 			System.out.println(sql);
 						
 			int result = databaseClass.delete(sql);
-			
 			if(result == 1) {
-				// reservation 삭제
+				// reservation 테이블에서 해당 예약 삭제
 				resdel = delReservation();
 							
-				// 첫 화면으로 
-				mainMenuForm = new MainMenuForm();
-				mainMenuForm.setId(id);
-				this.setVisible(false);
+				if(resdel == 1) {
+					// 첫 화면으로 이동
+					mainMenuForm = new MainMenuForm();
+					mainMenuForm.setId(id);
+					this.setVisible(false);
+				} else {
+					// 삭제 실패시 다이얼로그 띄움
+					JOptionPane.showMessageDialog(null, "첫 화면으로 이동할 수 없습니다.", "오류 안내", JOptionPane.WARNING_MESSAGE);
+				}
+				
 			} else {
 				// 삭제 실패시 다이얼로그 띄움
 				JOptionPane.showMessageDialog(null, "첫 화면으로 이동할 수 없습니다.", "오류 안내", JOptionPane.WARNING_MESSAGE);
@@ -441,6 +444,7 @@ public class ReservationDetailForm extends JFrame implements ActionListener {
 
 	private void clickOK() {
 		if(cbAgree.isSelected()) {
+			// 수신 동의 했을 경우
 			// 편도인지 왕복인지 확인
 			if(COMscheduleNo == "") {
 				// 편도일 경우
@@ -454,6 +458,7 @@ public class ReservationDetailForm extends JFrame implements ActionListener {
 			}
 
 		} else {
+			// 수신 동의 하지 않았을 경우 안내 표시
 			JOptionPane.showMessageDialog(null, "이메일과 SMS 수신 동의해주십시오.", "동의 안내", JOptionPane.INFORMATION_MESSAGE);
 		}
 		
@@ -461,12 +466,11 @@ public class ReservationDetailForm extends JFrame implements ActionListener {
 
 
 
-	// reservation 테이블에서 해당 예약 삭제
+	// reservation 테이블에서 해당 예매 삭제
 	private int delReservation() {
 		int resdel = 0;
 		
 		String sql = "DELETE FROM reservation WHERE reserveNum = '" + reserveNum + "'";
-		System.out.println(sql);
 		
 		resdel = databaseClass.delete(sql);
 		
@@ -475,7 +479,7 @@ public class ReservationDetailForm extends JFrame implements ActionListener {
 	}
 
 
-	// 정보 insert
+	// 예매 정보 insert
 	private void insertInformationData(String schedule, int flag) {
 		
 		// reservationDetail 테이블에 insert 하는 sql문
@@ -510,6 +514,7 @@ public class ReservationDetailForm extends JFrame implements ActionListener {
 		int result = databaseClass.insert(sql);
 		if(result == 1) {
 			
+			// flag - 0 : 가는날, 1 : 오는날
 			if(flag == 1) {
 				// 오는날 정보 insert
 				insertInformationData(COMscheduleNo, 0);
@@ -529,13 +534,16 @@ public class ReservationDetailForm extends JFrame implements ActionListener {
 		}
 	}
 
-
+	// 다음 승객 있는지 확인해서 결제로 넘어가기
 	private void goNext() {
 		
+		// payment 테이블에 가격 업데이트
 		int rs = upPay();
 		
 		if(rs == 1) {
+			// 업데이트 성공시
 			if(count == people) {
+				// 결제 확인 화면으로 이동
 				paymentForm = new SelectPaymentForm(reserveNum, id);
 				this.setVisible(false);
 			} else {
@@ -546,13 +554,14 @@ public class ReservationDetailForm extends JFrame implements ActionListener {
 				tfReset();
 				
 				if((count+1) == people) {
+					// 마지막 승객 일 경우 버튼을 결제하기로 변경
 					btnOK.setText("결제 하기");
 				}
 			}
 		} else {
+			// 업데이트 실패시
 			JOptionPane.showMessageDialog(null, "다시 시도해주세요.", "오류 안내", JOptionPane.WARNING_MESSAGE);
 		}
-		
 	}
 
 
@@ -570,6 +579,7 @@ public class ReservationDetailForm extends JFrame implements ActionListener {
 			baggageAddPay = (Integer.parseInt(baggage) *  50000) * 2;
 		}
 		
+		// 가격 = 원래 가격 + 추가수하물 가격
 		pay += baggageAddPay;
 		
 		// reservation 에 가격 업데이트
@@ -578,9 +588,7 @@ public class ReservationDetailForm extends JFrame implements ActionListener {
 		int rs = databaseClass.update(sql);
 		
 		return rs;
-		
 	}
-
 
 
 	// 입력된 값 다 지우기
