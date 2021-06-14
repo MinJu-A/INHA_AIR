@@ -9,6 +9,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -38,7 +40,7 @@ import Management.Payment.PaymentList;
 import Management.User.UserList;
 import be.sign.SignIn;
 
-public class AirportList extends JFrame implements ActionListener {
+public class AirportList extends JFrame implements ActionListener, MouseListener {
 	// Title 및 사이즈 설정
 	private String title = "Management";
 	private int width = 1120, height = 770;
@@ -348,6 +350,7 @@ public class AirportList extends JFrame implements ActionListener {
 		jtAirport.setRowHeight(20);
 		jtAirport.setFillsViewportHeight(true); //스크롤팬에 꽉 차서 보이게 하기
 		jtAirport.setBackground(Color.WHITE);
+		jtAirport.addMouseListener(this);
 		
 		Center = new DefaultTableCellRenderer(); //테이블 정렬
 		Center.setHorizontalAlignment(JLabel.CENTER); //가운데정렬
@@ -562,7 +565,45 @@ Object obj = e.getSource();
 		}
 		else if(obj == btnDel) {
 			// 삭제
+			String code = tfCode.getText();
+			String continent = tfCon.getText();
+			String country = tfCountry.getText();
+			String city = tfCity.getText();
+			String airport = tfAName.getText();
+			String terminal = tfBound.getText();
 			
+			String sql = "DELETE FROM airport\r\n"
+					+ "WHERE code='" + code + "' AND continent = '" + continent + "' AND country = '" + country +"' AND city = '" + city
+					+ "' AND airport = '" + airport + "' AND terminal = '" + terminal + "'";
+			
+			int rs = databaseClass.delete(sql);
+			if(rs == 1) {
+				JOptionPane.showMessageDialog(this, "삭제 되었습니다.");
+				setAirportTable(0, "");
+			} else if(rs == 0) {
+				JOptionPane.showMessageDialog(this, "삭제 실패했습니다.");
+			}
+		}
+		else if(obj == btnMod) {
+			// 수정
+			String code = tfCode.getText();
+			String continent = tfCon.getText();
+			String country = tfCountry.getText();
+			String city = tfCity.getText();
+			String airport = tfAName.getText();
+			String terminal = tfBound.getText();
+			
+			String sql = "UPDATE airport\r\n"
+					+ "SET continent='" + continent + "', country='" + country + "', city='" + city+"', airport='" + airport + "', terminal='" + terminal+ "'\r\n"
+					+ "WHERE code='" + code + "'";
+			
+			int rs = databaseClass.update(sql);
+			if(rs == 1) {
+				JOptionPane.showMessageDialog(this, "수정 되었습니다.");
+				setAirportTable(0, "");
+			} else if(rs == 0) {
+				JOptionPane.showMessageDialog(this, "수정 실패했습니다.");
+			}
 		}
 	}
 	// jtable 생성
@@ -586,6 +627,8 @@ Object obj = e.getSource();
 					component.setBackground(crPaleblue);
 				}
 			}
+			
+			
 
 			return component;
 		}
@@ -595,6 +638,56 @@ Object obj = e.getSource();
 		public boolean isCellEditable(int row, int column) {
 			return false;
 		}
+		
+	}
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// 선택한 값 텍스트필드에 표시
+		int row = jtAirport.getSelectedRow();
+		int col = jtAirport.getSelectedColumn();
+		
+		tfCode.setText((String)jtAirport.getValueAt(row, 0));
+		tfCon.setText((String)jtAirport.getValueAt(row, 1));
+		tfCountry.setText((String)jtAirport.getValueAt(row, 2));
+		tfCity.setText((String)jtAirport.getValueAt(row, 3));
+		tfAName.setText((String)jtAirport.getValueAt(row, 4));
+		tfBound.setText((String)jtAirport.getValueAt(row, 5));
+		
+	}
+
+
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 	}

@@ -113,8 +113,8 @@ public class SelectPaymentForm extends JFrame implements ActionListener {
 		// 예원 - 리스너
 		btnMainMenu.addActionListener(this);
 		
-		// 데이터베이스에서 값 가져옴
-		setDB();
+		// 데이터베이스에서 예매 정보 가져옴
+		getData();
 		
 		// 예원 - 컴포넌트 붙이기
 		add(btnMainMenu);
@@ -127,33 +127,33 @@ public class SelectPaymentForm extends JFrame implements ActionListener {
 
 
 	// 데이터정보 select
-	private void setDB() {
+	private void getData() {
 		
-		// 인원, 스케쥴번호, 가격
+		// 인원, 스케쥴번호, 가격 가져오기
 		String sqlReservation = "SELECT  GOscheduleNo, COMscheduleNo, adult, child, infant, pay "
 				+ "FROM reservation "
 				+ "WHERE reserveNum='" + reserveNum + "'";
 		
-		ResultSet rs1 = databaseClass.select(sqlReservation);
+		ResultSet rsReservation = databaseClass.select(sqlReservation);
 		try {
-			while(rs1.next()) {
-				GOscheduleNo = rs1.getString("GOscheduleNo");
-				COMscheduleNo = rs1.getString("COMscheduleNo");
-				adult = Integer.parseInt(rs1.getString("adult"));
-				child = Integer.parseInt(rs1.getString("child"));
-				infant = Integer.parseInt(rs1.getString("infant"));
-				pay = Integer.parseInt(rs1.getString("pay"));
+			while(rsReservation.next()) {
+				GOscheduleNo = rsReservation.getString("GOscheduleNo");
+				COMscheduleNo = rsReservation.getString("COMscheduleNo");
+				adult = Integer.parseInt(rsReservation.getString("adult"));
+				child = Integer.parseInt(rsReservation.getString("child"));
+				infant = Integer.parseInt(rsReservation.getString("infant"));
+				pay = Integer.parseInt(rsReservation.getString("pay"));
 			}
 		} catch (NumberFormatException | SQLException e) {
 			e.printStackTrace();
 		}
 		
-		// GoData
+		// 가는 날 데이터 가져오기
 		String sqlGo = "SELECT flightCode, `from`, fromDate, `to`, toDate "
 				+ "FROM inhaair.airSchedule "
 				+ "WHERE scheduleNo='" + GOscheduleNo + "'";
 		
-		ResultSet rs2 = databaseClass.select(sqlGo);
+		ResultSet rsGo = databaseClass.select(sqlGo);
 		
 		String flightCode = "";
 		String from = "";
@@ -161,12 +161,12 @@ public class SelectPaymentForm extends JFrame implements ActionListener {
 		String to = "";
 		String toDate = "";
 		try {
-			while(rs2.next()) {
-				flightCode = rs2.getString("flightCode");
-				from = rs2.getString("from");
-				fromDate = rs2.getString("fromDate");
-				to = rs2.getString("to");
-				toDate = rs2.getString("toDate");
+			while(rsGo.next()) {
+				flightCode = rsGo.getString("flightCode");
+				from = rsGo.getString("from");
+				fromDate = rsGo.getString("fromDate");
+				to = rsGo.getString("to");
+				toDate = rsGo.getString("toDate");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -175,12 +175,12 @@ public class SelectPaymentForm extends JFrame implements ActionListener {
 		GoData = "편명 " + flightCode + "   |   " + from + " -> " + to + "   |   " + fromDate + " ~ " + toDate;
 		
 		
-		// ComData
+		// 오는날 데이터 가져오기
 		String sqlCom = "SELECT flightCode, `from`, fromDate, `to`, toDate "
 				+ "FROM inhaair.airSchedule "
 				+ "WHERE scheduleNo='" + COMscheduleNo + "'";
 		
-		ResultSet rs3 = databaseClass.select(sqlCom);
+		ResultSet rsCom = databaseClass.select(sqlCom);
 		
 		flightCode = "";
 		from = "";
@@ -188,12 +188,12 @@ public class SelectPaymentForm extends JFrame implements ActionListener {
 		to = "";
 		toDate = "";
 		try {
-			while(rs3.next()) {
-				flightCode = rs3.getString("flightCode");
-				from = rs3.getString("from");
-				fromDate = rs3.getString("fromDate");
-				to = rs3.getString("to");
-				toDate = rs3.getString("toDate");
+			while(rsCom.next()) {
+				flightCode = rsCom.getString("flightCode");
+				from = rsCom.getString("from");
+				fromDate = rsCom.getString("fromDate");
+				to = rsCom.getString("to");
+				toDate = rsCom.getString("toDate");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -223,7 +223,6 @@ public class SelectPaymentForm extends JFrame implements ActionListener {
 		// 결제하기 버튼 부분
 		jpBtn = new JPanel(new GridLayout(1, 2, 30, 30));
 		jpBtn.setBorder(new EmptyBorder(30, 50, 30, 50));
-//		jpBtn = new JPanel();
 		jpBtn.setSize(1100, 100);
 		jpBtn.setLocation(0, 520);
 		jpBtn.setBackground(Color.WHITE);
@@ -380,20 +379,20 @@ public class SelectPaymentForm extends JFrame implements ActionListener {
 	private void updateSeat() {
 		
 		// 스케쥴번호, 좌석 클래스 정보 select
-		String sql = "SELECT GOscheduleNo, COMscheduleNo, GOclass, COMclass FROM reservation WHERE reserveNum = '" + reserveNum + "'";
+		String sqlSchedule = "SELECT GOscheduleNo, COMscheduleNo, GOclass, COMclass FROM reservation WHERE reserveNum = '" + reserveNum + "'";
 		
 		String GOscheduleNo = "";
 		String COMscheduleNo = "";
 		String GOclass = "";
 		String COMclass = "";
 		
-		ResultSet rs1 = databaseClass.select(sql);
+		ResultSet rsSchedule = databaseClass.select(sqlSchedule);
 		try {
-			while(rs1.next()) {
-				GOscheduleNo = rs1.getString("GOscheduleNo");
-				COMscheduleNo = rs1.getString("COMscheduleNo");
-				GOclass = rs1.getString("GOclass");
-				COMclass = rs1.getString("COMclass");
+			while(rsSchedule.next()) {
+				GOscheduleNo = rsSchedule.getString("GOscheduleNo");
+				COMscheduleNo = rsSchedule.getString("COMscheduleNo");
+				GOclass = rsSchedule.getString("GOclass");
+				COMclass = rsSchedule.getString("COMclass");
 			}
 			
 		} catch (SQLException e) {
@@ -404,44 +403,51 @@ public class SelectPaymentForm extends JFrame implements ActionListener {
 		int goSeat = 0;
 		int comSeat = 0;
 		
-		String sql2 = "SELECT " + GOclass + " FROM seat WHERE scheduleNo='" + GOscheduleNo + "'";
-		String sql3 = "SELECT " + COMclass + " FROM seat WHERE scheduleNo='" + COMscheduleNo + "'";
+		String sqlGoSeat = "SELECT " + GOclass + " FROM seat WHERE scheduleNo='" + GOscheduleNo + "'";
+		String sqlComSeat = "SELECT " + COMclass + " FROM seat WHERE scheduleNo='" + COMscheduleNo + "'";
 		
-		ResultSet rs2 = databaseClass.select(sql2);
+		// 가는날 잔여좌석수
+		ResultSet rsGoSeat = databaseClass.select(sqlGoSeat);
 		try {
-			while(rs2.next()) {
-				goSeat = Integer.parseInt(rs2.getString(1));
+			while(rsGoSeat.next()) {
+				goSeat = Integer.parseInt(rsGoSeat.getString(1));
 			}
 		} catch (NumberFormatException | SQLException e) {
 			e.printStackTrace();
 		}
 		
-		ResultSet rs3 = databaseClass.select(sql3);
+		// 오는날 잔여 좌석수
+		ResultSet rsComSeat = databaseClass.select(sqlComSeat);
 		try {
-			while(rs3.next()) {
-				comSeat = Integer.parseInt(rs3.getString(1));
+			while(rsComSeat.next()) {
+				comSeat = Integer.parseInt(rsComSeat.getString(1));
 			}
 		} catch (NumberFormatException | SQLException e) {
 			e.printStackTrace();
 		}
 		
 		// 잔여 좌석수 변경
+		// 탑승인원 수 계산
 		int people = adult + child;
 		
+		// 잔여 좌석 수 계산
 		goSeat = goSeat - people;
 		comSeat = comSeat - people;
 		
 		String sqlUpdate = "UPDATE seat SET " + GOclass + "=" + goSeat + " WHERE scheduleNo='" + GOscheduleNo + "'";
 		
+		// 가는날 잔여 좌석수 update
 		int resultGo = databaseClass.update(sqlUpdate);
 		
 		if(resultGo == 1) {
+			// 가는날 잔여 좌석수 update 성공 시
 			sqlUpdate = "UPDATE seat SET " + COMclass + "=" + comSeat + " WHERE scheduleNo='" + COMscheduleNo + "'";
 			
+			// 오는날 잔여 좌석수 update
 			int resultCom = databaseClass.update(sqlUpdate);
 			
 			if(resultCom == 1) {
-				// 성공시 결제완료 창으로 이동
+				// 오는날 잔여 좌석수 update 성공시 결제완료 창으로 이동
 				paymentForm = new PaymentForm(id);
 				this.setVisible(false);
 			}
@@ -480,17 +486,24 @@ public class SelectPaymentForm extends JFrame implements ActionListener {
 		} else {
 			// 정보 입력된 승객이 있으면 승객 정보 삭제 
 			sql = "DELETE FROM reservationDetail WHERE reserveNum = '" + reserveNum + "'";
-			System.out.println(sql);
 						
 			int result = databaseClass.delete(sql);
 			
 			if(result == 1) {
-				// reservation 삭제
+				// reservationDetail 테이블에 해당 예매 삭제 성공시
+				// reservation 테이블에서 해당 예매 삭제
 				resdel = delReservation();
 							
-				// 첫 화면으로 
-				mainMenuForm = new MainMenuForm();
-				this.setVisible(false);
+				if(resdel == 1) {
+					// reservation 테이블에 해당 예매 삭제 성공시
+					// 첫 화면으로 이동
+					mainMenuForm = new MainMenuForm();
+					mainMenuForm.setId(id);
+					this.setVisible(false);
+				} else {
+					// 삭제 실패시 다이얼로그 띄움
+					JOptionPane.showMessageDialog(null, "첫 화면으로 이동할 수 없습니다.", "오류 안내", JOptionPane.WARNING_MESSAGE);
+				}
 			} else {
 				// 삭제 실패시 다이얼로그 띄움
 				JOptionPane.showMessageDialog(null, "첫 화면으로 이동할 수 없습니다.", "오류 안내", JOptionPane.WARNING_MESSAGE);
@@ -500,16 +513,15 @@ public class SelectPaymentForm extends JFrame implements ActionListener {
 	}
 	
 	// reservation 테이블에서 해당 예약 삭제
-		private int delReservation() {
-			int resdel = 0;
-			
-			String sql = "DELETE FROM reservation WHERE reserveNum = '" + reserveNum + "'";
-			System.out.println(sql);
-			
-			resdel = databaseClass.delete(sql);
-			
-			return resdel;
-			
-		}
+	private int delReservation() {
+		int resdel = 0;
+		
+		String sql = "DELETE FROM reservation WHERE reserveNum = '" + reserveNum + "'";
+		
+		resdel = databaseClass.delete(sql);
+		
+		return resdel;
+		
+	}
 
 }

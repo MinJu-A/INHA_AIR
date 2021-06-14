@@ -21,6 +21,7 @@ import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import java.awt.BorderLayout;
@@ -269,7 +270,7 @@ public class TicketingRoundTripComingForm extends JFrame implements ActionListen
 		private JLabel lblGoingPayF;
 		private String selectedSeatGo;
 		private String GOscheduleNo;
-		private int finaltotalPay;
+		private double finaltotalPay;
 		private String selectedSeatCom;
 		private Color crChange;
 		private String comeDay;
@@ -283,7 +284,7 @@ public class TicketingRoundTripComingForm extends JFrame implements ActionListen
 		private String airportD;
 		private String airportA;
 		private String reserveNum;
-		private int totalPay;
+		private double totalPay;
 		
 		public TicketingRoundTripComingForm(TicketingRoundTripGoingForm rtg) {
 
@@ -555,7 +556,7 @@ public class TicketingRoundTripComingForm extends JFrame implements ActionListen
 		String sql = "UPDATE reservation set COMscheduleNo=?, pay=?, COMclass=? WHERE reserveNum=?";
 		ps = conn.prepareStatement(sql);
 		ps.setString(1,COMscheduleNo);
-		ps.setInt(2,finaltotalPay);
+		ps.setDouble(2,finaltotalPay);
 		ps.setString(3,selectedSeatCom);
 		ps.setString(4,reserveNum);
 		
@@ -870,47 +871,58 @@ public class TicketingRoundTripComingForm extends JFrame implements ActionListen
 			mainMenuForm.setId(ID);
 			this.setVisible(false);
 			
-		} else if(obj == btnNext)
-		{
-			
-//			tkRTComForm= new customer.book.ticketing.TicketingRoundTripComingFormX();
-//			this.setVisible(false);
-//			
-			Insert();
-			
-			reservation = new ReservationDetailForm(reserveNum, ID);
-			this.setVisible(false);
 		}
 		else if(obj == btnEcon)
 		{
-			finaltotalPay = totalPay + economyPay;
+//			finaltotalPay = totalPay + economyPay;
+//			totalPay = Math.round(economyPay * (numAdult + numChild*(0.8)));
+
+			finaltotalPay = totalPay + Math.round(economyPay * (numAdult + numChild*(0.8)));
 			lblTotalPayGoing.setText(finaltotalPay + "원");
 			
 			selectedSeatCom = "economy";
-			jpFlight1.setBackground(crChange);
+//			jpFlight1.setBackground(crChange);
 
 //			btnEcon.setBackground(crNext);
 		}
 		else if(obj == btnBus)
 		{
-			finaltotalPay = totalPay + businessPay;
+//			finaltotalPay = totalPay + businessPay;
+			finaltotalPay = totalPay + Math.round(businessPay * (numAdult + numChild*(0.8)));
 			lblTotalPayGoing.setText(finaltotalPay + "원");	
 			selectedSeatCom = "business";
-			jpFlight2.setBackground(crChange);
+//			jpFlight2.setBackground(crChange);
 
 //			btnBus.setBackground(crNext);
 
 			}
 		else if(obj == btnFirs)
 		{
-			finaltotalPay = totalPay + firstPay;
+//			finaltotalPay = totalPay + firstPay;
+			finaltotalPay = totalPay + Math.round(firstPay * (numAdult + numChild*(0.8)));
 			lblTotalPayGoing.setText(finaltotalPay + "원");	
 			
 			selectedSeatCom = "first";
-			jpFlight3.setBackground(crChange);
+//			jpFlight3.setBackground(crChange);
 
 //			btnFirs.setBackground(crNext);
 
+			}
+		 else if(obj == btnNext)
+			{
+				if(finaltotalPay == totalPay) {
+					JOptionPane.showMessageDialog(null, "오는 편을 선택하세요", "알림", JOptionPane.WARNING_MESSAGE);
+				}
+//				tkRTComForm= new customer.book.ticketing.TicketingRoundTripComingFormX();
+//				this.setVisible(false);
+//				
+				else {
+					
+				
+				Insert();
+				
+				reservation = new ReservationDetailForm(reserveNum, ID);
+				this.setVisible(false);}
 			}
 		
 	}

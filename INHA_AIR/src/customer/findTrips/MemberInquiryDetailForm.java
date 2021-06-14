@@ -94,13 +94,13 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 //			int baggage;
 			
 			//airschedule
-			String flightCode;
+			String GOflightCode;
 			String from;
-			String fromDate;
-			String fromTime;
+			String GOfromDate;
+			String GOfromTime;
 			String to;
 			String toDate;
-			String toTime;
+			String GOtoTime;
 			
 			//reservation
 			String GOclass;
@@ -146,14 +146,34 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 		private JLabel lblEmail;
 		private JLabel lblPassportNo;
 		private JLabel lblPassport;
-		private JLabel lblFlightcode;
-		private JLabel lblSchedule;
+		private JLabel lblGOFlightcode;
+		private JLabel lblGOScheduleNo;
 		private JLabel lblFromToP;
-		private Component lblFromToT;
+		private Component lblGOfromTime;
 		private JLabel lblFromToD;
-		private Component lblSeatInfo;
+		private Component lblGOSeatInfo;
 		private String seatClass;
 		private JLabel lblToFromP;
+		private String COMclass;
+		private String COMscheduleNo;
+		private String GOscheduleNo;
+		private String COMflightCode;
+		private String COMfromDate;
+		private String COMfromTime;
+		private String COMtoTime;
+		private JLabel lblCOMFlightcode;
+		private JLabel lblCOMscheduleNo;
+		private JLabel lblToFromD;
+		private JLabel lblCOMfromTime;
+		private JLabel lblCOMSeatInfo;
+		private JLabel lblNumOfP;
+		private JLabel lblAdult;
+		private JLabel lblInfant;
+		private Component lblChild;
+		private JLabel lblTotalNum;
+		private int adult;
+		private int child;
+		private int infant;
 
 	public MemberInquiryDetailForm(String id) {
 		
@@ -210,15 +230,15 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 		jpInquiryDetailTop2.setLocation(70,402);
 		jpInquiryDetailTop2.setBackground(crGrey);
 	
-		lblPassenger = new JLabel("승객 정보");
+		lblPassenger = new JLabel("예매자 정보");
 		lblPassenger.setBounds(70, 149, 200, 20);
 		lblPassenger.setFont(fontNanumGothic15Plain);
 		
-		lblFlightInfo = new JLabel("항공권 정보");
-		lblFlightInfo.setBounds(70, 375, 180, 20);
+		lblFlightInfo = new JLabel("항공편 정보 (가는 편 / 오는 편)");
+		lblFlightInfo.setBounds(70, 375, 400, 20);
 		lblFlightInfo.setFont(fontNanumGothic15Plain);
 		
-		lblPName = new JLabel("승객명");
+		lblPName = new JLabel("예매자명");
 		lblPName.setBounds(50, 10, 80, 20);
 		lblPName.setFont(fontNanumGothic15);
 		
@@ -234,31 +254,36 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 		lblPassportNo.setBounds(690, 10, 80, 20);
 		lblPassportNo.setFont(fontNanumGothic15);
 		
-		lblFlightName = new JLabel("항공편 (가는 편 / 오는 편)");
-		lblFlightName.setBounds(30, 10, 200, 20);
+		lblNumOfP = new JLabel("예매 인원");
+		lblNumOfP.setBounds(850, 10, 100, 20);
+		lblNumOfP.setFont(fontNanumGothic15);
+		
+		lblFlightName = new JLabel("항공편");
+		lblFlightName.setBounds(50, 10, 200, 20);
 		lblFlightName.setFont(fontNanumGothic15);
 		
 		lblDepArr = new JLabel("출발지  -  도착지");
-		lblDepArr.setBounds(270, 10, 150, 20);
+		lblDepArr.setBounds(250, 10, 150, 20);
 		lblDepArr.setFont(fontNanumGothic15);
 		
-		lblDate = new JLabel("날짜 및 시간 (가는 편 / 오는 편)");
-		lblDate.setBounds(460, 10, 150, 20);
+		lblDate = new JLabel("날짜 및 시간");
+		lblDate.setBounds(460, 10, 220, 20);
 		lblDate.setFont(fontNanumGothic15);
 		
-		lblSeat = new JLabel("좌석정보(가는 편 / 오는 편)");
-		lblSeat.setBounds(690, 10, 80, 20);
+		lblSeat = new JLabel("좌석정보");
+		lblSeat.setBounds(690, 10, 200, 20);
 		lblSeat.setFont(fontNanumGothic15);
 		
-		btnCheckIn = new JButton("체크인");
-		btnCheckIn.setBounds(880, 70, 90, 35);
-		btnCheckIn.setFont(fontNanumGothic12);
-		btnCheckIn.setBackground(crPaleblue);
+//		btnCheckIn = new JButton("체크인");
+//		btnCheckIn.setBounds(880, 70, 90, 35);
+//		btnCheckIn.setFont(fontNanumGothic12);
+//		btnCheckIn.setBackground(crPaleblue);
 		
 		jpInquiryDetailTop.add(lblPName);
 		jpInquiryDetailTop.add(lblPassengerDetail);
 		jpInquiryDetailTop.add(lblPNum);
 		jpInquiryDetailTop.add(lblPassportNo);
+		jpInquiryDetailTop.add(lblNumOfP);
 		
 		jpInquiryDetailTop2.add(lblFlightName);
 		jpInquiryDetailTop2.add(lblDepArr);
@@ -279,7 +304,7 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 		jpInquiry2.setSize(1000,180);
 		jpInquiry2.setLocation(70,454);
 		jpInquiry2.setBackground(crInfo);
-		jpInquiry2.add(btnCheckIn);
+//		jpInquiry2.add(btnCheckIn);
 		
 		add(lblInquiryTitle);
 		add(jpInquiryDetailTop);
@@ -298,7 +323,8 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 		lblnameENG.setBounds(47, 45, 150, 20);
 		lblnameENG.setFont(fontNanumGothic15Plain);
 		
-		lblSexBirth = new JLabel(birth.substring(0,4)+"-"+birth.substring(4,6)+"-"+birth.substring(6,8) + "  ·  " + sex);
+//		lblSexBirth = new JLabel(birth.substring(0,4)+"-"+birth.substring(4,6)+"-"+birth.substring(6,8) + "  ·  " + sex);
+		lblSexBirth = new JLabel(birth + " ·  "+sex);
 		lblSexBirth.setBounds(250, 20, 250, 20);
 		lblSexBirth.setFont(fontNanumGothic15Plain);
 		
@@ -314,6 +340,22 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 		lblPassport.setBounds(690, 20, 300, 20);
 		lblPassport.setFont(fontNanumGothic15Plain);
 		
+		lblAdult = new JLabel("성인 " + adult + "명 ");
+		lblAdult.setBounds(850, 20, 300, 20);
+		lblAdult.setFont(fontNanumGothic15Plain);
+		
+		lblChild = new JLabel("소아 " + child + "명 ");
+		lblChild.setBounds(850, 50, 300, 20);
+		lblChild.setFont(fontNanumGothic15Plain);
+		
+		lblInfant = new JLabel("유아 " + infant + "명 ");
+		lblInfant.setBounds(850, 80, 300, 20);
+		lblInfant.setFont(fontNanumGothic15Plain);
+		
+//		lblTotalNum = new JLabel(passport);
+//		lblTotalNum.setBounds(690, 20, 300, 20);
+//		lblTotalNum.setFont(fontNanumGothic15Plain);
+//		
 		//---------------------------------------
 		//---------------------------------------
 		
@@ -323,52 +365,83 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 		jpInquiry1.add(lblTel);
 		jpInquiry1.add(lblEmail);
 		jpInquiry1.add(lblPassport);
+		jpInquiry1.add(lblAdult);
+		jpInquiry1.add(lblChild);
+		jpInquiry1.add(lblInfant);
 		
 		//----------------------------------------
 		//----------------------------------------
 		
-		lblFlightcode = new JLabel("항공편명  :  " + flightCode);
-		lblFlightcode.setBounds(50, 25, 150, 20);
-		lblFlightcode.setFont(fontNanumGothic15Plain);
+		lblGOFlightcode = new JLabel("항공편명  :  " + GOflightCode);
+		lblGOFlightcode.setBounds(50, 20, 150, 20);
+		lblGOFlightcode.setFont(fontNanumGothic15Plain);
 		
-		lblSchedule = new JLabel("일정명  :  " + scheduleNo);
-		lblSchedule.setBounds(50, 55, 150, 20);
-		lblSchedule.setFont(fontNanumGothic15Plain);
+		lblGOScheduleNo = new JLabel("일정명  :  " + GOscheduleNo);
+		lblGOScheduleNo.setBounds(50, 50, 150, 20);
+		lblGOScheduleNo.setFont(fontNanumGothic15Plain);
+		
+		lblCOMFlightcode = new JLabel("항공편명  :  " + COMflightCode);
+		lblCOMFlightcode.setBounds(50, 100, 150, 20);
+		lblCOMFlightcode.setFont(fontNanumGothic15Plain);
+		
+		lblCOMscheduleNo = new JLabel("일정명  :  " + COMscheduleNo);
+		lblCOMscheduleNo.setBounds(50, 130, 150, 20);
+		lblCOMscheduleNo.setFont(fontNanumGothic15Plain);
 		
 		lblFromToP = new JLabel(from + " - " + to);
-		lblFromToP.setBounds(270, 25, 150, 20);
+		lblFromToP.setBounds(270, 20, 150, 20);
 		lblFromToP.setFont(fontNanumGothic18);
 		
 		lblToFromP = new JLabel(to + " - " + from);
-		lblToFromP.setBounds(270, 90, 150, 20);
+		lblToFromP.setBounds(270, 100, 150, 20);
 		lblToFromP.setFont(fontNanumGothic18);
 		
-		lblFromToD = new JLabel(fromDate.substring(0,4)+"년 " + fromDate.substring(4,6) + "월 " + fromDate.substring(6,8) + "일");
-		lblFromToD.setBounds(460, 25, 150, 20);
+//		lblFromToD = new JLabel(GOfromDate.substring(0,4)+"년 " + GOfromDate.substring(5,7) + "월 " + GOfromDate.substring(7,9) + "일");
+		lblFromToD = new JLabel(GOfromDate);
+		lblFromToD.setBounds(460, 20, 150, 20);
 		lblFromToD.setFont(fontNanumGothic15Plain);
 		
-		lblFromToT = new JLabel("출발 "+fromTime.substring(0,2)+":" + fromTime.substring(2,4) + " - 도착" + toTime.substring(0,2)+":" + toTime.substring(2,4));
-		lblFromToT.setBounds(460, 55, 200, 20);
-		lblFromToT.setFont(fontNanumGothic15Plain);
+		lblToFromD = new JLabel(COMfromDate);
+		lblToFromD.setBounds(460, 100, 150, 20);
+		lblToFromD.setFont(fontNanumGothic15Plain);
 		
-		if(GOclass == "e") {seatClass = "이코노미";}
-		else if(GOclass == "b") {seatClass = "비즈니스";}
-		else if(GOclass == "f"){seatClass = "퍼스트";}
+		lblGOfromTime = new JLabel("출발 "+GOfromTime.substring(0,2)+":" + GOfromTime.substring(3,5) + " - 도착" + GOtoTime.substring(0,2)+":" + GOtoTime.substring(3,5));
+		lblGOfromTime.setBounds(460, 50, 200, 20);
+		lblGOfromTime.setFont(fontNanumGothic15Plain);
 		
-		lblSeatInfo = new JLabel("클래스 : " + seatClass );
-		lblSeatInfo.setBounds(690, 25, 300, 20);
-		lblSeatInfo.setFont(fontNanumGothic15Plain);
+		lblCOMfromTime = new JLabel("출발 "+GOfromTime.substring(0,2)+":" + COMfromTime.substring(3,5) + " - 도착" + COMtoTime.substring(0,2)+":" + COMtoTime.substring(3,5));
+		lblCOMfromTime.setBounds(460, 130, 200, 20);
+		lblCOMfromTime.setFont(fontNanumGothic15Plain);
+		
+//		if(GOclass == "economy") {seatClass = "이코노미";}
+//		else if(GOclass == "business") {seatClass = "비즈니스";}
+//		else if(GOclass == "first"){seatClass = "퍼스트";}
+//		
+		lblGOSeatInfo = new JLabel("클래스 : " + GOclass );
+		lblGOSeatInfo.setBounds(690, 20, 300, 20);
+		lblGOSeatInfo.setFont(fontNanumGothic15Plain);
+		
+		lblCOMSeatInfo = new JLabel("클래스 : " + COMclass );
+		lblCOMSeatInfo.setBounds(690, 100, 300, 20);
+		lblCOMSeatInfo.setFont(fontNanumGothic15Plain);
 		
 		//-----------------------------------------
 		//-----------------------------------------
 		
-		jpInquiry2.add(lblFlightcode);
-		jpInquiry2.add(lblSchedule);
+		jpInquiry2.add(lblGOFlightcode);
+		jpInquiry2.add(lblCOMFlightcode);
+		
+//		jpInquiry2.add(lblGOScheduleNo);
+//		jpInquiry2.add(lblCOMscheduleNo);
 		jpInquiry2.add(lblFromToP);
 		jpInquiry2.add(lblToFromP);
 		jpInquiry2.add(lblFromToD);
-		jpInquiry2.add(lblFromToT);
-		jpInquiry2.add(lblSeatInfo);
+		jpInquiry2.add(lblToFromD);
+		jpInquiry2.add(lblGOfromTime);
+		jpInquiry2.add(lblCOMfromTime);
+		
+		jpInquiry2.add(lblGOSeatInfo);
+		jpInquiry2.add(lblCOMSeatInfo);
 		
 		setVisible(true);
 	}
@@ -388,7 +461,32 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 			ResultSet rs = state.executeQuery(sql);
 			while (rs.next()) {
 				reserveNum = rs.getString("reserveNum");
+				GOscheduleNo = rs.getString("GOscheduleNo");
+				COMscheduleNo = rs.getString("COMscheduleNo");
 				GOclass = rs.getString("GOclass");
+				COMclass = rs.getString("COMclass");
+				
+				adult = rs.getInt("adult");
+				child = rs.getInt("child");
+				infant = rs.getInt("infant");
+				
+				this.reserveNum = reserveNum;
+				this.GOscheduleNo= GOscheduleNo;
+				this.COMscheduleNo = COMscheduleNo;
+				this.GOclass = GOclass;
+				this.COMclass = COMclass;
+				this.adult = adult;
+				this.child = child;
+				this.infant = infant;
+				
+//				if(GOclass == "economy") {seatClass = "이코노미";}
+//				else if(GOclass == "business") {seatClass = "비즈니스";}
+//				else if(GOclass == "first"){seatClass = "퍼스트";}
+//				
+//				
+				System.out.println(GOclass);
+//				System.out.println(seatClass);
+				
 			}
 			rs.close();
 			state.close();
@@ -413,8 +511,6 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 		
 		ResultSet rs = state.executeQuery(sql);
 		while (rs.next()) {
-			reserveNum = rs.getString("reserveNum");
-			scheduleNo = rs.getString("scheduleNo");
 			nameKOR = rs.getString("nameKOR");
 			nameENG = rs.getString("nameENG");
 			sex = rs.getString("sex");
@@ -424,6 +520,20 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 			email = rs.getString("email");
 			agree = rs.getInt("agree");
 			baggage = rs.getInt("baggage");
+			
+			this.nameKOR = nameKOR;
+			this.nameENG = nameENG;
+			this.sex = sex;
+			this.passport = passport;
+			this.birth = birth;
+			this.tel = tel;
+			this.email = email;
+			this.agree = agree;
+			this.baggage = baggage;
+			
+			System.out.println(tel);
+			
+			
 		}
 		rs.close();
 		state.close();
@@ -444,16 +554,49 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 		state = conn.createStatement();	
 
 		String sql;
-		sql = "SELECT * FROM airSchedule WHERE `scheduleNo` = '"+ scheduleNo +"' ";
+		sql = "SELECT * FROM airSchedule WHERE `scheduleNo` = '"+ GOscheduleNo +"' ";
 		
 		ResultSet rs = state.executeQuery(sql);
 		while (rs.next()) {
-			flightCode = rs.getString("flightCode");
+			GOflightCode = rs.getString("flightCode");
 			from = rs.getString("from");
-			fromDate = rs.getString("fromDate");
-			fromTime = rs.getString("fromTime");
+			GOfromDate = rs.getString("fromDate");
+			GOfromTime = rs.getString("fromTime");
 			to = rs.getString("to");
-			toTime = rs.getString("toTime");
+			GOtoTime = rs.getString("toTime");
+		}
+		rs.close();
+		state.close();
+		conn.close();
+	}
+	catch (Exception e) {
+	}finally {try {if(state!=null)state.close();}
+	catch (SQLException ex1) {}
+	try {if(conn!=null)conn.close();}
+	catch (SQLException ex2) {}
+	}
+//----------------------------------------
+//----------------------------------------
+	try{
+		Class.forName(driver);
+		conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
+		state = conn.createStatement();	
+		
+		String sql;
+		sql = "SELECT * FROM airSchedule WHERE `scheduleNo` = '"+ COMscheduleNo +"' ";
+		
+		ResultSet rs = state.executeQuery(sql);
+		while (rs.next()) {
+			COMflightCode = rs.getString("flightCode");
+//			from = rs.getString("from");
+			COMfromDate = rs.getString("fromDate");
+			COMfromTime = rs.getString("fromTime");
+			COMtoTime = rs.getString("toTime");
+
+			
+			
+//			to = rs.getString("to");
+//			toTime = rs.getString("toTime");
 		}
 		rs.close();
 		state.close();
