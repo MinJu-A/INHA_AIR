@@ -10,6 +10,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -37,7 +39,7 @@ import Management.Payment.PaymentList;
 import Management.User.UserList;
 import be.sign.SignIn;
 
-public class AirplaneList extends JFrame implements ActionListener {
+public class AirplaneList extends JFrame implements ActionListener, MouseListener {
 	// Title 및 사이즈 설정
 	private String title = "Management";
 	private int width = 1120, height = 770;
@@ -146,7 +148,7 @@ public class AirplaneList extends JFrame implements ActionListener {
 		setUserEdit();
 		
 		//검색
-		setPlaneTable();
+		setPlaneTable(0,"");
 
 		
 		setVisible(true);
@@ -155,7 +157,7 @@ public class AirplaneList extends JFrame implements ActionListener {
 
 	
 	//유저 조회 테이블
-	private void setPlaneTable() {
+	private void setPlaneTable(int i, String codename) {
 		
 		//전체 사용자 조회
 		String sql = "SELECT *\r\n"
@@ -164,6 +166,17 @@ public class AirplaneList extends JFrame implements ActionListener {
 		
 		//테이블 초기화
 		model.setNumRows(0);
+		
+		if(i==0) {
+			sql = "SELECT *\r\n"
+					+ "FROM airplane\r\n"
+					+ "ORDER BY flightCode";
+		} else if(i==1) {
+			sql = "SELECT *\r\n"
+					+ "FROM airplane\r\n"
+					+ "WHERE Code flightCode = '" +codename+ "'\r\n"
+					+ "ORDER BY flightCode";
+		}
 		
 		//결제 금액 검색
 		ResultSet rs = databaseClass.select(sql);
@@ -362,6 +375,7 @@ public class AirplaneList extends JFrame implements ActionListener {
 		jtAirway.setRowHeight(20);
 		jtAirway.setFillsViewportHeight(true); //스크롤팬에 꽉 차서 보이게 하기
 		jtAirway.setBackground(Color.WHITE);
+		jtAirway.addMouseListener(this);
 		
 		Center = new DefaultTableCellRenderer(); //테이블 정렬
 		Center.setHorizontalAlignment(JLabel.CENTER); //가운데정렬
@@ -406,7 +420,7 @@ public class AirplaneList extends JFrame implements ActionListener {
 		btnLogo = new JButton("INHA AIR");
 		btnLogo.setFont(fontArial36);
 		btnLogo.setSize(200, 70);
-		btnLogo.setLocation(10, 5);
+		btnLogo.setLocation(10, 25);
 		btnLogo.addActionListener(this);
 		btnLogo.setBackground(Color.WHITE);
 		btnLogo.setForeground(new Color(24, 62, 111));	// 글자색 변경
@@ -498,16 +512,18 @@ public class AirplaneList extends JFrame implements ActionListener {
 Object obj = e.getSource();
 		
 	if(obj == btnLogo) {
+		//메인으로 돌아가기
 		result = JOptionPane.showConfirmDialog(this, "메인으로 돌아가시겠습니까?", "알림", JOptionPane.YES_NO_OPTION);
 		if(result == JOptionPane.YES_OPTION) {
 			JOptionPane.showMessageDialog(this, "메인으로 돌아갑니다.");
 			dispose();
-			mainform = new MainForm();
+			userList = new UserList();
 		}else {
 			JOptionPane.showMessageDialog(this, "메인으로 돌아가지 않습니다.");
 		}
 			
 		} else if(obj == btnLogout){
+		 //로그아웃
 			int result = JOptionPane.showConfirmDialog(this, "정말 로그아웃 하시겠습니까?", "로그아웃",JOptionPane.YES_NO_OPTION);
 			if(result == JOptionPane.YES_OPTION ) {
 				JOptionPane.showMessageDialog(null, "시스템을 종료합니다");
@@ -517,35 +533,88 @@ Object obj = e.getSource();
 				JOptionPane.showMessageDialog(null, "로그아웃을 취소합니다.");
 			}
 		}  else if(obj == btnUser) {
+			//유저창
 			dispose();
 			userList = new UserList();
 		} else if(obj == btnAirway) {
+			//항공편
 			dispose();
 			airwaylist = new AirwayList();
 		} else if(obj == btnAirport) {
+			//공항
 			dispose();
 			airportlist = new AirportList();
 		} else if(obj == btnPay) {
+			//매출
 			dispose();
 			paymentlist = new PaymentList();
 		} else if(obj == btnAirplane) {
+			//비행기
 			dispose();
 			airplanelist = new AirplaneList();
 		} else if(obj == btnBye) {
+			//취소
 			result = JOptionPane.showConfirmDialog(this, "입력을 취소하시겠습니까?", "입력 취소",JOptionPane.YES_NO_OPTION);
 			if(result == JOptionPane.YES_OPTION) {
 				JOptionPane.showMessageDialog(null, "입력이 취소되었습니다.");
+				tfSer.setText("");
 				tfSche.setText("");
-			 	tfeconomy.setText("");
-			 	tfBusiness.setText("");
-			 	tffirst.setText("");
-			 	tfDepTime.setText("");
-			 	tfArr.setText("");
-			 	tfArrDay.setText("");
-			 	tffArrTime.setText("");
+				tfDep.setText("");
+				tfArr.setText("");
+				tfeconomy.setText("");
+				tfBusiness.setText("");
+				tfPfirst.setText("");
+				tfPeconomy.setText("");
+				tfPBusiness.setText("");
+				tfPfirst.setText("");
+			 	
+			 	
 			} else {
 				JOptionPane.showMessageDialog(null, "계속 입력해주세요");
 			}
+		}else if(obj == btnser) {
+			//검색
+			String code = tfSer.getText();
+			
+			if(code.equals("")||code.equals("ex)AKLTOI-1")) {
+				setPlaneTable(0, "");
+			}else {
+				setPlaneTable(1, code);
+			}
+		}else if(obj == btnDel) {
+			String Schedule = tfSche.getText();
+			String Dep = tfDep.getText();
+			String Arr = tfArr.getText();
+			String economy = tfeconomy.getText();
+			String business = tfBusiness.getText();
+			String first = tfPfirst.getText();
+			String Peconomy = tfPeconomy.getText();
+			String Pbusiness = tfPBusiness.getText();
+			String Pfirst = tfPfirst.getText();
+			
+			String sql = "DELETE FROM airplane\r\n"
+					+ "WHERE = flightCode'" + Schedule + "' AND from = '" + Dep + "' AND to = '" + Arr +"' AND economy = '" + economy
+					+ "' AND business = '" + business + "' AND first = '" + first + "' AND Peconomy = '" + Peconomy + "'AND Pbusiness = '" + Pbusiness + "'AND Pfirst = '" + Pfirst + "'";
+			
+			int rs = databaseClass.delete(sql);
+			if(rs ==1) {
+				JOptionPane.showMessageDialog(this, "삭제 되었습니다.");
+				setPlaneTable(0, "");
+				
+			} else if(rs ==0) {
+				JOptionPane.showMessageDialog(this, "삭제 실패했습니다.");
+			}
+			tfSer.setText("");
+			tfSche.setText("");
+			tfDep.setText("");
+			tfArr.setText("");
+			tfeconomy.setText("");
+			tfBusiness.setText("");
+			tfPfirst.setText("");
+			tfPeconomy.setText("");
+			tfPBusiness.setText("");
+			tfPfirst.setText("");
+		 	
 		}
 	}
 	// jtable 생성
@@ -578,6 +647,49 @@ Object obj = e.getSource();
 		public boolean isCellEditable(int row, int column) {
 			return false;
 		}
+		
+	}
+	@Override
+	public void mouseClicked(MouseEvent e) {
+	 int row = jtAirway.getSelectedRow();	
+	 int col = jtAirway.getSelectedColumn();	
+	
+	 tfSche.setText((String)jtAirway.getValueAt(row, 0));
+	 tfDep.setText((String)jtAirway.getValueAt(row, 1));
+	 tfArr.setText((String)jtAirway.getValueAt(row, 2));
+	 tfeconomy.setText((String)jtAirway.getValueAt(row, 3));
+	 tfBusiness.setText((String)jtAirway.getValueAt(row, 4));
+	 tfPeconomy.setText((String)jtAirway.getValueAt(row, 5));
+	 tfPBusiness.setText((String)jtAirway.getValueAt(row, 6));
+	 tfPfirst.setText((String)jtAirway.getValueAt(row, 7));
+	 
+	}
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 	}

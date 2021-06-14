@@ -39,6 +39,7 @@ import Management.Main.MainForm;
 import Management.Payment.PaymentList;
 import Management.User.UserList;
 import be.sign.SignIn;
+import customer.start.StartForm;
 
 public class AirportList extends JFrame implements ActionListener, MouseListener {
 	// Title 및 사이즈 설정
@@ -56,6 +57,7 @@ public class AirportList extends JFrame implements ActionListener, MouseListener
 		private AirplaneList airplanelist;
 		private HintTextField hintTf;
 		private MainForm mainform;
+		private StartForm startform;
 		private int result;
 		
 		
@@ -388,7 +390,7 @@ public class AirportList extends JFrame implements ActionListener, MouseListener
 		btnLogo = new JButton("INHA AIR");
 		btnLogo.setFont(fontArial36);
 		btnLogo.setSize(200, 70);
-		btnLogo.setLocation(10, 5);
+		btnLogo.setLocation(10, 25);
 		btnLogo.addActionListener(this);
 		btnLogo.setBackground(Color.WHITE);
 		btnLogo.setForeground(new Color(24, 62, 111));	// 글자색 변경
@@ -480,40 +482,48 @@ public class AirportList extends JFrame implements ActionListener, MouseListener
 Object obj = e.getSource();
 		
 	if(obj == btnLogo) {
+		//메인으로 돌아가기
 		result = JOptionPane.showConfirmDialog(this, "메인으로 돌아가시겠습니까?", "알림", JOptionPane.YES_NO_OPTION);
 		if(result == JOptionPane.YES_OPTION) {
 			JOptionPane.showMessageDialog(this, "메인으로 돌아갑니다.");
 			dispose();
-			mainform = new MainForm();
+			userList = new UserList();
 		}else {
 			JOptionPane.showMessageDialog(this, "메인으로 돌아가지 않습니다.");
 		}
 			
 		} else if(obj == btnLogout){
+			//로그아웃
 			int result = JOptionPane.showConfirmDialog(this, "정말 로그아웃 하시겠습니까?", "로그아웃",JOptionPane.YES_NO_OPTION);
 			if(result == JOptionPane.YES_OPTION ) {
 				JOptionPane.showMessageDialog(null, "시스템을 종료합니다");
 				dispose();
-				signIn = new SignIn();
+				startform = new StartForm();
 			} else {
 				JOptionPane.showMessageDialog(null, "로그아웃을 취소합니다.");
 			}
 		}  else if(obj == btnUser) {
+			//유저창
 			dispose();
 			userList = new UserList();
 		} else if(obj == btnAirway) {
+			//항공편
 			dispose();
 			airwaylist = new AirwayList();
 		} else if(obj == btnAirport) {
+			//공항
 			dispose();
 			airportlist = new AirportList();
 		} else if(obj == btnPay) {
+			//매출
 			dispose();
 			paymentlist = new PaymentList();
 		} else if(obj == btnBye) {
+			//취소버튼
 			 result = JOptionPane.showConfirmDialog(this, "입력을 취소하시겠습니까?", "입력 취소",JOptionPane.YES_NO_OPTION);
 			 if(result == JOptionPane.YES_OPTION ) {
 					JOptionPane.showMessageDialog(null, "입력이 취소되었습니다");
+					tfSer.setText("");
 					tfCode.setText("");
 					tfCon.setText("");
 					tfCountry.setText("");
@@ -524,6 +534,7 @@ Object obj = e.getSource();
 					JOptionPane.showMessageDialog(null, "계속 입력해주세요");
 				}
 		}else if(obj == btnAirplane) {
+			//비행기버튼
 			dispose();
 			airplanelist = new AirplaneList();
 		}
@@ -532,12 +543,20 @@ Object obj = e.getSource();
 			String code = tfSer.getText();
 		
 			
-			if(code.length() > 3) {
+			if(code.length() > 3||code.equals("")||code.equals("ex)AKLTOI-1")) {
 				setAirportTable(0, "");
 			}
 			else {
 				setAirportTable(1, code);
 			}
+			
+			tfSer.setText("");
+			tfCode.setText("");
+			tfCon.setText("");
+			tfCountry.setText("");
+			tfCity.setText("");
+			tfAName.setText("");
+			tfBound.setText("");
 			
 		}
 		else if(obj == btnOk) {
@@ -561,6 +580,13 @@ Object obj = e.getSource();
 			} else if(rs == 0) {
 				JOptionPane.showMessageDialog(this, "등록에 실패했습니다.");
 			}
+			tfSer.setText("");
+			tfCode.setText("");
+			tfCon.setText("");
+			tfCountry.setText("");
+			tfCity.setText("");
+			tfAName.setText("");
+			tfBound.setText("");
 
 		}
 		else if(obj == btnDel) {
@@ -583,6 +609,13 @@ Object obj = e.getSource();
 			} else if(rs == 0) {
 				JOptionPane.showMessageDialog(this, "삭제 실패했습니다.");
 			}
+			tfSer.setText("");
+			tfCode.setText("");
+			tfCon.setText("");
+			tfCountry.setText("");
+			tfCity.setText("");
+			tfAName.setText("");
+			tfBound.setText("");
 		}
 		else if(obj == btnMod) {
 			// 수정
@@ -604,6 +637,13 @@ Object obj = e.getSource();
 			} else if(rs == 0) {
 				JOptionPane.showMessageDialog(this, "수정 실패했습니다.");
 			}
+			tfSer.setText("");
+			tfCode.setText("");
+			tfCon.setText("");
+			tfCountry.setText("");
+			tfCity.setText("");
+			tfAName.setText("");
+			tfBound.setText("");
 		}
 	}
 	// jtable 생성
