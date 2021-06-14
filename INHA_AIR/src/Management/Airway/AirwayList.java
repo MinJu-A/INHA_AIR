@@ -32,6 +32,7 @@ import DataBase.databaseClass;
 import Management.AirPort.AirportList;
 import Management.Airplane.AirplaneList;
 import Management.Airway.AirwayList;
+import Management.Form.HintTextField;
 import Management.Main.MainForm;
 import Management.Payment.PaymentList;
 import Management.User.UserList;
@@ -96,7 +97,7 @@ public class AirwayList extends JFrame implements ActionListener {
 	private JPanel jpAll, jpBtn, jpEdit, jpNew, jpSer;
 	private JButton btnOk, btnBye, btnDel, btnMod, btnser;
 	private JLabel lblNew, lblsche, lblflightNo, lblDep, lblDepday, lblDepTime, lblArr, lblArrDay, lblArrTime, lblserach;
-	private JTextField tfSche, tfFlightNo, tfDep, tfDepDay, tfDepTime, tfArr, tfArrDay, tffArrTime, tfSer;
+	private HintTextField tfSche, tfFlightNo, tfDep, tfDepDay, tfDepTime, tfArr, tfArrDay, tffArrTime, tfSer;
 	
 	public AirwayList() {
 		
@@ -150,7 +151,7 @@ public class AirwayList extends JFrame implements ActionListener {
 			private void setAirwayTable() {
 				
 				//전체 사용자 조회
-				String sql = "SELECT scheduleNo, flightCode, `from`, fromDate,  `to`, toDate\r\n"
+				String sql = "SELECT scheduleNo, flightCode, `from`, fromDate,fromTime,  `to`, toDate,toTime\r\n"
 						+ "FROM airSchedule\r\n"
 						+ "ORDER BY fromDate,flightCode ";
 				
@@ -165,10 +166,12 @@ public class AirwayList extends JFrame implements ActionListener {
 						String flightcode = rs.getString("flightCode");
 						String from = rs.getString("from");
 						String fromDate = rs.getString("fromDate");
+						String fromTime = rs.getString("fromTime");
 						String to = rs.getString("to");
 						String toDate = rs.getString("toDate");
+						String toTime = rs.getString("toTime");
 						
-						String[] airway = {scheduleNo, flightcode, from, fromDate,  to, toDate};
+						String[] airway = {scheduleNo, flightcode, from, fromDate,fromTime,  to, toDate, toTime};
 						model.addRow(airway);
 						
 					}
@@ -179,12 +182,6 @@ public class AirwayList extends JFrame implements ActionListener {
 				
 			}
 	
-
-
-
-
-
-
 
 
 	private void setUserEdit() {
@@ -204,7 +201,8 @@ public class AirwayList extends JFrame implements ActionListener {
 		lblserach.setHorizontalAlignment(JLabel.CENTER);
 		
 		//검색 텍스트필드
-		tfSer = new JTextField("ex)AKLTOI-1",15);
+		tfSer = new HintTextField("ex)AKLTOI-1");
+		tfSer.setPreferredSize(new Dimension(200, 25));	
 				
 		//검색 버튼
 		btnser = new JButton("검색");
@@ -239,20 +237,28 @@ public class AirwayList extends JFrame implements ActionListener {
 	 	lblDepday = new JLabel("출발일  ");
 	 	lblDepday.setFont(fontNanumGothic15);
 	 	lblDepday.setHorizontalAlignment(JLabel.CENTER);
+	 	lblDepTime = new JLabel("출발시  ");
+	 	lblDepTime.setFont(fontNanumGothic15);
+	 	lblDepTime.setHorizontalAlignment(JLabel.CENTER);
 	 	lblArr = new JLabel("도착지  ");
 	 	lblArr.setFont(fontNanumGothic15);
 	 	lblArr.setHorizontalAlignment(JLabel.CENTER);
 	 	lblArrDay = new JLabel("도착일  ");
 	 	lblArrDay.setFont(fontNanumGothic15);
 	 	lblArrDay.setHorizontalAlignment(JLabel.CENTER);
+	 	lblArrTime = new JLabel("도착시  ");
+	 	lblArrTime.setFont(fontNanumGothic15);
+	 	lblArrTime.setHorizontalAlignment(JLabel.CENTER);
 	 			
 	 	//폼 텍스트필드 
-	 	tfSche = new JTextField("ex)AKLTOI-1",30);
-	 	tfFlightNo = new JTextField("ex)IH1222",30);
-	 	tfDep = new JTextField("ex)AKL",30);
-	 	tfDepDay = new JTextField("ex)1998-12-22",30);
-	 	tfArr = new JTextField("ex)ICN",30);
-	 	tfArrDay = new JTextField("ex)2000-02-16",30);
+	 	tfSche = new HintTextField("ex)AKLTOI-1");
+	 	tfFlightNo = new HintTextField("ex)IH1222");
+	 	tfDep = new HintTextField("ex)AKL");
+	 	tfDepDay = new HintTextField("ex)1998-12-22");
+	 	tfDepTime = new HintTextField("ex)12:22:00");
+	 	tfArr = new HintTextField("ex)ICN");
+	 	tfArrDay = new HintTextField("ex)2000-02-16");
+	 	tffArrTime = new HintTextField("ex)02:16:00");
 	 	
 	 	//붙이기
 	 	jpNew.add(lblsche);
@@ -263,10 +269,14 @@ public class AirwayList extends JFrame implements ActionListener {
 	 	jpNew.add(tfDep);
 	 	jpNew.add(lblDepday);
 	 	jpNew.add(tfDepDay);
+	 	jpNew.add(lblDepTime);
+	 	jpNew.add(tfDepTime);
 	 	jpNew.add(lblArr);
 	 	jpNew.add(tfArr);
 	 	jpNew.add(lblArrDay);
 	 	jpNew.add(tfArrDay);
+	 	jpNew.add(lblArrTime);
+	 	jpNew.add(tffArrTime);
 	 	
 	 	jpEdit.add(jpNew);
 	 	
@@ -503,6 +513,25 @@ Object obj = e.getSource();
 		}else if(obj == btnAirplane) {
 			dispose();
 			airplanelist = new AirplaneList();
+		}else if(obj == btnOk) {
+			//값 입력됐는지 확인
+			if(tfSche.toString().equals("")||tfSche.toString().equals("ex)AKLTOI-1")) {
+				JOptionPane.showMessageDialog(null, "아이디를 입력하세요");
+			}else if(tfFlightNo.toString().equals("")||tfFlightNo.toString().equals("ex)IH1222")) {
+				JOptionPane.showMessageDialog(null, "편명 입력하세요");
+			}else if(tfDep.toString().equals("")||tfDep.toString().equals("ex)AKL")) {
+				JOptionPane.showMessageDialog(null, "출발지를 입력하세요");
+			}else if(tfDepDay.toString().equals("")||tfDepDay.toString().equals("ex)1988-12-22")) {
+				JOptionPane.showMessageDialog(null, "출발날짜를 입력하세요");
+			}else if(tfDepTime.toString().equals("")||tfDepTime.toString().equals("ex)12:22:00")) {
+				JOptionPane.showMessageDialog(null, "출발시간을 입력하세요");
+			}else if(tfArr.toString().equals("")||tfArr.toString().equals("ex)ICN")) {
+				JOptionPane.showMessageDialog(null, "도착지를 입력하세요");
+			}else if(tfArrDay.toString().equals("")||tfArrDay.toString().equals("ex)2000-02-16")) {
+				JOptionPane.showMessageDialog(null, "도착일을 입력하세요");
+			}else if(tffArrTime.toString().equals("")||tffArrTime.toString().equals("ex)02:16:00")) {
+				JOptionPane.showMessageDialog(null, "도착시간을 입력하세요");
+			}
 		}
 	}
 	// jtable 생성

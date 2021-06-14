@@ -394,7 +394,10 @@ public class TicketingRoundTripComingForm extends JFrame implements ActionListen
 	lblTotalPay.setFont(fontNanumGothic20);
 	lblTotalPay.setBounds(50,0,200,100);
 	
-	lblTotalPayGoing = new JLabel(totalPay + " 원");
+	String pay = Double.toString(totalPay);
+	pay = pay.substring(0, pay.length()-2);
+	
+	lblTotalPayGoing = new JLabel(pay + " 원");
 	lblTotalPayGoing.setFont(fontNanumGothic20);
 	lblTotalPayGoing.setBounds(500,0,200,100);
 	
@@ -878,7 +881,9 @@ public class TicketingRoundTripComingForm extends JFrame implements ActionListen
 //			totalPay = Math.round(economyPay * (numAdult + numChild*(0.8)));
 
 			finaltotalPay = totalPay + Math.round(economyPay * (numAdult + numChild*(0.8)));
-			lblTotalPayGoing.setText(finaltotalPay + "원");
+			String pay = Double.toString(finaltotalPay);
+			pay = pay.substring(0, pay.length()-2);
+			lblTotalPayGoing.setText(pay + "원");
 			
 			selectedSeatCom = "economy";
 //			jpFlight1.setBackground(crChange);
@@ -889,7 +894,9 @@ public class TicketingRoundTripComingForm extends JFrame implements ActionListen
 		{
 //			finaltotalPay = totalPay + businessPay;
 			finaltotalPay = totalPay + Math.round(businessPay * (numAdult + numChild*(0.8)));
-			lblTotalPayGoing.setText(finaltotalPay + "원");	
+			String pay = Double.toString(finaltotalPay);
+			pay = pay.substring(0, pay.length()-2);
+			lblTotalPayGoing.setText(pay + "원");	
 			selectedSeatCom = "business";
 //			jpFlight2.setBackground(crChange);
 
@@ -900,7 +907,9 @@ public class TicketingRoundTripComingForm extends JFrame implements ActionListen
 		{
 //			finaltotalPay = totalPay + firstPay;
 			finaltotalPay = totalPay + Math.round(firstPay * (numAdult + numChild*(0.8)));
-			lblTotalPayGoing.setText(finaltotalPay + "원");	
+			String pay = Double.toString(finaltotalPay);
+			pay = pay.substring(0, pay.length()-2);
+			lblTotalPayGoing.setText(pay + "원");
 			
 			selectedSeatCom = "first";
 //			jpFlight3.setBackground(crChange);
