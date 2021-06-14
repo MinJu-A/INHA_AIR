@@ -63,7 +63,10 @@ public class LoginForm extends JFrame implements ActionListener {
 	private SignUpForm signUpForm;
 	private FindIdPwForm findIdPwForm;
 	
+	
 	public LoginForm() {
+		
+		//창 설정
 		setTitle(title);
 		setSize(width, height);
 		setResizable(false);
@@ -75,9 +78,7 @@ public class LoginForm extends JFrame implements ActionListener {
 		Container c = getContentPane();
 		c.setBackground(Color.WHITE);
 		
-
 		
-		// 연우 - 로그인 레이아웃 구성
 		setLogin();
 		
 		
@@ -94,7 +95,7 @@ public class LoginForm extends JFrame implements ActionListener {
 		jpLogin.setLocation(360, 100);
 //		jpLogin.setBorder(new EtchedBorder(EtchedBorder.RAISED));		// 테두리 설정
 		
-		//상단판넬
+		//상단패널
 		jpTop = new JPanel();
 		jpTop.setBackground(Color.white);
 		jpTop.setPreferredSize(new Dimension(400, 100)); //판넬사이즈 설정
@@ -107,7 +108,7 @@ public class LoginForm extends JFrame implements ActionListener {
 		jpLogin.add(jpTop, BorderLayout.NORTH);
 		
 		
-		//중앙판넬
+		//중앙패널
 		jpCenter = new JPanel();
 		jpCenter.setLayout(new GridLayout(5, 1, 10, 10));
 		jpCenter.setBackground(Color.white);
@@ -127,6 +128,8 @@ public class LoginForm extends JFrame implements ActionListener {
 		btnLogin.setBorderPainted(false); //버튼 윤곽선 제거
 		btnLogin.setBackground(colorLogin); //버튼 색 설정
 		btnLogin.setForeground(Color.WHITE);
+		
+		//값들 추가
 		jpCenter.add(lblId);
 		jpCenter.add(tfId);
 		jpCenter.add(lblPw);
@@ -135,7 +138,7 @@ public class LoginForm extends JFrame implements ActionListener {
 		jpLogin.add(jpCenter, BorderLayout.CENTER);
 		
 		
-		//하단판넬
+		//하단패널
 		jpBottom = new JPanel();
 		jpBottom.setPreferredSize(new Dimension(400, 100));
 		jpBottom.setLayout(new GridLayout(3,1));
@@ -189,27 +192,25 @@ public class LoginForm extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object obj = e.getSource();
 		
-		if(obj == btnLogin) {
+		if(obj == btnLogin) {	//로그인버튼 눌렀을 경우
 			
 			String id = tfId.getText();
 			String pw = pwfPw.getText();
 			
-			if (id.isEmpty() && pw.isEmpty()) {
+			if (id.isEmpty() && pw.isEmpty()) {	//id와 pw 값이 비어있는지 확인
 				JOptionPane.showMessageDialog(null, "아이디와 비밀번호를 입력해주세요.", "로그인 실패", JOptionPane.OK_CANCEL_OPTION); //INFORMATION_MESSAGE, QUESTION_MESSAGE, WARNING_MESSAGE, ERROR_MESSAGE
 			} else if (id.isEmpty()) {
 				JOptionPane.showMessageDialog(null, "아이디를 입력해주세요.", "로그인 실패", JOptionPane.OK_CANCEL_OPTION);
 			} else if (pw.isEmpty()){
 				JOptionPane.showMessageDialog(null, "비밀번호를 입력해주세요.", "로그인 실패", JOptionPane.OK_CANCEL_OPTION);
-			} else {
+			} else { //아이디 비밀번호 확인 - 교수님 강의 보고 함 !
 				boolean check = checkIDPW(id, pw);
 				if(check) {
-					//System.out.println("로그인 성공!");
 					JOptionPane.showMessageDialog(null, id + "님 안녕하세요.", "로그인 성공", JOptionPane.INFORMATION_MESSAGE);
 					mainMenuForm = new MainMenuForm();
 					mainMenuForm.setId(id);
 					this.setVisible(false);
 				} else {
-					//System.out.println("로그인 실패!");
 					JOptionPane.showMessageDialog(null, "아이디 또는 비밀번호를 확인해주세요.", "로그인 실패", JOptionPane.OK_CANCEL_OPTION);
 					tfId.setText("");
 					pwfPw.setText("");
@@ -217,10 +218,10 @@ public class LoginForm extends JFrame implements ActionListener {
 				}
 			}
 			
-		} else if(obj == btnFindIdPw) {
-			findIdPwForm = new FindIdPwForm();
-		} else if(obj == btnSignUp) {
-			signUpForm = new SignUpForm();
+		} else if(obj == btnFindIdPw) { //아이디비밀번호찾기 버튼 눌렀을 때
+			findIdPwForm = new FindIdPwForm(); //아이디비밀번호찾기 창 띄우기
+		} else if(obj == btnSignUp) { //회원가입 버튼 눌렀을 때
+			signUpForm = new SignUpForm(); //회원가입 창 띄우기
 		}
 	}
 
@@ -228,15 +229,14 @@ public class LoginForm extends JFrame implements ActionListener {
 		
 		boolean check = false;
 		
-//		String sql = "SELECT * FROM login WHERE ID = 'test1' AND password='1111'";
-		String sql = "SELECT * FROM login WHERE ID = '" + id + "' AND password='" + pw + "'";
+		String sql = "SELECT * FROM login WHERE ID = '" + id + "' AND password='" + pw + "'"; //아이디 비밀번호 찾기 sql문
 		ResultSet rs = databaseClass.select(sql);
 		
 		
 		try {
-			if(rs.next()) {	//내용이 있을 때
+			if(rs.next()) {	//sql문에 내용이 있을 때
 				check = true;
-			} else {
+			} else { //내용이 없으면 false
 				check = false;
 			}
 		} catch (SQLException e) {
