@@ -291,13 +291,14 @@ public class FlightStatusForm extends JFrame implements ActionListener {
 		Object obj = e.getSource();
 		
 		if(obj == btnMainMenu) {
+			// 메뉴로 이동
 			mainMenuForm = new MainMenuForm();
 			mainMenuForm.setId(id);
 			this.setVisible(false);
 			
 		} else if(obj == cbFrom) {
+			// 출발지 가져오기
 			String selected = cbFrom.getSelectedItem().toString();
-			
 			String dept = selected.substring(selected.lastIndexOf("/")+1);
 			
 			// 도착지 콤보박스 설정
