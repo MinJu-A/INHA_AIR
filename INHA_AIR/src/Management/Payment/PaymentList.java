@@ -49,12 +49,11 @@ public class PaymentList extends JFrame implements ActionListener {
 		private JPanel jpTOP, jpMenu;
 		private JButton btnLogo, btnUser, btnAirway, btnAirport, btnPay, btnLogout, btnser, btnAirplane;
 		private LoginForm signIn;
-		private UserList userlist, userList;
+		private UserList userlist, userList, mainform;
 		private PaymentList paymentlist;
 		private AirwayList airwaylist;
 		private AirportList airlinelist;
 		private AirplaneList airplanelist; 
-		private MainForm mainform;
 		private int result;
 		
 		
@@ -451,7 +450,7 @@ Object obj = e.getSource();
 		if(result == JOptionPane.YES_OPTION) {
 			JOptionPane.showMessageDialog(this, "메인으로 돌아갑니다.");
 			dispose();
-			mainform = new MainForm();
+			mainform = new UserList();
 		}else {
 			JOptionPane.showMessageDialog(this, "메인으로 돌아가지 않습니다.");
 		}
