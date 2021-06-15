@@ -142,8 +142,8 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 		private int child;
 		private int infant;
 
-	public MemberInquiryDetailForm(String id) {
-		
+	public MemberInquiryDetailForm(String id, String reserveNum) {
+		this.reserveNum = reserveNum;
 		this.id = id;
 		
 		setTitle(title);
@@ -400,12 +400,12 @@ public class MemberInquiryDetailForm extends JFrame implements ActionListener {
 
 			
 			String sql;
-			sql = "SELECT * FROM reservation WHERE `ID` = '"+ id +"' ";
+			sql = "SELECT * FROM reservation WHERE reserveNum = '"+ reserveNum +"' ";
 			//reservation테이블에서 id 이용하여 예매 상세 정보를 검색
 
 			ResultSet rs = state.executeQuery(sql);
 			while (rs.next()) {
-				reserveNum = rs.getString("reserveNum");
+//				reserveNum = rs.getString("reserveNum");
 				GOscheduleNo = rs.getString("GOscheduleNo");
 				COMscheduleNo = rs.getString("COMscheduleNo");
 				GOclass = rs.getString("GOclass");
